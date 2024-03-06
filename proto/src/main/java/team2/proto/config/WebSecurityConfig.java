@@ -25,18 +25,20 @@ import static org.springframework.boot.autoconfigure.security.servlet.PathReques
 public class WebSecurityConfig {
 
     private final UserDetailService userService;
-
     @Bean
     public WebSecurityCustomizer configure() {
         return (web) -> web.ignoring()
                 .requestMatchers("/static/**");
     }
 
+    /*
+    스프링 시큐리티&스웨거 충돌 문제 해결 : https://recordsoflife.tistory.com/1090
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeRequests()
-                .requestMatchers("/login", "/signup", "/user").permitAll()
+                .requestMatchers("/login", "/signup", "/user", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin(formLogin -> formLogin

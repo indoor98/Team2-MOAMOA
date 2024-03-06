@@ -17,11 +17,12 @@ public class UserApiController {
 
     private final UserService userService;
 
-    @PostMapping("/user")
-    public String signUp(AddUserRequestDTO request) {
-        userService.save(request);
-        return "redirect:/login";
-    }
+      // RestAPI로 변경됨
+//    @PostMapping("/user")
+//    public String signUp(AddUserRequestDTO request) {
+//        userService.save(request);
+//        return "redirect:/login";
+//    }
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {

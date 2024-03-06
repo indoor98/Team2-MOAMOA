@@ -30,8 +30,14 @@ dependencies {
 	}
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+	//swagger
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
 	implementation 'org.hibernate.validator:hibernate-validator'
+
+	// (장명훈) 맥북에 mysql이 이미 설치되어 있어서 mariaDB 설치 시 충돌이 발생합니다.
+	// 그래서 개발할때만 mysql 사용하겠읍니다. 다른 분들은 이부분 무시해주셔도됩니다.
+	runtimeOnly 'com.mysql:mysql-connector-j'
 
 }
 
