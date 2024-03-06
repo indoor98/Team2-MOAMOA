@@ -36,17 +36,21 @@ public class User implements UserDetails {
     @Column(name = "school")
     private String school;
 
+    @Column(name = "phone")
+    private String phone;
+
     @Column(name ="authentication")
     @ColumnDefault("false")
     private boolean authentication;
 
     @Builder
-    public User(String nickname, String email, String password, String address, String school, String auth) { // auth?
+    public User(String nickname, String email, String password, String address, String school, String phone, String auth) { // auth?
         this.nickname = nickname;
         this.email = email;
         this.password = password;
         this.address = address;
         this.school = school;
+        this.phone = phone;
     }
 
     @Override // 권한 반환
@@ -62,6 +66,8 @@ public class User implements UserDetails {
     public String getPassword() {
         return password;
     }
+
+    public String getNickname() { return nickname; }
 
     @Override
     public boolean isAccountNonExpired() {

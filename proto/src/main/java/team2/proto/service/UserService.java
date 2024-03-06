@@ -19,6 +19,7 @@ public class UserService {
                 .nickname(dto.getNickname())
                 .email(dto.getEmail())
                 .password(bCryptPasswordEncoder.encode(dto.getPassword()))
+                .phone(dto.getPhone())
                 .address(dto.getAddress())
                 .school(dto.getSchool())
                 .build()).getId();

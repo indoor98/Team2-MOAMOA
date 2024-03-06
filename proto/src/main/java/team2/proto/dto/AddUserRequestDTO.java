@@ -12,5 +12,6 @@ public class AddUserRequestDTO {
     private String password;
     private String address;
     private String school;
+    private String phone;
 
 }
