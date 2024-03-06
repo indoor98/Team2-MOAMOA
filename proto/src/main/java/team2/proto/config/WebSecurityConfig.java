@@ -1,6 +1,7 @@
 package team2.proto.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,26 +25,28 @@ public class WebSecurityConfig {
     private final UserDetailService userService;
 
     @Bean
+    public WebSecurityCustomizer configure() {
+        return (web) -> web.ignoring()
+                .requestMatchers("/static/**");
+    }
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        CharacterEncodingFilter filter = new CharacterEncodingFilter();
-        filter.setEncoding("UTF-8");
-        filter.setForceEncoding(true);
-
-        return http.addFilterBefore(filter, CsrfFilter.class)
-                .authorizeHttpRequests()
-                .requestMatchers("/login", "/signup", "/user", "/swagger-ui/index.html").permitAll() // 특정 요청과 일치하는 url에 대한 엑세스 설정, permitAll -> 인증/인가 없이 접근 가능
-                .anyRequest().authenticated() // -> 위 제외하고는 모두 인증/인가 필요, authenticated : 인가는 필요 x 인증은 필요
+        return http
+                //authorizeRequest() deprecated 오류 해결(링크 : https://sennieworld.tistory.com/109)
+                .authorizeHttpRequests()// 인증 인가 설정
+                .requestMatchers("/login", "/signup", "/user").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login") // 로그인 페이지 경로 설정
-                .defaultSuccessUrl("/hello") // 로그인이 완료되었을 때 이동할 경로를 설정합니다.
+                .formLogin()// 폼 기반 로그인 설정
+                .loginPage("/login")
+                .defaultSuccessUrl("/hello", true)
                 .and()
-                .logout()
-                .logoutSuccessUrl("/login") // 로그아웃이 완료되었을 때 이동할 경로
-                .invalidateHttpSession(true) // 로그아웃 후 세션을 전부 삭제할지 결정
+                .logout()//로그아웃 설정
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true)
                 .and()
-                .csrf().disable()
+                .csrf().disable() //csrf 비활성화
                 .build();
     }
 
