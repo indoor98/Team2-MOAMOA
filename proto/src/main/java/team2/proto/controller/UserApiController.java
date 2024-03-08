@@ -7,13 +7,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import team2.proto.service.UserService;
+import team2.proto.service.UserServiceImpl;
 
 @RequiredArgsConstructor
 @Controller
 public class UserApiController {
 
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
       // RestAPI로 변경됨
 //    @PostMapping("/user")

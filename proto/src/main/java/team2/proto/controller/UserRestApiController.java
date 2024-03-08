@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import team2.proto.domain.User;
 import team2.proto.dto.AddUserRequest;
 import team2.proto.repository.UserRepository;
-import team2.proto.service.UserService;
+import team2.proto.service.UserServiceImpl;
 
 
 @RequiredArgsConstructor
@@ -15,12 +15,12 @@ import team2.proto.service.UserService;
 public class UserRestApiController {
 
     // DIP
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
     private final UserRepository userRepository;
 
     @PostMapping("/user")
     public User signUp(@RequestBody AddUserRequest request) {
-        Long id = userService.save(request);
+        Long id = userServiceImpl.save(request);
         User user = userRepository.findById(id).get();
         return user;
     }
