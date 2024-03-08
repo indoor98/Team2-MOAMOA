@@ -20,11 +20,20 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public JwtAuthenticationResponse signin(SigninRequest request) {
+
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), passwordEncoder.encode(request.getPassword())));
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+        System.out.println("여기");
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
         var jwt = jwtService.generateToken(user);
+        System.out.println("====================================================");
+        System.out.println(" debug >>>>>>> AuthenticationServiceImpl.signin");
+        System.out.println(" parameter : "+request);
+        System.out.println(" user : " + user);
+        System.out.println(" jwt : " + jwt);
+        System.out.println("JwtAuthenticationResponse.builder().token(jwt).build();");
+        System.out.println("====================================================");
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }
 }
