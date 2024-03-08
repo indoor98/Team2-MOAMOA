@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import team2.proto.domain.User;
-import team2.proto.dto.AddUserRequestDTO;
+import team2.proto.dto.AddUserRequest;
 import team2.proto.repository.UserRepository;
 
 @RequiredArgsConstructor
@@ -14,7 +14,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     
-    public Long save(AddUserRequestDTO dto) {
+    public Long save(AddUserRequest dto) {
         return userRepository.save(User.builder()
                 .nickname(dto.getNickname())
                 .email(dto.getEmail())
@@ -23,6 +23,11 @@ public class UserService {
                 .address(dto.getAddress())
                 .school(dto.getSchool())
                 .build()).getId();
+    }
+
+    public User findById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow( () -> new IllegalArgumentException("Unexpected User"));
     }
 
 }
