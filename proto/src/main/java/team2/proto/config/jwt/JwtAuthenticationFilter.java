@@ -40,16 +40,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain) throws ServletException, IOException {
 
-        final String authHeader = request.getHeader("Authorizaion");
+        final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
 
+        System.out.println("debug >>>>>>>>>>>>>>> do filter interfnal" + authHeader);
         // 토큰 없는 경우 컨텍스트 홀더에 올리지 않음
         if (StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader, "Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
-
 
         jwt = authHeader.substring(7); // Bearer+공백 다음부터 토큰임
         userEmail = jwtService.extractUserName(jwt); // 유저 정보 추출
