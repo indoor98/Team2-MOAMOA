@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import team2.proto.domain.User;
 import team2.proto.dto.AddUserRequest;
+import team2.proto.dto.UserSignUpRequest;
 import team2.proto.repository.UserRepository;
 
 @Service
@@ -18,7 +19,7 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public Long save(AddUserRequest dto) {
+    public Long save(UserSignUpRequest dto) {
         return userRepository.save(User.builder()
                 .nickname(dto.getNickname())
                 .email(dto.getEmail())

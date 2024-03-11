@@ -19,6 +19,7 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
     @PostMapping("/signin")
     public ResponseEntity<JwtAuthenticationResponse> signin(@RequestBody SigninRequest request) {
+        System.out.println(request);
         return ResponseEntity.ok(authenticationService.signin(request));
     }
 }
