@@ -8,17 +8,14 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import team2.proto.service.JwtService;
 import team2.proto.service.UserDetailService;
-import team2.proto.service.UserService;
 
 import java.io.IOException;
 
@@ -69,25 +66,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
-
-//
-//        // 요청 헤더의 Authorizaion 키의 값 조회
-//        String authorizationHeader = request.getHeader(HEADER_AUTHORIZATION);
-//        // 가져온 값에서 접두사 제거
-//        String token = getAccessToken(authorizationHeader);
-//        // 가져온 토큰이 유효한지 확인하고, 유효한 경우 인증 정보 설정
-//
-//        if(tokenProvider.validToken(token)) {
-//            Authentication authentication = tokenProvider.getAuthentication(token);
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
-//        }
-//        filterChain.doFilter(request, response);
-//    }
-//
-//    private String getAccessToken(String authorizationHeader) {
-//        if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {
-//            return authorizationHeader.substring(TOKEN_PREFIX.length());
-//        }
-//            return null;
-//        }
 }
