@@ -15,20 +15,6 @@ import team2.proto.repository.UserRepository;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-
-    @Override
-    public Long save(UserSignUpRequest dto) {
-        return userRepository.save(User.builder()
-                .nickname(dto.getNickname())
-                .email(dto.getEmail())
-                .password(bCryptPasswordEncoder.encode(dto.getPassword()))
-                .phone(dto.getPhone())
-                .address(dto.getAddress())
-                .school(dto.getSchool())
-                .build()).getId();
-    }
 
     @Override
     public User findById(Long userId) {

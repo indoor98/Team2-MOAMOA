@@ -6,7 +6,5 @@ import team2.proto.dto.AddUserRequest;
 import team2.proto.dto.UserSignUpRequest;
 
 public interface UserService {
-
-    Long save(UserSignUpRequest dto);
     User findById(Long userId);
 }
