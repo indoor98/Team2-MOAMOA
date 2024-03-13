@@ -1,13 +1,15 @@
 package team2.proto.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Getter
-@NoArgsConstructor(access= AccessLevel.PROTECTED)
+import java.time.Instant;
+
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor(access= AccessLevel.PROTECTED)
+@Builder
 public class RefreshToken {
 
     @Id
@@ -15,19 +17,13 @@ public class RefreshToken {
     @Column(name="id", updatable = false)
     private Long id;
 
-    @Column(name="user_id", nullable=false, unique = true)
-    private Long userId;
-
     @Column(name="refresh_token", nullable = false)
     private String refreshToken;
 
-    public RefreshToken(Long userId, String refreshToken) {
-        this.userId = userId;
-        this.refreshToken = refreshToken;
-    }
+    @Column(name="expiry_date", nullable = false)
+    private Instant expiryDate;
 
-    public RefreshToken update(String newRefreshToken) {
-        this.refreshToken = newRefreshToken;
-        return this;
-    }
+    @OneToOne
+    @JoinColumn(name="user_id", referencedColumnName = "id")
+    private User userId;
 }
