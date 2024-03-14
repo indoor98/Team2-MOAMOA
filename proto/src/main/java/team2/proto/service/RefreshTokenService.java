@@ -17,9 +17,8 @@ public class RefreshTokenService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserRepository userRepository;
 
-    public RefreshToken findByRefreshToken(String refreshToken) {
-        return refreshTokenRepository.findByRefreshToken(refreshToken)
-                .orElseThrow( () -> new IllegalArgumentException("Unexpected Token"));
+    public Optional<RefreshToken> findByRefreshToken(String refreshToken) {
+        return refreshTokenRepository.findByRefreshToken(refreshToken);
     }
 
 
@@ -42,7 +41,4 @@ public class RefreshTokenService {
             return refreshToken;
         }
     }
-
-
-
 }

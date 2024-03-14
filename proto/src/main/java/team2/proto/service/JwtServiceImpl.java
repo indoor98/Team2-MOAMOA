@@ -24,6 +24,8 @@ public class JwtServiceImpl implements JwtService {
     @Value("${jwt.secret-key}")
     private String jwtSigningKey;
 
+    private final JWTBlacklistService jwtBlacklistService;
+
     @Override
     public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -33,8 +35,8 @@ public class JwtServiceImpl implements JwtService {
     @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String userName = extractUserName(token);
-        System.out.println("DEBUG >>>>>>>>>> JwtService.isTokenValid" + userName);
-        return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
+        System.out.println("Debug >>>> JwtService isTokenValid");
+        return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token) && !jwtBlacklistService.isBlacklisted(token);
     }
 
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolvers) {

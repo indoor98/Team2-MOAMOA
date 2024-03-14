@@ -48,8 +48,15 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
             http.csrf(AbstractHttpConfigurer::disable)
-                    .authorizeHttpRequests(request -> request.requestMatchers("/api/auth/**","/login", "/signup", "/user", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
-                            .permitAll().anyRequest().authenticated())
+                    .authorizeHttpRequests(request -> request.requestMatchers(
+                                    "/api/auth/**",
+                                    "/login",
+                                    "/signup",
+                                    "/user",
+                                    "/v3/api-docs/**",
+                                    "/swagger-ui/**",
+                                    "/swagger-ui.html",
+                                    "/api/auth/refreshtoken").permitAll().anyRequest().authenticated())
                     .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                     .authenticationProvider(daoAuthenticationProvider()).addFilterBefore(
                             jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
