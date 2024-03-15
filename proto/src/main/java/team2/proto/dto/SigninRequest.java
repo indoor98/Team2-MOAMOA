@@ -1,4 +1,4 @@
-package team2.proto.dao.request;
+package team2.proto.dto;
 
 import lombok.*;
 

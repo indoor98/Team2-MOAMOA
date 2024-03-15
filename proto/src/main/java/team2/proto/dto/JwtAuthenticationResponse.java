@@ -1,4 +1,4 @@
-package team2.proto.dao.response;
+package team2.proto.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class JwtAuthenticationResponse {
-    private String token;
+    private String accessToken;
+    private String refreshToken;
 }

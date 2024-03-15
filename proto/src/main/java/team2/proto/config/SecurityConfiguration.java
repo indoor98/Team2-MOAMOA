@@ -48,29 +48,19 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
             http.csrf(AbstractHttpConfigurer::disable)
-                    .authorizeHttpRequests(request -> request.requestMatchers("/api/auth/**","/login", "/signup", "/user", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
-                            .permitAll().anyRequest().authenticated())
+                    .authorizeHttpRequests(request -> request.requestMatchers(
+                                    "/api/auth/**",
+                                    "/login",
+                                    "/signup",
+                                    "/user",
+                                    "/v3/api-docs/**",
+                                    "/swagger-ui/**",
+                                    "/swagger-ui.html",
+                                    "/api/auth/refreshtoken").permitAll().anyRequest().authenticated())
                     .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                     .authenticationProvider(daoAuthenticationProvider()).addFilterBefore(
                             jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
             return http.build();
-
-//        return http
-//                .authorizeRequests()
-//                .requestMatchers("/login", "/signup", "/user", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin(formLogin -> formLogin
-//                        .loginPage("/login")
-//                        .defaultSuccessUrl("/hello", true)
-//                )
-//                .logout(logout -> logout
-//                        .logoutSuccessUrl("/login")
-//                        .invalidateHttpSession(true)
-//                )
-//                .csrf(AbstractHttpConfigurer::disable)
-//                .build();
-
     }
 
     // 인증 관리자 관련 설정
@@ -79,9 +69,7 @@ public class SecurityConfiguration {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(userDetailService);
         daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
-        return daoAuthenticationProvider;
-    }
-
+        return daoAuthenticationProvider; }
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
