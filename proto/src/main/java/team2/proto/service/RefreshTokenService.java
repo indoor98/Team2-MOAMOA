@@ -2,11 +2,10 @@ package team2.proto.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import team2.proto.domain.RefreshToken;
+import team2.proto.entity.authentication.RefreshToken;
 import team2.proto.repository.RefreshTokenRepository;
 import team2.proto.repository.UserRepository;
 
-import java.sql.Ref;
 import java.time.Instant;
 import java.util.UUID;
 import java.util.Optional;
@@ -28,6 +27,7 @@ public class RefreshTokenService {
                 .userId(userRepository.findByEmail(email).get())
                 .refreshToken(UUID.randomUUID().toString())
                 .expiryDate(Instant.now().plusMillis(600000))
+                .isRefreshed(false)
                 .build();
         return refreshTokenRepository.save(refreshToken);
     }
@@ -40,5 +40,10 @@ public class RefreshTokenService {
         } else {
             return refreshToken;
         }
+    }
+
+    public void logoutRefreshToken(Long userId) {
+        refreshTokenRepository.deleteByUserId(userRepository.findById(userId).get());
+        System.out.println("로그아웃 완료 : 유저 refreshToken 삭제");
     }
 }

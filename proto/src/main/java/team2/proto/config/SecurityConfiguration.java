@@ -61,23 +61,6 @@ public class SecurityConfiguration {
                     .authenticationProvider(daoAuthenticationProvider()).addFilterBefore(
                             jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
             return http.build();
-
-//        return http
-//                .authorizeRequests()
-//                .requestMatchers("/login", "/signup", "/user", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin(formLogin -> formLogin
-//                        .loginPage("/login")
-//                        .defaultSuccessUrl("/hello", true)
-//                )
-//                .logout(logout -> logout
-//                        .logoutSuccessUrl("/login")
-//                        .invalidateHttpSession(true)
-//                )
-//                .csrf(AbstractHttpConfigurer::disable)
-//                .build();
-
     }
 
     // 인증 관리자 관련 설정
@@ -86,9 +69,7 @@ public class SecurityConfiguration {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(userDetailService);
         daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
-        return daoAuthenticationProvider;
-    }
-
+        return daoAuthenticationProvider; }
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();

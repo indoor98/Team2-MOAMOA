@@ -1,4 +1,4 @@
-package team2.proto.dao.response;
+package team2.proto.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

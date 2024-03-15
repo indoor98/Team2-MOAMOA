@@ -1,7 +1,7 @@
 package team2.proto.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import team2.proto.domain.User;
+import team2.proto.entity.authentication.User;
 
 import java.util.Optional;
 

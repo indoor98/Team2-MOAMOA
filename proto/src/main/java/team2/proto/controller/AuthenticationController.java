@@ -2,22 +2,19 @@ package team2.proto.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import team2.proto.dao.request.SigninRequest;
-import team2.proto.dao.response.JwtAuthenticationResponse;
-import team2.proto.domain.RefreshToken;
+import team2.proto.dto.SigninRequest;
+import team2.proto.dto.JwtAuthenticationResponse;
+import team2.proto.entity.authentication.RefreshToken;
 import team2.proto.dto.RefreshTokenRequestDTO;
 import team2.proto.dto.UserSignUpRequest;
-import team2.proto.service.AuthenticationService;
-import team2.proto.service.JWTBlacklistService;
-import team2.proto.service.JwtService;
-import team2.proto.service.RefreshTokenService;
+import team2.proto.entity.authentication.User;
+import team2.proto.service.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -28,6 +25,7 @@ public class AuthenticationController {
     private final RefreshTokenService refreshTokenService;
     private final JwtService jwtService;
     private final JWTBlacklistService jwtBlacklistService;
+    private final UserDetailsService userDetailService;
 
     @PostMapping("signup")
     public ResponseEntity<Void> signup(@RequestBody UserSignUpRequest params) {
@@ -37,7 +35,7 @@ public class AuthenticationController {
 
     @PostMapping("/signin")
     public ResponseEntity<JwtAuthenticationResponse> signin(@RequestBody SigninRequest request) {
-        System.out.println(request);
+        System.out.println("DEBUG >>>> AuthenticationController::signin");
         return ResponseEntity.ok(authenticationService.signIn(request));
     }
 
@@ -57,8 +55,9 @@ public class AuthenticationController {
     @GetMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request) {
         String token = extractTokenFromRequest(request);
-        jwtBlacklistService.addToBlacklist(token);
-        System.out.println("logout 완료");
+        String userEmail = jwtService.extractUserName(token);
+        User user = (User)userDetailService.loadUserByUsername(userEmail);
+        refreshTokenService.logoutRefreshToken(user.getId());
         return ResponseEntity.ok("Logged out successfully!");
     }
 

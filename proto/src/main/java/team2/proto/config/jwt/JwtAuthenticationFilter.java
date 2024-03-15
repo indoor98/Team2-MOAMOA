@@ -42,13 +42,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String userEmail;
 
-        System.out.println("debug >>>>>>>>>>>>>>> do filter interfnal" + authHeader);
+        System.out.println("DEBUG >>>> JwtAuthenticationFilter::"+authHeader);
         // 토큰 없는 경우 컨텍스트 홀더에 올리지 않음
         if (StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader, "Bearer ")) {
+            System.out.println("DEBUG >>>> JwtAuthenticationFilter::JWT토큰이 없는 요청임");
             filterChain.doFilter(request, response);
             return;
         }
-
+        
         jwt = authHeader.substring(7); // Bearer+공백 다음부터 토큰임
         userEmail = jwtService.extractUserName(jwt); // 유저 정보 추출
         if (StringUtils.isNotEmpty(userEmail)
@@ -57,12 +58,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     .loadUserByUsername(userEmail);
 
             if (jwtService.isTokenValid(jwt, userDetails)) {
+                System.out.println("DEBUG >>>> JwtAuthenticationFilter::JWT토큰이 유효함 SecurityContextHolder에 올림(인증 성공)");
                 SecurityContext context = SecurityContextHolder.createEmptyContext();
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 context.setAuthentication(authToken);
                 SecurityContextHolder.setContext(context);
+            } else {
+                System.out.println("DEBUG >>>> JwtAuthenticationFilter::JWT토큰이 있으나 유효하지 않은 요청임");
             }
         }
         filterChain.doFilter(request, response);

@@ -1,4 +1,4 @@
-package team2.proto.domain;
+package team2.proto.entity.authentication;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,6 +22,9 @@ public class RefreshToken {
 
     @Column(name="expiry_date", nullable = false)
     private Instant expiryDate;
+
+    @Column(name="is_refreshed", nullable = false)
+    private Boolean isRefreshed;
 
     @OneToOne
     @JoinColumn(name="user_id", referencedColumnName = "id")

@@ -1,4 +1,4 @@
-package team2.proto.domain;
+package team2.proto.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

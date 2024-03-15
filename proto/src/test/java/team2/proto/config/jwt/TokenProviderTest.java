@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import team2.proto.domain.User;
+import team2.proto.entity.authentication.User;
 import team2.proto.repository.UserRepository;
 import java.time.Duration;
 import java.util.Date;
