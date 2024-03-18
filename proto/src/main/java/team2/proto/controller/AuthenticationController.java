@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,10 @@ import team2.proto.entity.authentication.RefreshToken;
 import team2.proto.dto.RefreshTokenRequestDTO;
 import team2.proto.dto.UserSignUpRequest;
 import team2.proto.entity.authentication.User;
-import team2.proto.service.*;
+import team2.proto.service.authentication.AuthenticationService;
+import team2.proto.service.authentication.JWTBlacklistService;
+import team2.proto.service.authentication.JwtService;
+import team2.proto.service.authentication.RefreshTokenService;
 
 @RestController
 @RequestMapping("/api/auth")
