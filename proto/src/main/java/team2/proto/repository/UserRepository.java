@@ -1,0 +1,10 @@
+package team2.proto.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import team2.proto.entity.authentication.User;
+
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmail(String email); // email로 사용자 정보를 가져옴
+}
