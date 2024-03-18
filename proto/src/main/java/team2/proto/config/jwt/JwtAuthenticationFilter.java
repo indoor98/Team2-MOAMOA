@@ -14,9 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import team2.proto.service.JWTBlacklistService;
-import team2.proto.service.JwtService;
-import team2.proto.service.UserDetailService;
+import team2.proto.service.authentication.JwtService;
+import team2.proto.service.authentication.UserDetailService;
 
 import java.io.IOException;
 

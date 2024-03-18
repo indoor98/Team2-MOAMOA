@@ -1,4 +1,4 @@
-package team2.proto.service;
+package team2.proto.service.authentication;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
