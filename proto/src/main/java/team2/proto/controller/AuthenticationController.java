@@ -63,6 +63,7 @@ public class AuthenticationController {
         return ResponseEntity.ok("Logged out successfully!");
     }
 
+
     public String extractTokenFromRequest(HttpServletRequest request) {
         // Get the Authorization header from the request
         String authorizationHeader = request.getHeader("Authorization");
@@ -76,4 +77,5 @@ public class AuthenticationController {
         // If the Authorization header is not valid, return null
         return null;
     }
+
 }
