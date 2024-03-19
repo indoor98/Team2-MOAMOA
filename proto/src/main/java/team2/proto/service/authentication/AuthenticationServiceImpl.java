@@ -53,4 +53,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                             refreshToken(refreshToken.getRefreshToken())
                             .build();
     }
+
+    @Override
+    public void schoolAuthenticate(String userEmail, String fileUrl) {
+
+    }
 }

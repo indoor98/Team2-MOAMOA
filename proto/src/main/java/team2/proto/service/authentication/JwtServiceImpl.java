@@ -7,10 +7,12 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.security.Key;
 import java.util.Date;
@@ -73,14 +75,19 @@ public class JwtServiceImpl implements JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-//    public String createNewAccessToken(String refreshToken) {
-//        //토큰 유효성 검사에 실패하면 예외 발생
-//        if(!tokenProvider.validToken(refreshToken)) {
-//            throw new IllegalArgumentException("Unexpected token");
-//        }
-//
-//        Long userId = refreshTokenService.findByRefreshToken(refreshToken).getUserId();
-//        User user = userServiceImpl.findById(userId);
-//        return tokenProvider.generateToken(user, Duration.ofHours(2));
-//    }
+    @Override
+    public String extractTokenFromRequest(HttpServletRequest request) {
+        // Get the Authorization header from the request
+        String authorizationHeader = request.getHeader("Authorization");
+
+        // Check if the Authorization header is not null and starts with "Bearer "
+        if (StringUtils.hasText(authorizationHeader) && authorizationHeader.startsWith("Bearer ")) {
+            // Extract the JWT token (remove "Bearer " prefix)
+            return authorizationHeader.substring(7);
+        }
+
+        // If the Authorization header is not valid, return null
+        return null;
+    }
+
 }

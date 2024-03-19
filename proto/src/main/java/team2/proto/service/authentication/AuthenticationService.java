@@ -8,4 +8,6 @@ public interface AuthenticationService {
 
     Long signUp(UserSignUpRequest dto);
     JwtAuthenticationResponse signIn(SigninRequest request);
+
+    void schoolAuthenticate(String userEmail, String fileUrl);
 }
