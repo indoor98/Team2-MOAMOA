@@ -5,16 +5,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import team2.proto.dto.SigninRequest;
-import team2.proto.dto.JwtAuthenticationResponse;
+import team2.proto.dto.authentication.SigninDTO;
+import team2.proto.dto.authentication.JwtAuthenticationResponse;
 import team2.proto.entity.authentication.RefreshToken;
-import team2.proto.dto.RefreshTokenRequestDTO;
-import team2.proto.dto.UserSignUpRequest;
+import team2.proto.dto.authentication.RefreshTokenRequestDTO;
+import team2.proto.dto.authentication.UserSignUpDTO;
 import team2.proto.entity.authentication.User;
 import team2.proto.service.authentication.AuthenticationService;
-import team2.proto.service.authentication.JWTBlacklistService;
 import team2.proto.service.authentication.JwtService;
 import team2.proto.service.authentication.RefreshTokenService;
 
@@ -26,17 +24,16 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
     private final RefreshTokenService refreshTokenService;
     private final JwtService jwtService;
-    private final JWTBlacklistService jwtBlacklistService;
     private final UserDetailsService userDetailService;
 
-    @PostMapping("signup")
-    public ResponseEntity<Void> signup(@RequestBody UserSignUpRequest params) {
+    @PostMapping("/signup")
+    public ResponseEntity<Void> signup(@RequestBody UserSignUpDTO params) {
         authenticationService.signUp(params);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<JwtAuthenticationResponse> signin(@RequestBody SigninRequest request) {
+    public ResponseEntity<JwtAuthenticationResponse> signin(@RequestBody SigninDTO request) {
         System.out.println("DEBUG >>>> AuthenticationController::signin");
         return ResponseEntity.ok(authenticationService.signIn(request));
     }
@@ -62,6 +59,4 @@ public class AuthenticationController {
         refreshTokenService.logoutRefreshToken(user.getId());
         return ResponseEntity.ok("Logged out successfully!");
     }
-
-
 }

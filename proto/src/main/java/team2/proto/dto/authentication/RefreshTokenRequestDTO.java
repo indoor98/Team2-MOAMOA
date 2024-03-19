@@ -1,4 +1,4 @@
-package team2.proto.dto;
+package team2.proto.dto.authentication;
 
 import lombok.Getter;
 
