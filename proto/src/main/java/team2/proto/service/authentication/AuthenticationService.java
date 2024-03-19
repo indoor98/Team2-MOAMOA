@@ -1,4 +1,4 @@
-package team2.proto.service;
+package team2.proto.service.authentication;
 
 import team2.proto.dto.SigninRequest;
 import team2.proto.dto.JwtAuthenticationResponse;
