@@ -56,24 +56,12 @@ public class AuthenticationController {
 
     @GetMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request) {
-        String token = extractTokenFromRequest(request);
+        String token = jwtService.extractTokenFromRequest(request);
         String userEmail = jwtService.extractUserName(token);
         User user = (User)userDetailService.loadUserByUsername(userEmail);
         refreshTokenService.logoutRefreshToken(user.getId());
         return ResponseEntity.ok("Logged out successfully!");
     }
 
-    public String extractTokenFromRequest(HttpServletRequest request) {
-        // Get the Authorization header from the request
-        String authorizationHeader = request.getHeader("Authorization");
 
-        // Check if the Authorization header is not null and starts with "Bearer "
-        if (StringUtils.hasText(authorizationHeader) && authorizationHeader.startsWith("Bearer ")) {
-            // Extract the JWT token (remove "Bearer " prefix)
-            return authorizationHeader.substring(7);
-        }
-
-        // If the Authorization header is not valid, return null
-        return null;
-    }
 }
