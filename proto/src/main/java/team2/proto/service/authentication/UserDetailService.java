@@ -9,7 +9,7 @@ import team2.proto.repository.UserRepository;
 
 @RequiredArgsConstructor
 @Service
-public class UserDetailService implements UserDetailsService {
+public class UserDetailService implements UserDetailsService { // 보안을 위함
 
     private final UserRepository userRepository;
 

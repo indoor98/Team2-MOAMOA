@@ -27,7 +27,7 @@ public class UserController {
     public ResponseEntity<Void> SchoolAuth(@RequestParam(name = "image") MultipartFile imageFile, HttpServletRequest request) {
         System.out.println("debug >>>> schoolAuth MultipartFile imageFile:" + imageFile);
         String token = jwtService.extractTokenFromRequest(request);
-        String userEmail = jwtService.extractUserName(token);
+        String userEmail = jwtService.extractUserName(token); // 토큰으로부터 유저 email을 가져오는 함수
         System.out.println(userEmail);
 
         // /proto/auth-images 폴더에 이미지 파일 저장합니다.
