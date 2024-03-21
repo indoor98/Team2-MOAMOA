@@ -3,6 +3,7 @@ package team2.proto.entity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import team2.proto.entity.authentication.User;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 public class Comment {
-
+    // id, content, creaDate, updateDate, post, user
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,4 +37,13 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id", updatable = false) // 중복 매핑 수정
     private User user;
+
+    @Builder
+    public Comment(String content, Post post, User user) {
+        this.content = content;
+        this.createDate = LocalDateTime.now();
+        this.updateDate = null;
+        this.post = post;
+        this.user = user;
+    }
 }
