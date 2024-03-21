@@ -14,7 +14,7 @@ public interface CommentService {
     void writeComment(CommentRequestDTO commentRequestDTO, Long postId, String email );
 
     // 댓글 수정
-    void updateComment(CommentRequestDTO commentRequestDTO, Long commentId );
+    void updateComment(Long postId, Long commentId ,CommentRequestDTO commentRequestDTO);
 
     // 댓글 삭제
     void deleteComment(Long commentId);

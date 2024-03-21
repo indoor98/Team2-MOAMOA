@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 public class Comment {
-
+    // id, content, creaDate, updateDate, post, user
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,7 +39,7 @@ public class Comment {
     private User user;
 
     @Builder
-    private Comment(String content, Post post, User user) {
+    public Comment(String content, Post post, User user) {
         this.content = content;
         this.createDate = LocalDateTime.now();
         this.updateDate = null;
