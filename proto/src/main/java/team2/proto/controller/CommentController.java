@@ -41,6 +41,7 @@ public class CommentController {
     // 댓글 조회
     @GetMapping("/{postId}/list")
     public ResponseEntity<List<CommentResponseDTO>> commentList(@PathVariable Long postId) {
+        System.out.println("debug >>> CommentList ");
         List<CommentResponseDTO> commentList = commentService.commentList(postId);
 
         return new ResponseEntity<List<CommentResponseDTO>>(commentList, HttpStatus.OK);

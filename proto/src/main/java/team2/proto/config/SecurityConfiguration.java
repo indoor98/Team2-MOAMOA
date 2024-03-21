@@ -38,9 +38,6 @@ public class SecurityConfiguration {
                 .requestMatchers("/static/**");
     }
 
-    /*
-    스프링 시큐리티&스웨거 충돌 문제 해결 : https://recordsoflife.tistory.com/1090
-     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 

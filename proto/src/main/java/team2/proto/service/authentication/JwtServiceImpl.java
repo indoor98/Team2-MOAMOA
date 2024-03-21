@@ -85,9 +85,7 @@ public class JwtServiceImpl implements JwtService {
             // Extract the JWT token (remove "Bearer " prefix)
             return authorizationHeader.substring(7);
         }
-
         // If the Authorization header is not valid, return null
         return null;
     }
-
 }

@@ -1,17 +1,16 @@
-package team2.proto.dto;
+package team2.proto.dto.authentication;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
-public class AddUserRequest {
-
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserSignUpDTO {
     private String nickname;
     private String email;
     private String password;
     private String address;
     private String school;
     private String phone;
-
 }

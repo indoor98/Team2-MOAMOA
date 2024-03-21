@@ -15,7 +15,7 @@ import org.springframework.web.context.WebApplicationContext;
 import team2.proto.config.jwt.JwtFactory;
 import team2.proto.entity.authentication.RefreshToken;
 import team2.proto.entity.authentication.User;
-import team2.proto.dto.CreateAccessTokenRequest;
+import team2.proto.dto.authentication.CreateAccessTokenRequest;
 import team2.proto.repository.RefreshTokenRepository;
 import team2.proto.repository.UserRepository;
 

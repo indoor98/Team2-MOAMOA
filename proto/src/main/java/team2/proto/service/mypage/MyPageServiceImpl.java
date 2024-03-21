@@ -142,7 +142,6 @@ public class MyPageServiceImpl implements MyPageService{
             dto.setHeadCount(post.getHeadCount());
             dtoList.add(dto);
         }
-
         return dtoList;
     }
 }

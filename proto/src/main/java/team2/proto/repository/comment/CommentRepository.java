@@ -10,7 +10,7 @@ import team2.proto.entity.Comment;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     
-    @Query("SELECT A FROM COMMENT A WHERE A.post_id = :postId" )
+    // @Query("SELECT A FROM COMMENT A WHERE A.post_id = :postId" )
     public List<Comment> findByPostId(@Param("postId") Long postId);    
 
 }

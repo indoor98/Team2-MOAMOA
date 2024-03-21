@@ -5,11 +5,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import team2.proto.dto.SigninRequest;
-import team2.proto.dto.JwtAuthenticationResponse;
+import team2.proto.dto.authentication.SigninDTO;
+import team2.proto.dto.authentication.JwtAuthenticationResponse;
 import team2.proto.entity.authentication.RefreshToken;
 import team2.proto.entity.authentication.User;
-import team2.proto.dto.UserSignUpRequest;
+import team2.proto.dto.authentication.UserSignUpDTO;
 import team2.proto.repository.UserRepository;
 
 @Service
@@ -23,7 +23,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 
     @Override
-    public Long signUp(UserSignUpRequest dto) {
+    public Long signUp(UserSignUpDTO dto) {
         return userRepository.save(User.builder()
                 .nickname(dto.getNickname())
                 .email(dto.getEmail())
@@ -35,7 +35,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public JwtAuthenticationResponse signIn(SigninRequest request) {
+    public JwtAuthenticationResponse signIn(SigninDTO request) {
         System.out.println("DEBUG >>>> AuthenticationServiceImpl::signIn");
 
         // 인증 실패시 인증 에러 발생
@@ -52,10 +52,5 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                             accessToken(jwt).
                             refreshToken(refreshToken.getRefreshToken())
                             .build();
-    }
-
-    @Override
-    public void schoolAuthenticate(String userEmail, String fileUrl) {
-
     }
 }

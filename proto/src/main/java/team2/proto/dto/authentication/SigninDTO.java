@@ -1,4 +1,4 @@
-package team2.proto.dto;
+package team2.proto.dto.authentication;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SigninRequest {
+public class SigninDTO {
     private String email;
     private String password;
 }

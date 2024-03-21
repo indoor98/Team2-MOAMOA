@@ -1,13 +1,11 @@
 package team2.proto.service.authentication;
 
-import team2.proto.dto.SigninRequest;
-import team2.proto.dto.JwtAuthenticationResponse;
-import team2.proto.dto.UserSignUpRequest;
+import team2.proto.dto.authentication.SigninDTO;
+import team2.proto.dto.authentication.JwtAuthenticationResponse;
+import team2.proto.dto.authentication.UserSignUpDTO;
 
 public interface AuthenticationService {
 
-    Long signUp(UserSignUpRequest dto);
-    JwtAuthenticationResponse signIn(SigninRequest request);
-
-    void schoolAuthenticate(String userEmail, String fileUrl);
+    Long signUp(UserSignUpDTO dto);
+    JwtAuthenticationResponse signIn(SigninDTO request);
 }
