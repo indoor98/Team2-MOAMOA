@@ -43,9 +43,6 @@ public class PostServiceImpl implements PostService {
         return post.getId();
     }
     // 단일 게시글 조회
-
-
-    // 게시글 조회
     @Transactional(readOnly = true)
     @Override
     public PostResponseDTO getPostById(Long id) {
@@ -73,7 +70,7 @@ public class PostServiceImpl implements PostService {
         postRepository.save(post);
     }
 
-    // 전체 게시글 조회 - paging 하기 전
+    // 전체 게시글 조회
     @Transactional(readOnly = true)
     @Override
     public List<PostWriteDTO> getAllPosts(Integer pageno) {
