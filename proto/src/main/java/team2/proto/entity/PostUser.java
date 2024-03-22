@@ -8,7 +8,6 @@ import lombok.*;
  */
 @Table(name = "post_user")
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Data
 @Entity
 public class PostUser {
@@ -25,4 +24,12 @@ public class PostUser {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false) // 중복 매핑 수정
     private User user;
+
+    @Builder
+    public PostUser(PostUserPK id, boolean isHost, Post post, User user) {
+        this.id = id ;
+        this.isHost = isHost ;
+        this.post = post ;
+        this.user = user ;
+    }
 }

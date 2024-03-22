@@ -70,6 +70,14 @@ public class PostController {
         List<PostWriteDTO> posts = postService.getAllPosts(pageno);
         return new ResponseEntity<List<PostWriteDTO>>(posts, HttpStatus.OK);
     }
+
+    // 게시글 삭제 - pathvariable
+    @DeleteMapping(value = "/{postno}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public void delete(@PathVariable("postno") Long id){
+        postService.delete(id);
+    }
+
+    // 공동구매 참여
     
     
 

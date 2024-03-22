@@ -29,6 +29,10 @@ public class Post {
     private LocalDateTime createDate;
     @Column(name="updated_date")
     private LocalDateTime updateDate;
+
+    @Column(name = "delete_yn")
+    private Boolean deleteYn ;
+
     @Column
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime deadline;
