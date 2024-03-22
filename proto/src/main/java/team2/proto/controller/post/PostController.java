@@ -67,7 +67,9 @@ public class PostController {
         )
     // 페이징 zero based Index로 처리, 1페이지 = 0
     public ResponseEntity<List<PostWriteDTO>> getAllPosts(@PathVariable("pageno") @Min(0) Integer pageno) throws Exception{
+        System.out.println("debug msg >>>>>");
         List<PostWriteDTO> posts = postService.getAllPosts(pageno);
+        System.out.println("debug >>> posts" + posts);
         return new ResponseEntity<List<PostWriteDTO>>(posts, HttpStatus.OK);
     }
 

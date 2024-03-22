@@ -30,8 +30,8 @@ public class Post {
     @Column(name="updated_date")
     private LocalDateTime updateDate;
 
-    @Column(name = "delete_yn")
-    private Boolean deleteYn ;
+    @Column(name = "delete_yn", columnDefinition = "BIT DEFAULT 0")
+    private Boolean deleteYn;
 
     @Column
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -48,7 +48,7 @@ public class Post {
 
 
     @Builder
-    public Post(String title, Long price, Integer headCount, LocalDateTime deadline, String receivePlace, String productUrl, String writer) {
+    public Post(String title, Long price, Integer headCount, LocalDateTime deadline, String receivePlace, String productUrl, String writer,Boolean deleteYn) {
         this.title = title;
         this.price = price;
         this.headCount = headCount;
@@ -56,5 +56,6 @@ public class Post {
         this.receivePlace = receivePlace;
         this.productUrl = productUrl;
         this.writer = writer ;
+        this.deleteYn = deleteYn ;
     }
 }
