@@ -19,7 +19,9 @@ public class AdminAuthServiceImpl implements AdminAuthService {
     @Transactional
     @Override
     public List<AdminPage> getAllAuthList() {
+        System.out.println("getAllAuthList");
         List<AdminPage> list = adminAuthRepository.findAll();
+        System.out.println(list.get(0).toString());
         return list;
     }
 }
