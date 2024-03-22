@@ -16,4 +16,5 @@ public class PostUpdateDTO {
     private LocalDateTime deadLine;
     private String receivePlace;
     private String productUrl;
+    private Boolean deleteYn ;
 }
