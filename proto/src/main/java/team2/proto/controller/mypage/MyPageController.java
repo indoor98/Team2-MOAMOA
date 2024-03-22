@@ -1,4 +1,4 @@
-package team2.proto.controller;
+package team2.proto.controller.mypage;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -9,8 +9,6 @@ import team2.proto.dto.mypage.MyPageCommentResponseDTO;
 import team2.proto.dto.mypage.MyPagePostResponseDTO;
 import team2.proto.dto.mypage.MyPageUpdateRequestDTO;
 import team2.proto.dto.mypage.MyPageUserResponseDTO;
-import team2.proto.entity.Comment;
-import team2.proto.entity.authentication.User;
 import team2.proto.service.authentication.JwtService;
 import team2.proto.service.mypage.MyPageService;
 

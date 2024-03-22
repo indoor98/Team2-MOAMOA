@@ -3,12 +3,8 @@ package team2.proto.entity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.cglib.core.Local;
-import team2.proto.entity.authentication.User;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Table(name="admin_page")

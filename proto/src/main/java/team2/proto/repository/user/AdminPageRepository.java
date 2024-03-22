@@ -1,4 +1,4 @@
-package team2.proto.repository;
+package team2.proto.repository.user;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;

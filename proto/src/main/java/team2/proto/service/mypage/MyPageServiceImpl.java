@@ -1,7 +1,6 @@
 package team2.proto.service.mypage;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team2.proto.dto.mypage.MyPageCommentResponseDTO;
 import team2.proto.dto.mypage.MyPagePostResponseDTO;
@@ -9,8 +8,8 @@ import team2.proto.dto.mypage.MyPageUserResponseDTO;
 import team2.proto.entity.Comment;
 import team2.proto.entity.Post;
 import team2.proto.entity.PostUser;
-import team2.proto.entity.authentication.User;
-import team2.proto.repository.UserRepository;
+import team2.proto.entity.User;
+import team2.proto.repository.user.UserRepository;
 import team2.proto.repository.mypage.MyPageUserCommentRepository;
 import team2.proto.repository.mypage.MypageJoinPostRepository;
 import team2.proto.repository.mypage.MypagePostRepository;

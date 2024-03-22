@@ -1,4 +1,4 @@
-package team2.proto.entity.authentication;
+package team2.proto.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -43,7 +43,9 @@ public class User implements UserDetails {
     @ColumnDefault("false")
     private boolean authentication;
 
-
+    @Column(name="admin_yn")
+    @ColumnDefault("false")
+    private boolean adminYn;
 
     @Builder
     public User(String nickname, String email, String password, String address, String school, String phone, String auth) { // auth?

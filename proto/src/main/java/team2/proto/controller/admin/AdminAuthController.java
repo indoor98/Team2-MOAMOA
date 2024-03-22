@@ -1,4 +1,4 @@
-package team2.proto.controller.adminauth;
+package team2.proto.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import team2.proto.entity.AdminPage;
-import team2.proto.service.adminauth.AdminAuthService;
+import team2.proto.service.admin.AdminAuthService;
 
 import java.util.List;
 

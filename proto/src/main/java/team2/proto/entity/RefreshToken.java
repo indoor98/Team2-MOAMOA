@@ -1,7 +1,8 @@
-package team2.proto.entity.authentication;
+package team2.proto.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import team2.proto.entity.User;
 
 import java.time.Instant;
 

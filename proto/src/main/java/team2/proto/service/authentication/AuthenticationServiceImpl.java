@@ -7,10 +7,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import team2.proto.dto.authentication.SigninDTO;
 import team2.proto.dto.authentication.JwtAuthenticationResponse;
-import team2.proto.entity.authentication.RefreshToken;
-import team2.proto.entity.authentication.User;
+import team2.proto.entity.RefreshToken;
+import team2.proto.entity.User;
 import team2.proto.dto.authentication.UserSignUpDTO;
-import team2.proto.repository.UserRepository;
+import team2.proto.repository.user.UserRepository;
 
 @Service
 @RequiredArgsConstructor

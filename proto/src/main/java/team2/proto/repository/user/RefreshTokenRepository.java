@@ -1,9 +1,9 @@
-package team2.proto.repository;
+package team2.proto.repository.user;
 
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import team2.proto.entity.authentication.RefreshToken;
-import team2.proto.entity.authentication.User;
+import team2.proto.entity.RefreshToken;
+import team2.proto.entity.User;
 
 import java.util.Optional;
 

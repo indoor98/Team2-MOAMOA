@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import team2.proto.entity.Post;
-import team2.proto.entity.authentication.User;
+import team2.proto.entity.User;
 
 @NoArgsConstructor
 @AllArgsConstructor

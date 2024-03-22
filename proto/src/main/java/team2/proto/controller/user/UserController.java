@@ -1,4 +1,4 @@
-package team2.proto.controller;
+package team2.proto.controller.user;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -6,9 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import team2.proto.entity.AdminPage;
-import team2.proto.entity.authentication.User;
-import team2.proto.repository.AdminPageRepository;
-import team2.proto.service.UserService;
+import team2.proto.entity.User;
+import team2.proto.repository.user.AdminPageRepository;
 import team2.proto.service.authentication.JwtService;
 import team2.proto.service.authentication.UserDetailService;
 import team2.proto.service.storage.StorageService;

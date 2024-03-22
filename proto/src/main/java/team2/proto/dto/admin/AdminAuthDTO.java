@@ -1,4 +1,4 @@
-package team2.proto.dto.adminauth;
+package team2.proto.dto.admin;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -9,11 +9,12 @@ import java.time.LocalDateTime;
 @Getter
 @Service
 @ToString
-public class AdminAuthRequestDTO {
+public class AdminAuthDTO {
 
     private Integer id;
     private Integer userId;
     private boolean authYn;
     private String photoUrl;
     private LocalDateTime requestDate;
+    private LocalDateTime authDate;
 }
