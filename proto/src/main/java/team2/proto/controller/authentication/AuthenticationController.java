@@ -1,4 +1,4 @@
-package team2.proto.controller;
+package team2.proto.controller.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -8,10 +8,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 import team2.proto.dto.authentication.SigninDTO;
 import team2.proto.dto.authentication.JwtAuthenticationResponse;
-import team2.proto.entity.authentication.RefreshToken;
+import team2.proto.entity.RefreshToken;
 import team2.proto.dto.authentication.RefreshTokenRequestDTO;
 import team2.proto.dto.authentication.UserSignUpDTO;
-import team2.proto.entity.authentication.User;
+import team2.proto.entity.User;
 import team2.proto.service.authentication.AuthenticationService;
 import team2.proto.service.authentication.JwtService;
 import team2.proto.service.authentication.RefreshTokenService;

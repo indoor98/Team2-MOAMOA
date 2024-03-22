@@ -1,7 +1,5 @@
-package team2.proto.service.adminauth;
+package team2.proto.service.admin;
 
-import team2.proto.dto.adminauth.AdminAuthDTO;
-import team2.proto.dto.adminauth.AdminAuthRequestDTO;
 import team2.proto.entity.AdminPage;
 
 import java.util.List;

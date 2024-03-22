@@ -1,11 +1,10 @@
-package team2.proto.service.adminauth;
+package team2.proto.service.admin;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import team2.proto.dto.adminauth.AdminAuthRequestDTO;
 import team2.proto.entity.AdminPage;
-import team2.proto.repository.adminauth.AdminAuthRepository;
+import team2.proto.repository.admin.AdminAuthRepository;
 
 import java.util.List;
 

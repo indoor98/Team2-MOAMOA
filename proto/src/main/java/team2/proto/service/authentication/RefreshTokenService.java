@@ -2,9 +2,9 @@ package team2.proto.service.authentication;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import team2.proto.entity.authentication.RefreshToken;
-import team2.proto.repository.RefreshTokenRepository;
-import team2.proto.repository.UserRepository;
+import team2.proto.entity.RefreshToken;
+import team2.proto.repository.user.RefreshTokenRepository;
+import team2.proto.repository.user.UserRepository;
 
 import java.time.Instant;
 import java.util.UUID;

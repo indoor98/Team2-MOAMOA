@@ -2,17 +2,14 @@ package team2.proto.service.comment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import team2.proto.dto.comment.CommentRequestDTO;
 import team2.proto.dto.comment.CommentResponseDTO;
-import team2.proto.dto.post.PostResponseDTO;
 import team2.proto.entity.Comment;
-import team2.proto.entity.Post;
-import team2.proto.repository.UserRepository;
+import team2.proto.repository.user.UserRepository;
 import team2.proto.repository.comment.CommentRepository;
 import team2.proto.repository.post.PostRepository;
 

@@ -1,4 +1,4 @@
-package team2.proto.controller;
+package team2.proto.controller.comment;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

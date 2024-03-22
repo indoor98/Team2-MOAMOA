@@ -1,4 +1,4 @@
-package team2.proto.controller;
+package team2.proto.controller.post;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.Min;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import team2.proto.dto.post.PostResponseDTO;
 import team2.proto.dto.post.PostUpdateDTO;
 import team2.proto.dto.post.PostWriteDTO;
-import team2.proto.service.UserService;
+import team2.proto.service.authentication.UserService;
 import team2.proto.service.authentication.JwtService;
 import team2.proto.service.post.PostService;
 

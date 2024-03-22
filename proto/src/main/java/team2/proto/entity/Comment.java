@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import team2.proto.entity.authentication.User;
 
 import java.time.LocalDateTime;
 

@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Fetch;
-import team2.proto.entity.authentication.User;
 
 import java.io.Serializable;
 

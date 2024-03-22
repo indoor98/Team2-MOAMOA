@@ -10,7 +10,7 @@ import team2.proto.dto.post.PostUpdateDTO;
 import team2.proto.dto.post.PostWriteDTO;
 import team2.proto.entity.Post;
 import team2.proto.repository.post.PostRepository;
-import team2.proto.service.UserService;
+import team2.proto.service.authentication.UserService;
 
 import java.util.List;
 import java.util.stream.Collectors;

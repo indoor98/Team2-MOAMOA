@@ -1,11 +1,9 @@
-package team2.proto.service;
+package team2.proto.service.authentication;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import team2.proto.entity.authentication.User;
-import team2.proto.repository.UserRepository;
-
-import java.util.Optional;
+import team2.proto.entity.User;
+import team2.proto.repository.user.UserRepository;
 
 @Service
 @RequiredArgsConstructor

@@ -2,11 +2,6 @@ package team2.proto.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.domain.Persistable;
-import team2.proto.entity.authentication.User;
-
-import java.time.LocalDateTime;
 
 /**
  * post - user 간 다대다 매핑을 위한 entity
