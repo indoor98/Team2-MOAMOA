@@ -4,17 +4,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import team2.proto.entity.AdminPage;
 import team2.proto.entity.User;
 import team2.proto.service.admin.AdminAuthService;
 import team2.proto.service.authentication.JwtService;
 import team2.proto.service.authentication.UserService;
-
 import java.util.List;
 
 @RestController
@@ -37,8 +32,8 @@ public class AdminAuthController {
         String userEmail = jwtService.extractUserName(token);
         User user = userService.findByEmail(userEmail);
 
-        if( user.isAdminYn() == false ) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if(!user.isAdminYn()) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
         List<AdminPage> list = adminAuthService.getAllAuthList();
@@ -47,8 +42,10 @@ public class AdminAuthController {
     }
 
     @PutMapping("/authlist/{authNo}")
-    public ResponseEntity<Void> auth() {
-
-        return null;
+    public ResponseEntity<Void> updateAuth(@PathVariable Long authNo, boolean approve) {
+        System.out.println("AdminAuthController.updateAuth");
+        Integer updatedAuth = adminAuthService.updateAuth(authNo, approve);
+        System.out.println(updatedAuth + " 인증 완료");
+        return ResponseEntity.ok().build();
     }
 }

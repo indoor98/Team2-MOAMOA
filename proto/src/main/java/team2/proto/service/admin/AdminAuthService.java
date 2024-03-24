@@ -8,5 +8,5 @@ public interface AdminAuthService {
 
     public List<AdminPage> getAllAuthList();
 
-
+    public Integer updateAuth(Long authNo, boolean approve);
 }
