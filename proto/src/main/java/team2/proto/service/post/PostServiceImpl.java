@@ -1,6 +1,8 @@
 package team2.proto.service.post;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +19,7 @@ import team2.proto.entity.PostUserPK;
 import team2.proto.entity.User;
 import team2.proto.repository.post.PostRepository;
 import team2.proto.repository.post.PostUserRepository;
+import team2.proto.service.authentication.JwtService;
 import team2.proto.service.authentication.UserService;
 
 import java.util.List;
@@ -29,6 +32,7 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final PostUserRepository postUserRepository;
     private final UserService userService;
+    private final JwtService jwtService ;
 
     // 게시글 작성
     @Transactional
@@ -126,4 +130,49 @@ public class PostServiceImpl implements PostService {
         post.setDeleteYn(true);
         postRepository.save(post);
     }
+
+    // 공동구매 참여
+    @Transactional
+    @Override
+    public void join(Long postId, HttpServletRequest request) {
+        // 게시글 조회
+        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("해당하는 게시글이 존재하지 않습니다."));
+
+        // 게시글의 headCount 조회
+        int headCount = post.getHeadCount();
+
+        // 해당 게시글에 참여한 유저들의 수 조회
+        long joinedUsersCount = postUserRepository.countByPostId(postId);
+
+        // 현재 사용자의 정보 가져오기
+        String currentUserEmail = jwtService.extractUserName(jwtService.extractTokenFromRequest(request));
+        User currentUser = userService.findByEmail(currentUserEmail);
+
+        // 현재 사용자가 해당 게시글에 이미 참여하고 있는지 확인
+        boolean alreadyJoined = postUserRepository.existsByPostIdAndUserId(postId, currentUser.getId());
+        if (alreadyJoined) {
+            throw new IllegalArgumentException("이미 해당 공동구매에 참여하였습니다.");
+        }
+
+        // PostUserDTO에서 정보 가져와서 PostUser 엔티티 생성
+        boolean isHost = false; // 공동구매의 주최자가 아닌 경우
+        PostUserDTO postUserDTO = new PostUserDTO(isHost, post, currentUser);
+        PostUser postUser = convertToEntity(postUserDTO);
+
+        // PostUser 엔티티 저장
+        postUserRepository.save(postUser);
+    }
+
+
+    // 공동구매 참여 취소
+    @Transactional
+    @Override
+    public void cancel(Long postId) {
+        PostUser postUser = postUserRepository.findByPostIdAndIsHost(postId, false);
+        if (postUser != null) {
+            postUserRepository.deleteByPostIdAndIsHost(postId, false);
+        }
+    }
+
+
 }
