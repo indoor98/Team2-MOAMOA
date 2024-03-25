@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import team2.proto.dto.post.PostListResponseDTO;
 import team2.proto.dto.post.PostResponseDTO;
 import team2.proto.dto.post.PostUpdateDTO;
 import team2.proto.dto.post.PostWriteDTO;
@@ -33,6 +34,7 @@ public class PostController {
         String userEmail = jwtService.extractUserName(token);
 
         // 작성자 정보 설정 후 게시글 생성
+        System.out.println("DEBUG >>>> PostController::write");
         postService.createPost(params, userEmail);
         System.out.println();
         return new ResponseEntity<Void>(HttpStatus.OK);
@@ -62,11 +64,11 @@ public class PostController {
             produces = MediaType.APPLICATION_JSON_VALUE
         )
     // 페이징 zero based Index로 처리, 1페이지 = 0
-    public ResponseEntity<List<PostWriteDTO>> getAllPosts(@PathVariable("pageno") @Min(0) Integer pageno) throws Exception{
+    public ResponseEntity<List<PostListResponseDTO>> getAllPosts(@PathVariable("pageno") @Min(0) Integer pageno) throws Exception{
         System.out.println("debug msg >>>>>");
-        List<PostWriteDTO> posts = postService.getAllPosts(pageno);
+        List<PostListResponseDTO> posts = postService.getAllPosts(pageno);
         System.out.println("debug >>> posts" + posts);
-        return new ResponseEntity<List<PostWriteDTO>>(posts, HttpStatus.OK);
+        return new ResponseEntity<List<PostListResponseDTO>>(posts, HttpStatus.OK);
     }
 
     // 게시글 삭제 - pathvariable

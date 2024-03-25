@@ -6,6 +6,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(name="post")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -43,8 +45,12 @@ public class Post {
     @ManyToOne
     @JoinColumn(name="category_id", referencedColumnName = "id")
     private Category category;
+
     @Column(name = "writer")
     private String writer;
+
+    @OneToMany(mappedBy ="post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Hashtag> hashtagList = new ArrayList<Hashtag>();
 
 
     @Builder
@@ -57,5 +63,12 @@ public class Post {
         this.productUrl = productUrl;
         this.writer = writer ;
         this.deleteYn = deleteYn ;
+    }
+
+    public void resetHashtag() {
+        this.hashtagList.clear();
+    }
+    public void addHashtag(Hashtag hashtag) {
+        this.hashtagList.add(hashtag);
     }
 }

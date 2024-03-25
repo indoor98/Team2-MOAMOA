@@ -2,7 +2,7 @@ package team2.proto.dto.post;
 
 import lombok.*;
 import team2.proto.dto.hashtag.HashtagRequestDTO;
-import team2.proto.entity.Post;
+import team2.proto.entity.Hashtag;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class PostWriteDTO {
+public class PostListResponseDTO {
 
     private String title;
     private Long price;
@@ -19,6 +19,5 @@ public class PostWriteDTO {
     private String receivePlace;
     private String productUrl;
     private List<HashtagRequestDTO> hastagList;
-
-
 }
+
