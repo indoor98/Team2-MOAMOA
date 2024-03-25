@@ -41,9 +41,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         // 인증 실패시 인증 에러 발생
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        
+
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
+
+        if (user.isDeleteYn() == true) {
+            return null;
+        }
 
         String jwt = jwtService.generateToken(user);
 

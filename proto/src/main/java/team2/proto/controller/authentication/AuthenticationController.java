@@ -33,11 +33,26 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<JwtAuthenticationResponse> signin(@RequestBody SigninDTO request) {
+    public ResponseEntity<?> signin(@RequestBody SigninDTO request) {
         System.out.println("DEBUG >>>> AuthenticationController::signin");
-        return ResponseEntity.ok(authenticationService.signIn(request));
+        JwtAuthenticationResponse response = authenticationService.signIn(request);
+        if (response == null) {
+            System.out.println("없는 계정입니다.");
+            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+        }
+        return ResponseEntity.ok(response);
     }
 
+
+
+    @GetMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletRequest request) {
+        String token = jwtService.extractTokenFromRequest(request);
+        String userEmail = jwtService.extractUserName(token);
+        User user = (User)userDetailService.loadUserByUsername(userEmail);
+        refreshTokenService.logoutRefreshToken(user.getId());
+        return ResponseEntity.ok("Logged out successfully!");
+    }
     @PostMapping("/refreshtoken")
     public JwtAuthenticationResponse refreshToken(@RequestBody RefreshTokenRequestDTO refreshTokenRequestDTO) {
         return refreshTokenService.findByRefreshToken(refreshTokenRequestDTO.getRefreshToken())
@@ -49,14 +64,5 @@ public class AuthenticationController {
                             .accessToken(accessToken)
                             .refreshToken(refreshTokenRequestDTO.getRefreshToken()).build();
                 }).orElseThrow(() -> new RuntimeException("Refresh Token is not in DB..!!"));
-    }
-
-    @GetMapping("/logout")
-    public ResponseEntity<String> logout(HttpServletRequest request) {
-        String token = jwtService.extractTokenFromRequest(request);
-        String userEmail = jwtService.extractUserName(token);
-        User user = (User)userDetailService.loadUserByUsername(userEmail);
-        refreshTokenService.logoutRefreshToken(user.getId());
-        return ResponseEntity.ok("Logged out successfully!");
     }
 }

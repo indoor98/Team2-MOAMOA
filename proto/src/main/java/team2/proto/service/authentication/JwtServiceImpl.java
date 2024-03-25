@@ -13,20 +13,24 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import team2.proto.entity.User;
+import team2.proto.repository.user.UserRepository;
 
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
 @RequiredArgsConstructor
 @Service
 public class JwtServiceImpl implements JwtService {
+
+    private final UserRepository userRepository;
+
     @Value("${jwt.secret-key}")
     private String jwtSigningKey;
-
-    private final JWTBlacklistService jwtBlacklistService;
 
     @Override
     public String extractUserName(String token) {
@@ -38,7 +42,7 @@ public class JwtServiceImpl implements JwtService {
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String userName = extractUserName(token);
         System.out.println("Debug >>>> JwtService isTokenValid");
-        return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token) && !jwtBlacklistService.isBlacklisted(token);
+        return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolvers) {
@@ -88,4 +92,20 @@ public class JwtServiceImpl implements JwtService {
         // If the Authorization header is not valid, return null
         return null;
     }
+
+    @Override
+    public User extractUserFromRequest(HttpServletRequest request) {
+        System.out.println("DEBUG >>>> extractUserFromRequest");
+        String token = extractTokenFromRequest(request);
+        String userEmail = extractUserName(token);
+        Optional<User> user = userRepository.findByEmail(userEmail);
+
+        if (user.isPresent()) {
+            return user.get();
+        } else {
+            System.out.println("DEBUG >>>> User 객체가 없습니다.");
+            return null;
+        }
+    }
+
 }
