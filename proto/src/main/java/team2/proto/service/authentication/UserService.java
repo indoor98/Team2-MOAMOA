@@ -5,4 +5,6 @@ import team2.proto.entity.User;
 public interface UserService {
     User findById(Long userId);
     User findByEmail(String email);
+
+    void deleteUser(User user);
 }
