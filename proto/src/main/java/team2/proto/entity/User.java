@@ -47,6 +47,10 @@ public class User implements UserDetails {
     @ColumnDefault("false")
     private boolean adminYn;
 
+    @Column(name="delete_yn")
+    @ColumnDefault("false")
+    private boolean deleteYn;
+
     @Builder
     public User(String nickname, String email, String password, String address, String school, String phone, String auth) { // auth?
         this.nickname = nickname;

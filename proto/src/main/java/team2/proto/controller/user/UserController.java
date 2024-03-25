@@ -41,4 +41,11 @@ public class UserController {
         adminPageRepository.save(adminPage);
         return null;
     }
+
+    @PostMapping("/signout")
+    public ResponseEntity<Void> SignOut(@RequestBody String password, HttpServletRequest request) {
+        return null;
+    }
+
+
 }
