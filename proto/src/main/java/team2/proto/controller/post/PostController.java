@@ -74,7 +74,7 @@ public class PostController {
     public ResponseEntity<List<PostListResponseDTO>> getPostsByHashtag(String hashtag) {
         System.out.println("DEBUG PostController::GetPostsByHashtag");
         List<PostListResponseDTO> posts = new ArrayList<PostListResponseDTO>();
-
+        return null;
     }
 
     // 게시글 삭제 - pathvariable
