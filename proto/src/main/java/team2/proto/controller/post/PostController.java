@@ -15,6 +15,7 @@ import team2.proto.service.authentication.UserService;
 import team2.proto.service.authentication.JwtService;
 import team2.proto.service.post.PostService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -65,10 +66,15 @@ public class PostController {
         )
     // 페이징 zero based Index로 처리, 1페이지 = 0
     public ResponseEntity<List<PostListResponseDTO>> getAllPosts(@PathVariable("pageno") @Min(0) Integer pageno) throws Exception{
-        System.out.println("debug msg >>>>>");
         List<PostListResponseDTO> posts = postService.getAllPosts(pageno);
-        System.out.println("debug >>> posts" + posts);
         return new ResponseEntity<List<PostListResponseDTO>>(posts, HttpStatus.OK);
+    }
+
+    // 단일 해쉬태그로 검색하기
+    public ResponseEntity<List<PostListResponseDTO>> getPostsByHashtag(String hashtag) {
+        System.out.println("DEBUG PostController::GetPostsByHashtag");
+        List<PostListResponseDTO> posts = new ArrayList<PostListResponseDTO>();
+
     }
 
     // 게시글 삭제 - pathvariable
