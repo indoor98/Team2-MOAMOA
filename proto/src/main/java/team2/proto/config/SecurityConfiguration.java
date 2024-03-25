@@ -14,7 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import team2.proto.config.jwt.JwtAuthenticationFilter;
+import team2.proto.config.filter.JwtAuthenticationFilter;
 import team2.proto.service.authentication.UserDetailService;
 
 

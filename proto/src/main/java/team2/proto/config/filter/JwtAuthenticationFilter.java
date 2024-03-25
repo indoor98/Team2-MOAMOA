@@ -1,4 +1,4 @@
-package team2.proto.config.jwt;
+package team2.proto.config.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
