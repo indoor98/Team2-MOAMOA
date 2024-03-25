@@ -33,9 +33,14 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<JwtAuthenticationResponse> signin(@RequestBody SigninDTO request) {
+    public ResponseEntity<?> signin(@RequestBody SigninDTO request) {
         System.out.println("DEBUG >>>> AuthenticationController::signin");
-        return ResponseEntity.ok(authenticationService.signIn(request));
+        JwtAuthenticationResponse response = authenticationService.signIn(request);
+        if (response == null) {
+            System.out.println("없는 계정입니다.");
+            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+        }
+        return ResponseEntity.ok(response);
     }
 
 
