@@ -2,6 +2,7 @@ package team2.proto.service.comment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class CommentServiceImpl implements CommentService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
-    
+
     // 게시판 번호(postId)에 해당하는 댓글들에 대한 정보 조회.
     // 댓글 조회
     @Override
@@ -32,15 +33,15 @@ public class CommentServiceImpl implements CommentService {
         // CommentResponseDTO : id, content, creaDate, updateDate, nickname, postId
         // Comment Entity :  id, content, creaDate, updateDate, post, user
 
-        
+
         for(Comment entity : commentEntityList){
             CommentResponseDTO commentDTO = new CommentResponseDTO(
-                entity.getId(),
-                entity.getContent(),
-                entity.getCreateDate(),
-                entity.getUpdateDate(),
-                entity.getUser().getNickname(),
-                entity.getPost().getId()
+                    entity.getId(),
+                    entity.getContent(),
+                    entity.getCreateDate(),
+                    entity.getUpdateDate(),
+                    entity.getUser().getNickname(),
+                    entity.getPost().getId()
             );
 
             commentDtoList.add(commentDTO);
@@ -56,19 +57,24 @@ public class CommentServiceImpl implements CommentService {
                 .post(postRepository.findById(postId).get())
                 .user(userRepository.findByEmail(email).get())
                 .build();
-        
+
         commentRepository.save(comment);
     }
 
     // 댓글 수정
     @Override
     public void updateComment(Long postId, Long commentId, CommentRequestDTO commentRequestDTO) {
-        
+        Optional<Comment> comment = commentRepository.findById(commentId);
+        comment.get().setContent(commentRequestDTO.getContent());
+
+        commentRepository.save(comment.get());
+
     }
 
     // 댓글 삭제
     @Override
-    public void deleteComment(Long commentId) {
+    public void deleteComment(Long postId, Long commentId) {
+        commentRepository.deleteByPostIdAndId(postId, commentId);
     }
-    
+
 }

@@ -6,7 +6,7 @@ import team2.proto.dto.comment.CommentRequestDTO;
 import team2.proto.dto.comment.CommentResponseDTO;
 
 public interface CommentService {
-    
+
     // 댓글 조회
     List<CommentResponseDTO> commentList(Long postId);
 
@@ -17,5 +17,5 @@ public interface CommentService {
     void updateComment(Long postId, Long commentId ,CommentRequestDTO commentRequestDTO);
 
     // 댓글 삭제
-    void deleteComment(Long commentId);
+    void deleteComment(Long postId, Long commentId);
 }
