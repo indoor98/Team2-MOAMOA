@@ -32,4 +32,5 @@ public class PostUser {
         this.post = post ;
         this.user = user ;
     }
+
 }
