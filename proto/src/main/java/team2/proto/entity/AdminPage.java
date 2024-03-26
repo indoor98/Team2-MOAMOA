@@ -1,14 +1,15 @@
 package team2.proto.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Table(name="admin_page")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
+@Getter
+@Setter
 @Entity
 public class AdminPage {
     @Id
