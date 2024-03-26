@@ -18,4 +18,8 @@ public interface PostService {
 
     void join(Long postId, HttpServletRequest request);
     void cancel(Long id);
+
+    List<PostListResponseDTO> getAllPostsByHashtag(Integer pageNo, String hashtag);
+
+
 }

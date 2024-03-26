@@ -206,5 +206,21 @@ public class PostServiceImpl implements PostService {
         }
     }
 
+    // 단일 Hashtag 사용하여 조회하는 함수
+    @Override
+    @Transactional(readOnly = true)
+    public List<PostListResponseDTO> getAllPostsByHashtag(Integer pageNo, String hashtag) {
+        System.out.println("DEBUG >>>> PostService::getAllPostsByHashtag");
+        Pageable pageable = PageRequest.of(pageNo, 10, Sort.by("id").descending());
+        Page<Post> posts = postRepository.findAllByHashtag(hashtag, pageable);
+
+        // null 값을 무시하고 false인 데이터만 필터링하여 반환
+        return posts.stream()
+                .filter(post -> post.getDeleteYn() != null && !post.getDeleteYn())
+                .map(post -> new PostListResponseDTO(post.getTitle(), post.getPrice(), post.getHeadCount(),
+                        post.getDeadline(), post.getReceivePlace(), post.getProductUrl(), convertHashtagEntityToDto(post.getHashtagList())))
+                .collect(Collectors.toList());
+    }
+
 
 }

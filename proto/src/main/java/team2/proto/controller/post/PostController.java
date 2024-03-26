@@ -71,10 +71,12 @@ public class PostController {
     }
 
     // 단일 해쉬태그로 검색하기
-    public ResponseEntity<List<PostListResponseDTO>> getPostsByHashtag(String hashtag) {
+    @GetMapping(value = "/listhashtag/{pageno}")
+    public ResponseEntity<List<PostListResponseDTO>> getPostsByHashtag(@PathVariable("pageno") @Min(0) Integer pageno, String hashtag) throws Exception {
         System.out.println("DEBUG PostController::GetPostsByHashtag");
         List<PostListResponseDTO> posts = new ArrayList<PostListResponseDTO>();
-        return null;
+        posts = postService.getAllPostsByHashtag(pageno, hashtag);
+        return new ResponseEntity<List<PostListResponseDTO>>(posts, HttpStatus.OK);
     }
 
     // 게시글 삭제 - pathvariable
