@@ -44,8 +44,8 @@ public class AdminAuthController {
     @PutMapping("/authlist/{authNo}")
     public ResponseEntity<Void> updateAuth(@PathVariable Long authNo, boolean approve) {
         System.out.println("AdminAuthController.updateAuth");
-        Integer updatedAuth = adminAuthService.updateAuth(authNo, approve);
-        System.out.println(updatedAuth + " 인증 완료");
+        adminAuthService.updateAuth(authNo, approve);
+        System.out.println(authNo + " 인증 완료");
         return ResponseEntity.ok().build();
     }
 }
