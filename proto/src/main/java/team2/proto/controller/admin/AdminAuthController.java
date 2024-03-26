@@ -56,7 +56,7 @@ public class AdminAuthController {
     public ResponseEntity<Void> updateAdmin(@PathVariable Long adminNo, boolean adminApprove) {
         System.out.println("AdminAuthController.updateAdmin");
         adminAuthService.updateAdmin(adminNo, adminApprove );
-        System.out.println("UserId " + adminNo + "번 관리장 승급 완료");
+        System.out.println("UserId " + adminNo + "번 관리자 승급 완료");
         return ResponseEntity.ok().build();
     }
 }
