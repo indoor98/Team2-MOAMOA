@@ -11,6 +11,14 @@
         <module name="proto.proto.main~2" />
         <module name="proto.proto.test~2" />
       </profile>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../encore/intellij_java_workspace/encore_spring_pjt_2/encore_spring_pjt/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.30/f195ee86e6c896ea47a1d39defbe20eb59cd149d/lombok-1.18.30.jar" />
+        </processorPath>
+        <module name="team2.proto.main" />
+        <module name="team2.proto.test" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="proto.proto.main" target="17" />
