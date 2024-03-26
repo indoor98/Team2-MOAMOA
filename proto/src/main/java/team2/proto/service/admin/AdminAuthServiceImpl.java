@@ -54,5 +54,21 @@ public class AdminAuthServiceImpl implements AdminAuthService {
         return null;
     }
 
+    @Transactional
+    @Override
+    public Integer updateAdmin(Long adminNo, boolean adminApprove) {
+        Optional<AdminPage> adminOptional = adminAuthRepository.findById(adminNo);
+        if (adminOptional.isPresent()) {
+            AdminPage adminPage = adminOptional.get();
+
+            if (adminApprove) {
+                User user = adminPage.getUser();
+                user.setAdminYn(true);
+                userRepository.save(user);
+            }
+        }
+        return null;
+    }
+
 
 }
