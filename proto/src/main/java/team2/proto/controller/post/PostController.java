@@ -32,11 +32,7 @@ public class PostController {
         String token = jwtService.extractTokenFromRequest(request);
         String userEmail = jwtService.extractUserName(token);
 
-        if(userEmail == null){
-            throw new IllegalArgumentException("로그인을 먼저 해야합니다.");
-        }
         // 작성자 정보 설정 후 게시글 생성
-
         postService.createPost(params, userEmail);
         System.out.println();
         return new ResponseEntity<Void>(HttpStatus.OK);
@@ -80,9 +76,16 @@ public class PostController {
     }
 
     // 공동구매 참여
-    
-    
+    @PostMapping("/join/{postno}")
+    public ResponseEntity<Void> join(@PathVariable("postno") Long postId, HttpServletRequest request) {
+        postService.join(postId, request);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
-
-
+    // 공동구매 참여 취소
+    @PutMapping("/cancel/{postno}")
+    public ResponseEntity<String> cancelPostUser(@PathVariable("postno") Long postId) {
+        postService.cancel(postId);
+        return new ResponseEntity<>("PostUser 정보를 삭제했습니다.", HttpStatus.OK);
+    }
 }

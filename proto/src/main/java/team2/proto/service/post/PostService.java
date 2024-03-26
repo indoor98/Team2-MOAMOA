@@ -1,5 +1,6 @@
 package team2.proto.service.post;
 
+import jakarta.servlet.http.HttpServletRequest;
 import team2.proto.dto.post.PostResponseDTO;
 import team2.proto.dto.post.PostUpdateDTO;
 import team2.proto.dto.post.PostWriteDTO;
@@ -13,4 +14,7 @@ public interface PostService {
     void updatePost(Long id, PostUpdateDTO param);
     List<PostWriteDTO> getAllPosts(Integer pageno);
     void delete(Long id);
+
+    void join(Long postId, HttpServletRequest request);
+    void cancel(Long id);
 }

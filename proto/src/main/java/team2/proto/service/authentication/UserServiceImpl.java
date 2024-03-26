@@ -21,4 +21,10 @@ public class UserServiceImpl implements UserService{
         return userRepository.findByEmail(email)
                 .orElse(null); // Optional 객체에서 실제 User 객체를 추출하고, 만약 값이 없으면 null 반환
     }
+
+    @Override
+    public void deleteUser(User user) {
+        user.setDeleteYn(true);
+        userRepository.save(user);
+    }
 }
