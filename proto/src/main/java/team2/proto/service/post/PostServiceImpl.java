@@ -2,26 +2,22 @@ package team2.proto.service.post;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import team2.proto.dto.post.PostResponseDTO;
-import team2.proto.dto.post.PostUpdateDTO;
-import team2.proto.dto.post.PostUserDTO;
-import team2.proto.dto.post.PostWriteDTO;
-import team2.proto.entity.Post;
-import team2.proto.entity.PostUser;
-import team2.proto.entity.PostUserPK;
-import team2.proto.entity.User;
+import team2.proto.dto.hashtag.HashtagRequestDTO;
+import team2.proto.dto.post.*;
+import team2.proto.entity.*;
 import team2.proto.repository.post.PostRepository;
 import team2.proto.repository.post.PostUserRepository;
 import team2.proto.service.authentication.JwtService;
 import team2.proto.service.authentication.UserService;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,7 +37,7 @@ public class PostServiceImpl implements PostService {
         // 유저 이메일로부터 해당 유저의 ID를 가져옴
         String userNickname = userService.findByEmail(userEmail).getNickname();
         User user = userService.findByEmail(userEmail);
-
+        System.out.println("DEBUG >>>> PostService::createPost");
         // dto -> entity
         Post post = Post.builder()
                 .title(params.getTitle())
@@ -54,6 +50,12 @@ public class PostServiceImpl implements PostService {
                 .deleteYn(false) // 기본값을 false로 설정
                 .build();
 
+        // 해시태그 추가 하기
+        List<HashtagRequestDTO> hashtagList = params.getHastagList();
+        for(HashtagRequestDTO hashtagRequestDTO : hashtagList) {
+            Hashtag hashtag = Hashtag.createHashtag(hashtagRequestDTO.getHashtag(), post);
+            post.addHashtag(hashtag);
+           }
         postRepository.save(post);
 
         // PostUserDTO에서 정보 가져와서 PostUser 엔티티 생성
@@ -74,6 +76,14 @@ public class PostServiceImpl implements PostService {
                 .build();
     }
 
+    private List<HashtagRequestDTO> convertHashtagEntityToDto(List<Hashtag> hashtagList) {
+        List<HashtagRequestDTO> hashtagRequestDTOList = new ArrayList<HashtagRequestDTO>();
+        for(Hashtag hashtag : hashtagList) {
+            hashtagRequestDTOList.add(new HashtagRequestDTO(hashtag.getHashtag()));
+        }
+        return hashtagRequestDTOList;
+    }
+
     // 단일 게시글 조회
     @Override
     @Transactional(readOnly = true)
@@ -85,9 +95,20 @@ public class PostServiceImpl implements PostService {
             return null;
         }
         return new PostResponseDTO(post.getTitle(), post.getPrice(), post.getHeadCount(),
-                post.getDeadline(), post.getReceivePlace(), post.getProductUrl());
+                post.getDeadline(), post.getReceivePlace(), post.getProductUrl(), convertHashtagEntityToDto(post.getHashtagList()));
     }
 
+
+    public List<Hashtag> convertHashtagDtoToEntity(List<HashtagRequestDTO> hashtagRequestDTOList, Post post) {
+        List<Hashtag> hashtagList = new ArrayList<Hashtag>();
+        for (HashtagRequestDTO dto : hashtagRequestDTOList) {
+            hashtagList.add(Hashtag.builder()
+                    .hashtag(dto.getHashtag())
+                    .post(post)
+                    .build());
+        }
+        return hashtagList;
+    }
     // 게시글 수정
     @Override
     public void updatePost(Long id, PostUpdateDTO param) {
@@ -98,6 +119,17 @@ public class PostServiceImpl implements PostService {
         post.setDeadline(param.getDeadLine());
         post.setReceivePlace(param.getReceivePlace());
         post.setProductUrl(param.getProductUrl());
+        post.setUpdateDate(LocalDateTime.now());
+
+        post.resetHashtag();
+        for (HashtagRequestDTO dto : param.getHashtagList()) {
+            Hashtag hashtag = Hashtag.builder()
+                    .hashtag(dto.getHashtag())
+                    .post(post)
+                    .build();
+            post.addHashtag(hashtag);
+        }
+//        post.setHashtagList(convertHashtagDtoToEntity(param.getHashtagList(), post));
 
         postRepository.save(post);
     }
@@ -105,7 +137,7 @@ public class PostServiceImpl implements PostService {
     // 전체 게시글 조회
     @Override
     @Transactional(readOnly = true)
-    public List<PostWriteDTO> getAllPosts(Integer pageNo) {
+    public List<PostListResponseDTO> getAllPosts(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 10, Sort.by("id").descending());
         Page<Post> posts = postRepository.findAllByDeleteYnIsFalse(pageable);
         System.out.println("getallposts serviceimpl posts" + posts.getPageable());
@@ -113,8 +145,8 @@ public class PostServiceImpl implements PostService {
         // null 값을 무시하고 false인 데이터만 필터링하여 반환
         return posts.stream()
                 .filter(post -> post.getDeleteYn() != null && !post.getDeleteYn())
-                .map(post -> new PostWriteDTO(post.getTitle(), post.getPrice(), post.getHeadCount(),
-                        post.getDeadline(), post.getReceivePlace(), post.getProductUrl()))
+                .map(post -> new PostListResponseDTO(post.getTitle(), post.getPrice(), post.getHeadCount(),
+                        post.getDeadline(), post.getReceivePlace(), post.getProductUrl(), convertHashtagEntityToDto(post.getHashtagList())))
                 .collect(Collectors.toList());
     }
 
@@ -172,6 +204,22 @@ public class PostServiceImpl implements PostService {
         if (postUser != null) {
             postUserRepository.deleteByPostIdAndIsHost(postId, false);
         }
+    }
+
+    // 단일 Hashtag 사용하여 조회하는 함수
+    @Override
+    @Transactional(readOnly = true)
+    public List<PostListResponseDTO> getAllPostsByHashtag(Integer pageNo, String hashtag) {
+        System.out.println("DEBUG >>>> PostService::getAllPostsByHashtag");
+        Pageable pageable = PageRequest.of(pageNo, 10, Sort.by("id").descending());
+        Page<Post> posts = postRepository.findAllByHashtag(hashtag, pageable);
+
+        // null 값을 무시하고 false인 데이터만 필터링하여 반환
+        return posts.stream()
+                .filter(post -> post.getDeleteYn() != null && !post.getDeleteYn())
+                .map(post -> new PostListResponseDTO(post.getTitle(), post.getPrice(), post.getHeadCount(),
+                        post.getDeadline(), post.getReceivePlace(), post.getProductUrl(), convertHashtagEntityToDto(post.getHashtagList())))
+                .collect(Collectors.toList());
     }
 
 
