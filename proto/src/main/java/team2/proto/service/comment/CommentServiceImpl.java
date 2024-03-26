@@ -1,5 +1,6 @@
 package team2.proto.service.comment;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -66,6 +67,7 @@ public class CommentServiceImpl implements CommentService {
     public void updateComment(Long postId, Long commentId, CommentRequestDTO commentRequestDTO) {
         Optional<Comment> comment = commentRepository.findById(commentId);
         comment.get().setContent(commentRequestDTO.getContent());
+        comment.get().setUpdateDate(LocalDateTime.now());
 
         commentRepository.save(comment.get());
 
