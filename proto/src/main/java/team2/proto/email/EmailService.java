@@ -7,8 +7,5 @@ import java.io.UnsupportedEncodingException;
 
 public interface EmailService {
 
-    // 메일 내용 작성
-    public MimeMessage createMessage(String to) throws MessagingException, UnsupportedEncodingException;
-
-    public String postTitle();
+    public void sendMail(EmailMessageDTO emailMessageDTO);
 }
