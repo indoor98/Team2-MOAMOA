@@ -1,24 +1,21 @@
 package team2.proto.dto.admin;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @Service
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class AdminAuthDTO {
 
-    private Integer id;
-    private Integer userId;
-    private boolean authYn;
+    private Long id;
     private String photoUrl;
-    private LocalDateTime requestDate;
     private LocalDateTime authDate;
+    private Boolean authYn;
+    private String nickname;
+    private String school;
 }

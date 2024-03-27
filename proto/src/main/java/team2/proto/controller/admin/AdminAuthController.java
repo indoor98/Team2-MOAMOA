@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import team2.proto.dto.admin.AdminAuthDTO;
 import team2.proto.entity.AdminPage;
 import team2.proto.entity.User;
 import team2.proto.service.admin.AdminAuthService;
@@ -23,7 +24,7 @@ public class AdminAuthController {
 
     // 학교인증 목록 조회
     @GetMapping("/authlist")
-    public ResponseEntity<List<AdminPage>> getAllAuthList(HttpServletRequest request) {
+    public ResponseEntity<List<AdminAuthDTO>> getAllAuthList(HttpServletRequest request) {
         System.out.println("AdminAuthController.getAllAuthList");
         // 목표 : request로부터 유저 정보를 뽑는거
         // 순서 : 1. request에 담긴 토큰을 뽑는다.
@@ -37,9 +38,9 @@ public class AdminAuthController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        List<AdminPage> list = adminAuthService.getAllAuthList();
+        List<AdminAuthDTO> list = adminAuthService.getAllAuthList();
         System.out.println("debug controller adminauth: " + list.get(0).toString());
-        return new ResponseEntity<List<AdminPage>>(list, HttpStatus.OK);
+        return new ResponseEntity<List<AdminAuthDTO>>(list, HttpStatus.OK);
     }
 
     // 학교 인증
