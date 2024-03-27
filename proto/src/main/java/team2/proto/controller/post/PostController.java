@@ -2,6 +2,7 @@ package team2.proto.controller.post;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.Min;
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -72,7 +73,7 @@ public class PostController {
 
     // 단일 해쉬태그로 검색하기
     @GetMapping(value = "/listhashtag/{pageno}")
-    public ResponseEntity<List<PostListResponseDTO>> getPostsByHashtag(@PathVariable("pageno") @Min(0) Integer pageno, String hashtag) throws Exception {
+    public ResponseEntity<List<PostListResponseDTO>> getPostsByHashtag(@PathVariable("pageno") @Min(0) Integer pageno, @PathParam("hashtag") String hashtag) throws Exception {
         System.out.println("DEBUG PostController::GetPostsByHashtag");
         List<PostListResponseDTO> posts = new ArrayList<PostListResponseDTO>();
         posts = postService.getAllPostsByHashtag(pageno, hashtag);
