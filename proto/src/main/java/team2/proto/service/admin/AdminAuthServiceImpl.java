@@ -3,12 +3,14 @@ package team2.proto.service.admin;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import team2.proto.dto.admin.AdminAuthDTO;
 import team2.proto.entity.AdminPage;
 import team2.proto.entity.User;
 import team2.proto.repository.admin.AdminAuthRepository;
 import team2.proto.repository.user.UserRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,11 +25,27 @@ public class AdminAuthServiceImpl implements AdminAuthService {
 
     @Transactional
     @Override
-    public List<AdminPage> getAllAuthList() {
+    public List<AdminAuthDTO> getAllAuthList() {
         System.out.println("getAllAuthList");
         List<AdminPage> list = adminAuthRepository.findAll();
+
+        List<AdminAuthDTO> adminAuthDTOS = new ArrayList<>();
+
+        for (AdminPage adminPage : list) {
+            User user = adminPage.getUser();
+            AdminAuthDTO authDTO = new AdminAuthDTO();
+            authDTO.setId(adminPage.getId());
+            authDTO.setPhotoUrl(adminPage.getPhotoUrl());
+            authDTO.setAuthDate(adminPage.getAuthDate());
+            authDTO.setAuthYn(adminPage.getAuthYn());
+            authDTO.setNickname(user.getNickname());
+            authDTO.setSchool(user.getSchool());
+
+            adminAuthDTOS.add(authDTO);
+        }
+
         System.out.println(list.get(0).toString());
-        return list;
+        return adminAuthDTOS;
     }
 
     @Transactional

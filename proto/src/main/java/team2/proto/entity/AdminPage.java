@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Table(name="admin_page")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
+
 @Getter
 @Setter
 @Entity
