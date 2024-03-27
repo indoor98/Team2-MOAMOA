@@ -151,16 +151,24 @@ public class PostServiceImpl implements PostService {
     }
 
 
-    // 게시글 삭제
     @Transactional
     @Override
     public void delete(Long postId) {
-        // 게시글을 불러옴
+        // 게시글을 불러옵니다.
         Post post = postRepository.findById(postId).orElseThrow();
 
-        // 삭제 여부 플래그를 설정하고 엔티티를 저장
+        // 삭제 여부 플래그를 설정하고 엔티티를 저장합니다.
         post.setDeleteYn(true);
         postRepository.save(post);
+
+        // 게시글에 연관된 모든 PostUser를 삭제합니다.
+        postUserRepository.deleteByPost(post);
+
+        // PostUser 엔티티에 deleteYn 필드를 설정하여 삭제되었다는 것을 나타냅니다.
+        List<PostUser> postUsers = postUserRepository.findByPost(post);
+        for (PostUser postUser : postUsers) {
+            postUser.setDeleteYn(true);
+        }
     }
 
     // 공동구매 참여
