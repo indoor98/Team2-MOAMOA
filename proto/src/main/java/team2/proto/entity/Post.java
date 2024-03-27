@@ -42,9 +42,6 @@ public class Post {
     private String receivePlace;
     @Column
     private String productUrl;
-    @ManyToOne
-    @JoinColumn(name="category_id", referencedColumnName = "id")
-    private Category category;
 
     @Column(name = "writer")
     private String writer;
