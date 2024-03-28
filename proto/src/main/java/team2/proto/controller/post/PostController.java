@@ -12,6 +12,7 @@ import team2.proto.dto.post.PostListResponseDTO;
 import team2.proto.dto.post.PostResponseDTO;
 import team2.proto.dto.post.PostUpdateDTO;
 import team2.proto.dto.post.PostWriteDTO;
+import team2.proto.entity.User;
 import team2.proto.service.authentication.UserService;
 import team2.proto.service.authentication.JwtService;
 import team2.proto.service.post.PostService;
@@ -82,8 +83,9 @@ public class PostController {
 
     // 게시글 삭제 - pathvariable
     @DeleteMapping(value = "/{postno}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public void delete(@PathVariable("postno") Long id){
-        postService.delete(id);
+    public void delete(@PathVariable("postno") Long id, HttpServletRequest request){
+        User user = jwtService.extractUserFromRequest(request);
+        postService.delete(id, user);
     }
 
     // 공동구매 참여

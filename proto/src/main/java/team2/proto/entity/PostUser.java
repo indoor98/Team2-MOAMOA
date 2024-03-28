@@ -27,6 +27,9 @@ public class PostUser {
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false) // 중복 매핑 수정
     private User user;
 
+    @Column(name = "delete_yn", columnDefinition = "BIT DEFAULT 0")
+    private Boolean deleteYn;
+
     @Builder
     public PostUser(PostUserPK id, boolean isHost, /*boolean emailSent,*/ Post post, User user) {
         this.id = id ;
