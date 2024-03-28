@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Data
 @Entity
+@ToString(exclude = "hashtagList")
 public class Post {
 
     @Id

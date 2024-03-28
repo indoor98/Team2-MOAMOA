@@ -1,15 +1,13 @@
 package team2.proto.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Table(name="hashtag")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Data
 @Entity
+@ToString(exclude = "post")
 public class Hashtag {
 
     @Id
