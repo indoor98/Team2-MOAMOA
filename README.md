@@ -45,12 +45,32 @@
 
 ----------
 
-## 기능 명세
-
 **개발 기간**
 2024.03.04 ~ 2024.03.28
 
+## 설계
+
+### DDD
+<div align="center">
+  <img src = "ForReadMe/DDD.png" />
+</div>
+
+
 ---
+
+### DB 모델링
+
+**개념 모델링**
+<img width="1470" alt="ER" src = "ForReadMe/er model.png"/>
+
+**논리 모델링**
+<div align="center">
+  <img src = "ForReadMe/modeling.png" />
+</div>
+
+---
+
+## 기능 명세
 
 ### WBS
 ![image (1)](https://github.com/indoor98/proto/assets/92570309/dd001bb1-1046-4041-86ad-aa444fb4a575)
@@ -67,25 +87,6 @@
 
 ----------
 
-## 설계
-
-### DDD
-
-<img width="1470" alt="DDD" src = "https://github.com/indoor98/proto/blob/main/ForReadMe/DDD.png">
-
----
-
-### DB 모델링
-
-**개념 모델링**
-<img width="1470" alt="ER" src = "https://github.com/indoor98/proto/blob/main/ForReadMe/er%20model.png">
-
-**논리 모델링**
-<img width="1470" alt="ERD" src = 
-"https://github.com/indoor98/proto/blob/main/ForReadMe/modeling.png">
-
-----------
-
-## 테스트 케이스 및 결과
+## 테스트 케이스 및 결과 보고서
 
 - <https://docs.google.com/document/d/1r4iJGAXg6GL7j4NUlw16QeEHKis0Cqt9zFDCd4YM7cw/edit#heading=h.1tggv8i3p8uj>
