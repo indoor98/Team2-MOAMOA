@@ -48,13 +48,17 @@
 **개발 기간**
 2024.03.04 ~ 2024.03.28
 
+---
+
 ### WBS
 ![image (1)](https://github.com/indoor98/proto/assets/92570309/dd001bb1-1046-4041-86ad-aa444fb4a575)
 
+---
 
 ### 기능 명세서
 ![기능명세서](https://github.com/indoor98/proto/assets/92570309/27b60128-3bff-429f-ba5c-f2119d63be7b)
 
+---
 
 ### 요구사항 명세서
 ![요구사항 명세서](https://github.com/indoor98/proto/assets/92570309/a0a79f8f-ab77-4a29-85ce-de974447f586)
@@ -67,6 +71,8 @@
 
 <img width="1470" alt="DDD" src = "https://github.com/indoor98/proto/blob/main/ForReadMe/DDD.png">
 
+---
+
 ### DB 모델링
 
 **개념 모델링**
@@ -78,6 +84,6 @@
 
 ----------
 
-## 단위 테스트 결과
+## 테스트 케이스 및 결과
 
-<https://docs.google.com/document/d/1r4iJGAXg6GL7j4NUlw16QeEHKis0Cqt9zFDCd4YM7cw/edit#heading=h.1tggv8i3p8uj>
+- <https://docs.google.com/document/d/1r4iJGAXg6GL7j4NUlw16QeEHKis0Cqt9zFDCd4YM7cw/edit#heading=h.1tggv8i3p8uj>
