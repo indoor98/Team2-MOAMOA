@@ -1,7 +1,7 @@
 ## 모아모아
 
 ## 팀원 소개
-| 프로필 사진 | 프로필 사진 | 프로필 사진 | 프로필 사진 | 프로필 사진 
+| <img src="https://github.com/indoor98/proto/assets/134200142/d929de1f-0492-463c-99c8-ea8e3ed552ac" width="100" height="100"> | <img src="https://github.com/indoor98/proto/assets/134200142/ce807998-88e9-48a4-a0b6-ce61aa22ed11" width="100" height="100"> | <img src="https://github.com/indoor98/proto/assets/134200142/c217a7ec-4080-43de-8394-75eb9b7cc3a4" width="100" height="100"> | <img src="https://github.com/indoor98/proto/assets/134200142/08485ed5-3350-4d3d-9fd8-c8d7128be1ad" width="100" height="100"> | <img src="https://github.com/indoor98/proto/assets/134200142/f95377e9-e857-415f-bbd0-97c19be143cd" width="100" height="100"> 
 | --- |------|------|------|------|
 | [GitHub](https://github.com/indoor98) | [GitHub](https://github.com/KimHyeyeonn) |  [GitHub](https://github.com/hanachooi) |  [GitHub](https://github.com/sttoend) |  [GitHub](https://github.com/holyplace129) |
 | 장명훈 | 김혜연  | 최하나  | 백승호  | 권성지  |
