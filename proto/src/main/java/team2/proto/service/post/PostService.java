@@ -5,6 +5,7 @@ import team2.proto.dto.post.PostListResponseDTO;
 import team2.proto.dto.post.PostResponseDTO;
 import team2.proto.dto.post.PostUpdateDTO;
 import team2.proto.dto.post.PostWriteDTO;
+import team2.proto.entity.User;
 
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface PostService {
     PostResponseDTO getPostById(Long id);
     void updatePost(Long id, PostUpdateDTO param);
     List<PostListResponseDTO> getAllPosts(Integer pageno);
-    void delete(Long id);
+    void delete(Long id, User user);
 
     void join(Long postId, HttpServletRequest request);
     void cancel(Long id);

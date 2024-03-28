@@ -17,6 +17,8 @@ public class PostUser {
 
     private boolean isHost;
 
+//    private boolean emailSent;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", referencedColumnName = "id", insertable = false, updatable = false) // 중복 매핑 수정
     private Post post;
@@ -29,11 +31,21 @@ public class PostUser {
     private Boolean deleteYn;
 
     @Builder
-    public PostUser(PostUserPK id, boolean isHost, Post post, User user) {
+    public PostUser(PostUserPK id, boolean isHost, /*boolean emailSent,*/ Post post, User user) {
         this.id = id ;
         this.isHost = isHost ;
+//        this.emailSent = emailSent;
         this.post = post ;
         this.user = user ;
     }
+
+    // emailSent get/set 추가
+//    public boolean isEmailSent() {
+//        return emailSent;
+//    }
+//
+//    public void setEmailSent(boolean emailSent) {
+//        this.emailSent = emailSent;
+//    }
 
 }
