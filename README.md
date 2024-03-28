@@ -24,20 +24,14 @@
 **우리의 가치**
 
 모아모아는 학생들의 경제적 부담을 줄이고, 소비자들이 더 저렴하게 상품을 구매할 수 있는 기회를 제공합니다. 또한 대량 주문을 통해 환경적인 측면에서도 효율적이고 친환경적인 소비를 장려하고 있습니다.
-## 기능 명세서
 
-## 요구사항 명세서
+---
 
-## WBS
-
-## 시작
-
-## 기술 스택
-### Requirements
+## Requirements
 - Java 17
 - MariaDB or MySQL
 
-### 📌Backend
+## 📌Backend
 | 기술                | 버전     |
 |-------------------|--------|
 | Spring Boot       | 3.2.3  |
@@ -49,4 +43,49 @@
 | WebMVC UI         | 2.2.0  |
 | MySQL Connector J | 8.3.0  |
 
-### 실행 방법
+----------
+
+## 기능 명세
+
+**개발 기간**
+2024.03.04 ~ 2024.03.28
+
+---
+
+### WBS
+![image (1)](https://github.com/indoor98/proto/assets/92570309/dd001bb1-1046-4041-86ad-aa444fb4a575)
+
+---
+
+### 기능 명세서
+![기능명세서](https://github.com/indoor98/proto/assets/92570309/27b60128-3bff-429f-ba5c-f2119d63be7b)
+
+---
+
+### 요구사항 명세서
+![요구사항 명세서](https://github.com/indoor98/proto/assets/92570309/a0a79f8f-ab77-4a29-85ce-de974447f586)
+
+----------
+
+## 설계
+
+### DDD
+
+<img width="1470" alt="DDD" src = "https://github.com/indoor98/proto/blob/main/ForReadMe/DDD.png">
+
+---
+
+### DB 모델링
+
+**개념 모델링**
+<img width="1470" alt="ER" src = "https://github.com/indoor98/proto/blob/main/ForReadMe/er%20model.png">
+
+**논리 모델링**
+<img width="1470" alt="ERD" src = 
+"https://github.com/indoor98/proto/blob/main/ForReadMe/modeling.png">
+
+----------
+
+## 테스트 케이스 및 결과
+
+- <https://docs.google.com/document/d/1r4iJGAXg6GL7j4NUlw16QeEHKis0Cqt9zFDCd4YM7cw/edit#heading=h.1tggv8i3p8uj>
