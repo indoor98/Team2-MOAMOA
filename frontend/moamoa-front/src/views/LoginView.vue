@@ -1,50 +1,34 @@
-<script>
-import axios from 'axios';
-import { useRouter } from "vue-router";
+<script setup>
+import { ref } from 'vue'
+import axios from 'axios'
+import { useRouter } from 'vue-router'
 
-// Vue Router의 인스턴스를 가져옴
-const router = useRouter();
+const email = ref('')
+const password = ref('')
+const accessToken = ref('')
+const refreshToken = ref('')
+const router = useRouter()
 
-export default {
-  data() {
-    return {
-      email: '',
-      password: '',
-      accessToken: '', // 엑세스 토큰을 저장할 변수
-      refreshToken: '' // 리프레시 토큰을 저장할 변수
-    };
-  },
-  methods: {
-    async handleSubmit() {
-      try {
-        const response = await axios.post("http://localhost:8080/api/auth/signin", {
-          email: this.email,
-          password: this.password
-        });
-        // POST 요청에 대한 응답 처리
-        console.log(response.data);
-        // 응답에서 엑세스 토큰과 리프레시 토큰을 추출하여 변수에 저장
-        this.accessToken = response.data.accessToken;
-        this.refreshToken = response.data.refreshToken;
+const handleSubmit = async () => {
+  try {
+    const response = await axios.post("http://localhost:8080/api/auth/signin", {
+      email: email.value,
+      password: password.value
+    })
+    console.log(response.data)
+    accessToken.value = response.data.accessToken
+    refreshToken.value = response.data.refreshToken
 
-        // 저장된 토큰을 로컬 스토리지나 쿠키 등에 저장할 수도 있습니다.
-        // 이 예시에서는 간단히 데이터 변수에 저장합니다.
-        localStorage.setItem('accessToken', this.accessToken);
-        localStorage.setItem('refreshToken', this.refreshToken);
+    localStorage.setItem('accessToken', accessToken.value)
+    localStorage.setItem('refreshToken', refreshToken.value)
 
-        // 로그인 성공 시 홈 페이지로 이동
-        this.$router.push({
-          name: "home",
-        });
-
-      } catch (error) {
-        // 요청 실패 처리
-        console.error(error);
-      }
-    }
+    router.push({ name: "home" })
+  } catch (error) {
+    console.error(error)
   }
-};
+}
 </script>
+
 
 <template>
   <div class="login-container">
