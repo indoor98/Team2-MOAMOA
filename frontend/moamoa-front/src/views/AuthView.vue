@@ -3,52 +3,37 @@
 import { ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
-import $ from 'jquery';
-
 
 const router = useRouter()
+const image = ref('')
 
+//작동 중
 const readInputFile = (e) => {
+  const file = e.target.files[0]
+  if (!file.type.match("image/.*")) {
+    alert("이미지 확장자만 업로드 가능합니다.")
+    return
+  }
 
-  // 미리보기 기능구현
-  $('#imagePreview').empty();
-  var files = e.target.files;
-  var fileArr = Array.prototype.slice.call(files);
-  console.log(fileArr);
-  fileArr.forEach(function(f){
-    if(!f.type.match("image/.*")){
-      alert("이미지 확장자만 업로드 가능합니다.");
-      return;
-    };
-
-    var reader = new FileReader();
-    reader.onload = function(e){
-      var html = `<img src=${e.target.result} />`;
-      $('#imagePreview').append(html);
-    };
-    reader.readAsDataURL(f);
-  })
-
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    image.value = e.target.result; // 데이터 URL을 image 변수에 저장합니다.
+    console.log(image.value); // 데이터 URL을 확인합니다.
+  };
+  reader.readAsDataURL(file); // 파일을 읽고 데이터 URL을 생성합니다.
 }
 
+// 작동 오류 -> post 오류
 const handleSubmit = async () => {
   try {
-    const formData = new FormData();
-    formData.append('image', file); // 'file'는 이미지 파일 객체입니다.
+    const formData = new FormData()
+    formData.append('image', image.value)
 
-    const response = await axios.post("http://localhost:8080/api/auth/school_auth", {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
+    const response = await axios.post("/api/auth/school_auth", formData)
     console.log(response.data)
-    accessToken.value = response.data.accessToken
-    refreshToken.value = response.data.refreshToken
-
-    localStorage.setItem('accessToken', accessToken.value)
-    localStorage.setItem('refreshToken', refreshToken.value)
-
-    router.push({ name: "home" })
+    localStorage.setItem('accessToken', response.data.accessToken)
+    localStorage.setItem('refreshToken', response.data.refreshToken)
+    router.push({ name: "auth" })
   } catch (error) {
     console.error(error)
   }
@@ -57,15 +42,15 @@ const handleSubmit = async () => {
 
 
 <template>
-  <div class = "body">
+  <div class="body">
     <div>
-      <h2 style = "color: white; font-weight: bold; text-align: center;">MOA<br/>MOA</h2>
+      <h2 style="color: white; font-weight: bold; text-align: center;">MOA<br/>MOA</h2>
       <div class="authup-container">
         <h2>Auth</h2>
-        <form action="#" class = "auth-form">
-          <input type = "file" @change = "readInputFile" ref = "imageUpload"/>
-          <div id = "image">
-            <img id = "img" />
+        <form class="auth-form" @submit.prevent="handleSubmit">
+          <input type="file" @change="readInputFile" ref="imageUpload"/>
+          <div id="imagePreview">
+            <img v-if="image" :src="image" />
           </div>
           <br>
           <button type="submit">제출</button>
@@ -114,7 +99,7 @@ const handleSubmit = async () => {
 .body{
   background-color: #498C74;
 }
-#image{
+#imagePreview{
   width : 100%;
   height: 110px;
   background-color : #EFF3FD;
@@ -125,5 +110,7 @@ const handleSubmit = async () => {
   text-align: center;
 
 }
+
+
 
 </style>

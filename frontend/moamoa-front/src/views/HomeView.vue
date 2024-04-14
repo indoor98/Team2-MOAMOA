@@ -2,6 +2,7 @@
 import NavHeader from "@/components/NavHeader.vue";
 import {useRouter} from "vue-router";
 const router = useRouter();
+
 export default {
   components: {NavHeader},
   data() {
