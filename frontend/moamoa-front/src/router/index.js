@@ -31,7 +31,14 @@ const router = createRouter({
       path: '/mypage',
       name: 'mypage',
       component: () => import('../views/MypageView.vue')
-    }
+    },
+      // 게시글 상세페이지
+    {
+      path: '/post/:postno',
+      name: 'postno',
+      component: () => import('../views/PostDetailView.vue')
+    },
+
   ]
 })
 
