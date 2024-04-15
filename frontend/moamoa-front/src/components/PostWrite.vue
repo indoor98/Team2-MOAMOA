@@ -1,5 +1,6 @@
 <template>
-    <br/>
+    <body>
+        <br/>
     <div>
         <form @submit.prevent="submitPost" class="post-form">
         <label for="title">상품 이름:</label>
@@ -8,7 +9,7 @@
         <label for="price">가격:</label>
         <input type="number" id="price" v-model="post.price" required>
 
-        <label for="headCount">인원:</label>
+        <label for="headCount">참여 인원:</label>
         <input type="number" id="headCount" v-model="post.headCount" required>
 
         <label for="deadLine">마감 일자:</label>
@@ -28,6 +29,8 @@
         <button type="submit">작성 완료</button>
         </form>
     </div>
+        
+    </body>
 </template>
 
 <script setup>
@@ -104,14 +107,14 @@ body {
 
 .post-form button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #019b63;
     color: white;
     border: none;
     cursor: pointer;
 }
 
 .post-form button:hover {
-  background-color: #0056b3;
+  background-color: #ffd557;
 }
 
 .post-form .hint {

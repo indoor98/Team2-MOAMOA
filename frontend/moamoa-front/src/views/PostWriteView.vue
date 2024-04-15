@@ -14,8 +14,8 @@ import PostWrite from '@/components/PostWrite.vue'
 
 <style scoped>
 header {
-    background-color: #498C74;
-    color: white;
-    }
+    background-color: #f7efe4;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+}
 
 </style>
