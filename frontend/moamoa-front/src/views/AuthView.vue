@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+<<<<<<< Updated upstream
 const image = ref('')
 
 const readInputFile = (e) => {
@@ -14,11 +15,26 @@ const readInputFile = (e) => {
     image.value = reader.result;
     return image.value;
   };
+=======
+const imageInput = ref('')
+
+const readInputFile = async () => {
+  const file = imageInput.value.files[0]
+  const reader = new FileReader()
+  reader.readAsDataURL(file)
+  return new Promise((resolve, reject) => {
+    reader.onloadend = () => {
+      console.log(reader.result);
+      resolve(reader.result);
+    };
+    reader.onerror = reject;
+  });
+>>>>>>> Stashed changes
 }
 
-// 작동 오류 -> post 오류
 const handleSubmit = async () => {
   try {
+<<<<<<< Updated upstream
     const formData = new FormData();
     // 이미지 파일을 base64 문자열로 변환하여 FormData에 추가
     const base64String = await readInputFile();
@@ -35,6 +51,24 @@ const handleSubmit = async () => {
     const response = await axios.post('http://localhost:8080/api/auth/school_auth', formData, headers);
     console.log(response.data);
     router.push({ name: 'auth' });
+=======
+    const formData = new FormData()
+    const base64String = await readInputFile()
+    formData.append('image', base64String);
+    console.log("제출 후 " , formData.get('image'));
+    const accessToken = localStorage.getItem('accessToken')
+    console.log(accessToken);
+    const headers = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${accessToken}`
+      }
+    };
+    const response = await axios.post('http://localhost:8080/api/auth/school_auth', formData, headers);
+
+    console.log(response.data)
+    router.push({ name: "auth" })
+>>>>>>> Stashed changes
   } catch (error) {
     console.error(error);
   }
@@ -49,7 +83,11 @@ const handleSubmit = async () => {
       <div class="authup-container">
         <h2>Auth</h2>
         <form class="auth-form" @submit.prevent="handleSubmit">
+<<<<<<< Updated upstream
           <input type="file" @change="readInputFile"/>
+=======
+          <input type="file" ref="imageInput" @change="readInputFile"/>
+>>>>>>> Stashed changes
           <div id="imagePreview">
             <img v-if="image" :src="image" />
           </div>
@@ -111,7 +149,4 @@ const handleSubmit = async () => {
   text-align: center;
 
 }
-
-
-
 </style>
