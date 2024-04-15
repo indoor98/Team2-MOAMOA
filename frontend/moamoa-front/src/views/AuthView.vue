@@ -7,54 +7,36 @@ const router = useRouter()
 const image = ref('')
 
 const readInputFile = (e) => {
-  const file = e.target.files[0]
-  // if (!file.type.match("image/.*")) {
-  //   alert("이미지 확장자만 업로드 가능합니다.")
-  //   return
-  // }
-
-  const reader = new FileReader()
-  // reader.onload = (e) => {
-  //   image.value = e.target.result; // 데이터 URL을 image 변수에 저장합니다.
-  //   //console.log(image.value); // 데이터 URL을 확인합니다.
-  // };
-  reader.readAsDataURL(file); // 파일을 읽고 데이터 URL을 생성합니다.
-  return new Promise((resolve, reject) => {
-    reader.onloadend = () => {
-      resolve(reader.result);
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
+  const file = e.target.files[0];
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onloadend = () => {
+    image.value = reader.result;
+    return image.value;
+  };
 }
 
 // 작동 오류 -> post 오류
 const handleSubmit = async () => {
   try {
-    const formData = new FormData()
-    const base64String = await readInputFile(image);
-    formData.append(
-        'image', base64String
-    );
-    // const imageUpload = ref('');
-    // console.log(imageUpload);
-    // const fileInput = imageUpload;    // ref를 이용해서 파일 입력(input)
-    // formData.append('image', fileInput.files[0]) // 첫 번째 파일만 추가하도록 함
-    // formData.append('image', image.value)
-    // console.log(image.value);
-    const accessToken = localStorage.getItem('accessToken')
-    console.log(accessToken);
+    const formData = new FormData();
+    // 이미지 파일을 base64 문자열로 변환하여 FormData에 추가
+    const base64String = await readInputFile();
+    formData.append('image', base64String);
+
+    const accessToken = localStorage.getItem('accessToken');
     const headers = {
       headers: {
         'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${accessToken}`
       }
     };
-    const request = await axios.post('http://localhost:8080/api/auth/school_auth', formData, headers);
-    console.log(request.data)
-    router.push({ name: "auth" })
+
+    const response = await axios.post('http://localhost:8080/api/auth/school_auth', formData, headers);
+    console.log(response.data);
+    router.push({ name: 'auth' });
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 </script>
