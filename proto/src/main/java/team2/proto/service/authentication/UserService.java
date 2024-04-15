@@ -6,5 +6,6 @@ public interface UserService {
     User findById(Long userId);
     User findByEmail(String email);
 
+    String findNicknameByEmail(String email);
     void deleteUser(User user);
 }
