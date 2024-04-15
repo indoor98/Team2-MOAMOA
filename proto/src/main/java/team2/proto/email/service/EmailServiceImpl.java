@@ -8,13 +8,13 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.spring6.SpringTemplateEngine;
-import team2.proto.email.EmailMessageDTO;
+import team2.proto.email.dao.EmailMessageDTO;
 import team2.proto.repository.post.PostRepository;
 import team2.proto.repository.user.UserRepository;
 
 @Service
 @RequiredArgsConstructor
-public class EmailServiceImpl  {
+public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine springTemplateEngine;
@@ -38,7 +38,7 @@ public class EmailServiceImpl  {
     @Description : 이메일주소, 내용, 제목 필요
      */
 
-
+    @Override
     @Transactional
     public void sendMail(EmailMessageDTO emailMessageDTO) {
         MimeMessage message = mailSender.createMimeMessage();

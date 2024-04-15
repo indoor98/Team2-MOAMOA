@@ -41,7 +41,14 @@ const router = createRouter({
       path: '/admin',
       name: 'admin',
       component: () => import('../views/AdminView.vue')
-    }
+    },
+      // 게시글 상세페이지
+    {
+      path: '/post/:postno',
+      name: 'postno',
+      component: () => import('../views/PostDetailView.vue')
+    },
+
   ]
 })
 
