@@ -49,9 +49,9 @@ public class EmailScheduler {
                         emailService.sendMail(emailMessage);
 
                         // 일단 emailsent로 주석
-//                        postUser.setEmailSent(true);
-//                        postUserRepository.save(postUser);
-//                    }
+                        postUser.setEmailSent(true);
+                        postUserRepository.save(postUser);
+
                 }
             }
         }
