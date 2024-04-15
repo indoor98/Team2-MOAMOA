@@ -1,14 +1,11 @@
 package team2.proto.email.config;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
 import team2.proto.email.EmailMessageDTO;
-import team2.proto.email.EmailService;
 import team2.proto.entity.Post;
 import team2.proto.entity.PostUser;
 import team2.proto.repository.post.PostRepository;
@@ -23,7 +20,7 @@ public class EmailScheduler {
 
     private final PostRepository postRepository;
     private final PostUserRepository postUserRepository;
-    private final EmailService emailService;
+//    private final EmailService emailService;
 
     // 메일 전송
     @Scheduled(fixedDelay = 60000) // 10초마다 실행
@@ -48,7 +45,7 @@ public class EmailScheduler {
                                 .subject(subject)
                                 .message(message)
                                 .build();
-                        emailService.sendMail(emailMessage);
+//                        emailService.sendMail(emailMessage);
 
                         // 일단 emailsent로 주석
 //                        postUser.setEmailSent(true);

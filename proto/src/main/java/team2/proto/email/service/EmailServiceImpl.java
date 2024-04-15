@@ -1,7 +1,6 @@
 package team2.proto.email.service;
 
 import jakarta.mail.MessagingException;
-import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -10,16 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import team2.proto.email.EmailMessageDTO;
-import team2.proto.email.EmailService;
 import team2.proto.repository.post.PostRepository;
 import team2.proto.repository.user.UserRepository;
-import team2.proto.service.authentication.UserService;
-
-import java.io.UnsupportedEncodingException;
 
 @Service
 @RequiredArgsConstructor
-public class EmailServiceImpl implements EmailService {
+public class EmailServiceImpl  {
 
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine springTemplateEngine;
@@ -43,7 +38,7 @@ public class EmailServiceImpl implements EmailService {
     @Description : 이메일주소, 내용, 제목 필요
      */
 
-    @Override
+
     @Transactional
     public void sendMail(EmailMessageDTO emailMessageDTO) {
         MimeMessage message = mailSender.createMimeMessage();
