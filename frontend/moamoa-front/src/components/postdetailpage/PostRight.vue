@@ -3,7 +3,7 @@
     <div class="date-counter">{{ deadlineDay }}</div>
     <div class="participation-info">
       <div class="participants">{{ headCount }}명 참여</div>
-      <div class="amount-raised">{{ joinUser }}명 달성</div>
+      <div class="amount-raised">{{ joinedUsersCount }}명 달성</div>
       <div>{{ price }}원</div>
     </div>
   </div>
@@ -12,7 +12,7 @@
 <script>
 export default {
   name: 'PostRight',
-  props: ['deadline', 'headCount', 'joinUser', 'price'],
+  props: ['deadline', 'headCount', 'joinedUsersCount', 'price'],
 
   // 데드라인 일수로 변환
   computed: {

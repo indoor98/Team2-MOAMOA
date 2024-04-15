@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <NavHeader></NavHeader>
+    <header>
+      <NavHeader />
+    </header>
+
     <div class="main-content">
       <PostLeft
           :title="post.title"
@@ -11,10 +13,9 @@
       <PostRight
           :deadline="post.deadline"
           :headCount="post.headCount"
-          :joinUser="dummyJoinUser"
+          :joined-users-count="post.joinedUsersCount"
           :price="post.price">
       </PostRight>
-    </div>
     <PostComment></PostComment>
   </div>
 </template>
@@ -37,7 +38,6 @@ export default {
   data() {
     return {
       post: {},
-      dummyJoinUser: 4
     }
   },
   mounted() {
@@ -55,7 +55,6 @@ export default {
           .then(response => {
             console.log('API Response:', response.data);  // API 응답 로그 출력
             this.post = response.data;
-            this.dummyJoinUser = response.data.joinUser || 5;
           })
           .catch(error => {
             console.error("There was an error fetching the post: ", error);
@@ -66,6 +65,11 @@ export default {
 </script>
 
 <style>
+header {
+  background-color: #498C74;
+  color: white;
+}
+
 body {
   font-family: 'Helvetica Neue', Arial, sans-serif;
   color: #333; /* 기본 텍스트 색상 */

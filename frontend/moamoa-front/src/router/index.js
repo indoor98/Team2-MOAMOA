@@ -38,7 +38,6 @@ const router = createRouter({
       name: 'postno',
       component: () => import('../views/PostDetailView.vue')
     },
-
   ]
 })
 

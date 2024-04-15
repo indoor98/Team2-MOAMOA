@@ -17,6 +17,7 @@ public class PostResponseDTO {
     private Long price;
     private Integer headCount;
     private LocalDateTime deadLine;
+    private Long joinedUsersCount;
     private String receivePlace;
     private String productUrl;
     private List<HashtagRequestDTO> hashtagList;
