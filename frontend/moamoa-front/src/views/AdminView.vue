@@ -3,9 +3,6 @@
 </script>
 
 <template>
-<<<<<<< Updated upstream
-
-=======
   <div class = "body">
 
   <div class="header">
@@ -37,8 +34,6 @@
 
 <style scoped>
 
-<<<<<<< Updated upstream
-=======
 .body {
   font-family: Arial, sans-serif;
   margin: 0;
