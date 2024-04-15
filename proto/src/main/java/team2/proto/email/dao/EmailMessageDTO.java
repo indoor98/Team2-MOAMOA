@@ -1,4 +1,4 @@
-package team2.proto.email;
+package team2.proto.email.dao;
 
 import lombok.Builder;
 import lombok.Getter;

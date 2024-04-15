@@ -1,14 +1,12 @@
-package team2.proto.email.config;
+package team2.proto.email.ctrl;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
-import team2.proto.email.EmailMessageDTO;
-import team2.proto.email.EmailService;
+import team2.proto.email.dao.EmailMessageDTO;
+import team2.proto.email.service.EmailService;
 import team2.proto.entity.Post;
 import team2.proto.entity.PostUser;
 import team2.proto.repository.post.PostRepository;
@@ -51,9 +49,9 @@ public class EmailScheduler {
                         emailService.sendMail(emailMessage);
 
                         // 일단 emailsent로 주석
-//                        postUser.setEmailSent(true);
-//                        postUserRepository.save(postUser);
-//                    }
+                        postUser.setEmailSent(true);
+                        postUserRepository.save(postUser);
+
                 }
             }
         }
