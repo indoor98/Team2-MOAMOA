@@ -86,28 +86,28 @@ body {
 }
 
 .post-form {
-  display: flex;
-  flex-direction: column;
-  max-width: 400px;
-  margin: auto;
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: auto;
 }
 
 .post-form label {
-  margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 
 .post-form input, .post-form textarea {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
 }
 
 .post-form button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
 .post-form button:hover {
