@@ -38,7 +38,7 @@ const router = createRouter({
       name: 'postno',
       component: () => import('../views/PostDetailView.vue')
     },
-    // 게시글 작성 페이지
+    // 게시글 작성페이지
     {
       path: '/post',
       name: 'post',
