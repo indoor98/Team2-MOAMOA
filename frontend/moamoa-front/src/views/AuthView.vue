@@ -1,4 +1,3 @@
-// 컴포지션 api 사용
 <script setup>
 import { ref } from 'vue'
 import axios from 'axios'
@@ -7,32 +6,52 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const image = ref('')
 
-//작동 중
 const readInputFile = (e) => {
   const file = e.target.files[0]
-  if (!file.type.match("image/.*")) {
-    alert("이미지 확장자만 업로드 가능합니다.")
-    return
-  }
+  // if (!file.type.match("image/.*")) {
+  //   alert("이미지 확장자만 업로드 가능합니다.")
+  //   return
+  // }
 
   const reader = new FileReader()
-  reader.onload = (e) => {
-    image.value = e.target.result; // 데이터 URL을 image 변수에 저장합니다.
-    console.log(image.value); // 데이터 URL을 확인합니다.
-  };
+  // reader.onload = (e) => {
+  //   image.value = e.target.result; // 데이터 URL을 image 변수에 저장합니다.
+  //   //console.log(image.value); // 데이터 URL을 확인합니다.
+  // };
   reader.readAsDataURL(file); // 파일을 읽고 데이터 URL을 생성합니다.
+  return new Promise((resolve, reject) => {
+    reader.onloadend = () => {
+      resolve(reader.result);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
 }
 
 // 작동 오류 -> post 오류
 const handleSubmit = async () => {
   try {
     const formData = new FormData()
-    formData.append('image', image.value)
-
-    const response = await axios.post("/api/auth/school_auth", formData)
-    console.log(response.data)
-    localStorage.setItem('accessToken', response.data.accessToken)
-    localStorage.setItem('refreshToken', response.data.refreshToken)
+    const base64String = await readInputFile(image);
+    formData.append(
+        'image', base64String
+    );
+    // const imageUpload = ref('');
+    // console.log(imageUpload);
+    // const fileInput = imageUpload;    // ref를 이용해서 파일 입력(input)
+    // formData.append('image', fileInput.files[0]) // 첫 번째 파일만 추가하도록 함
+    // formData.append('image', image.value)
+    // console.log(image.value);
+    const accessToken = localStorage.getItem('accessToken')
+    console.log(accessToken);
+    const headers = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${accessToken}`
+      }
+    };
+    const request = await axios.post('http://localhost:8080/api/auth/school_auth', formData, headers);
+    console.log(request.data)
     router.push({ name: "auth" })
   } catch (error) {
     console.error(error)
@@ -48,7 +67,7 @@ const handleSubmit = async () => {
       <div class="authup-container">
         <h2>Auth</h2>
         <form class="auth-form" @submit.prevent="handleSubmit">
-          <input type="file" @change="readInputFile" ref="imageUpload"/>
+          <input type="file" @change="readInputFile"/>
           <div id="imagePreview">
             <img v-if="image" :src="image" />
           </div>
