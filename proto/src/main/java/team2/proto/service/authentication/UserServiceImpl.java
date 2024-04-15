@@ -23,6 +23,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public String findNicknameByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null).getNickname();
+    }
+
+    @Override
     public void deleteUser(User user) {
         user.setDeleteYn(true);
         userRepository.save(user);

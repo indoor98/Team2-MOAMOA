@@ -10,12 +10,14 @@ const accessToken = localStorage.getItem('accessToken')
 const payload = accessToken.split('.').at(1);
 // base64로 인코딩된 payload를 디코딩합니다.
 const decodedPayload = JSON.parse(atob(payload));
-console.log(decodedPayload.sub.split('@').at(0));
 
-const userEmail = ref('');
-userEmail.value = decodedPayload.sub.split('@').at(0);
+const bytes = Uint8Array.from(decodedPayload.nickname, c => c.charCodeAt(0));
+const decoder = new TextDecoder('utf-8');
 
+const nickname = ref('');
 
+nickname.value = decoder.decode(bytes);
+console.log(nickname.value);
 </script>
 
 <template>
@@ -24,7 +26,7 @@ userEmail.value = decodedPayload.sub.split('@').at(0);
       <img src="/userprofile/userdefault.jpg">
     </div>
     <div>
-      {{ userEmail }}
+      {{ nickname }}
     </div>
     <div>
       <button>
