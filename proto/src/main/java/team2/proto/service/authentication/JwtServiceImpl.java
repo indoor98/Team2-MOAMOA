@@ -55,7 +55,11 @@ public class JwtServiceImpl implements JwtService {
     }
 
     private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
+        String nickname = userRepository.findByEmail(userDetails.getUsername()).get().getNickname();
+        return Jwts.builder()
+                .setClaims(extraClaims)
+                .setSubject(userDetails.getUsername())
+                .claim("nickname", nickname)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 10000 * 60 * 24))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS512).compact();
