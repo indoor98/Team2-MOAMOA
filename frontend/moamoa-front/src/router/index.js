@@ -38,6 +38,11 @@ const router = createRouter({
       name: 'postno',
       component: () => import('../views/PostDetailView.vue')
     },
+    {
+      path: '/auth',
+      name: 'auth',
+      component: () => import('../views/AuthView.vue')
+    },
 
   ]
 })
