@@ -22,5 +22,8 @@ export default defineConfig({
     proxy: {
       "/api": "http://localhost:8080",
     },
+    server: {
+      port: 5173 // 사용하고자 하는 포트 번호로 변경
+    }
   },
 });

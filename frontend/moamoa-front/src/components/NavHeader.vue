@@ -43,9 +43,9 @@ const logout = () => {
   <div class="container">
     <div class="row">
       <div class="col-md-4 col-12 text-start">
-        <a class="navbar-brand" href="#">MOA<br>MOA</a>
+        <a class="navbar-brand" href="/">MOA<br>MOA</a>
       </div>
-      <div class="col-md-5 col-12 my-md-0 my-3 mt-3">
+      <div class="col-md-5 col-12 my-md-0 my-3 mt-md-4 text-center mx-auto">
         <input type="search" class="form-control" placeholder="Search...">
       </div>
       <div class="col-md-3 col-12 text-md-end text-start mt-3">

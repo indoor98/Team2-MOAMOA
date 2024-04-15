@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 
@@ -8,6 +8,17 @@ const password = ref('')
 const accessToken = ref('')
 const refreshToken = ref('')
 const router = useRouter()
+
+// 페이지가 로드될 때 마다 확인하는 함수
+onMounted( () => {
+  //로컬 스토리지에서 accessToken 존재하는지 확인
+  accessToken.value = localStorage.getItem('accessToken');
+
+  // accessToken이 존재할 경우 리다이렉트
+  if (accessToken.value) {
+    router.push({ name: 'home' })
+  }
+})
 
 const handleSubmit = async () => {
   try {
