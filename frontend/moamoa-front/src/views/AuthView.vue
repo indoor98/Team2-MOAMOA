@@ -7,35 +7,23 @@ const router = useRouter()
 const image = ref('')
 
 const readInputFile = (e) => {
-  const file = e.target.files[0]
-  // if (!file.type.match("image/.*")) {
-  //   alert("이미지 확장자만 업로드 가능합니다.")
-  //   return
-  // }
+  const file = e.target.files[0];
+  const reader = new FileReader();
 
-  const reader = new FileReader()
-  // reader.onload = (e) => {
-  //   image.value = e.target.result; // 데이터 URL을 image 변수에 저장합니다.
-  //   //console.log(image.value); // 데이터 URL을 확인합니다.
-  // };
+  reader.onload = () => {
+    image.value = reader.result; // 데이터 URL을 image 변수에 저장합니다.
+    console.log(image.value); // 데이터 URL을 확인합니다.
+  };
+
   reader.readAsDataURL(file); // 파일을 읽고 데이터 URL을 생성합니다.
-  return new Promise((resolve, reject) => {
-    reader.onloadend = () => {
-      resolve(reader.result);
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
+};
 
 // 작동 오류 -> post 오류
 const handleSubmit = async () => {
   try {
     const formData = new FormData()
-    const base64String = await readInputFile(image);
-    formData.append(
-        'image', base64String
-    );
+    const fileInput = document.querySelector('input[type="file"]'); // 파일 입력(input) 요소를 선택합니다.
+    formData.append('image', fileInput.files[0]) // 첫 번째 파일만 추가하도록 함
     // const imageUpload = ref('');
     // console.log(imageUpload);
     // const fileInput = imageUpload;    // ref를 이용해서 파일 입력(input)
