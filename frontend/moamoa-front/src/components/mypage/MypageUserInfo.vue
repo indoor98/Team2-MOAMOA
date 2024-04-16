@@ -81,6 +81,7 @@ const changePassword = () => {
 const changeNickname = () => {
   // 닉네임 변경 로직 구현
   console.log('닉네임 변경');
+  router.push({name: 'mypageNicknameChange'})
   closeModal();
 }
 
