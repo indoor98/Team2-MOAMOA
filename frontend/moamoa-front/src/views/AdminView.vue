@@ -20,11 +20,12 @@
         <div class="author-name">{{ item.nickname }}</div>
         <div class="school">{{ item.school }}</div>
         <div class="img">
-          <img :src="item.photoUrl" alt="이미지">
-          <button @click="approveRequest(item.id)">승인</button>
-<!--          <button @click="rejectRequest(item.id)">거절</button>-->
+          <img src="/userprofile/userdefault.jpg" alt="이미지">
         </div>
-      </div>
+        <div class="approve-button">
+        <button @click="approveRequest(item.id)">승인</button>
+        </div>
+        </div>
     </div>
   </div>
 </template>
@@ -33,8 +34,18 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
+
+
 export default {
   name: 'About',
+
+  methods: {
+    convertPath(path) {
+      // "C:\proto\auth-images\wolf.jpg" -> "../proto/auth-images/wolf.jpg"
+      `/auth-images/${path.split('\\').pop()}`;
+    }
+  },
+
   setup() {
     const str = ref(null); // 데이터를 저장할 변수
 
@@ -57,14 +68,7 @@ export default {
         });
 
     const approveRequest = (id) => {
-      console.log(id);
       const accessToken = localStorage.getItem('accessToken');
-      console.log(accessToken);
-      // const requestData = {
-      //   authNo: id,
-      //   approve: true
-      // };
-
       axios.put(
           `http://localhost:8080/api/admin/authlist/${id}`,
           null,
@@ -156,18 +160,19 @@ export default {
   padding: 0 10%;
 }
 .list-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   padding: 10px;
   border-bottom: 2px solid #498C74;
   font-weight: bold;
 }
 .list-header div, .list-item div {
-  flex: 1;
   text-align: center;
-
+  padding: 10px;
 }
 .list-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #ddd;
@@ -175,9 +180,12 @@ export default {
 .list-item img {
   width: 50px;
   height: 50px;
+  justify-self: center; /* 이미지를 가운데 정렬 */
 }
 .list-item button {
   width: 50px;
   height: 50px;
+  justify-self: center; /* 버튼을 가운데 정렬 */
+  margin-top: 10px; /* 버튼 위 간격 추가 */
 }
 </style>
