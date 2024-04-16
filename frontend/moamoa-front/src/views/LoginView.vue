@@ -20,7 +20,7 @@ onMounted( () => {
   }
 })
 
-const handleSubmit = async () => {
+const login = async () => {
   try {
     const response = await axios.post("http://localhost:8080/api/auth/signin", {
       email: email.value,
@@ -35,7 +35,8 @@ const handleSubmit = async () => {
 
     router.push({ name: "home" })
   } catch (error) {
-    console.error(error)
+    console.error(error);
+    alert("로그인에 실패하였습니다. 이메일과 비밀번호를 확인해주세요.");
   }
 }
 </script>
@@ -44,7 +45,7 @@ const handleSubmit = async () => {
 <template>
   <div class="login-container">
     <h2 style = "color: white; font-weight: bold; padding-top:20px;">MOA<br/>MOA</h2>
-    <form class = "login-form" @submit.prevent="handleSubmit">
+    <form class = "login-form" @submit.prevent="login">
       <input type="text" v-model="email" placeholder="아이디 입력">
       <br>
       <input type="password" v-model="password" placeholder="비밀번호 입력">
