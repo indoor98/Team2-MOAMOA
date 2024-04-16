@@ -15,7 +15,7 @@ import MyPageUserContents from "@/components/mypage/MyPageUserContents.vue";
         <MypageUserInfo />
       </div>
       <div class="right-content">
-        <MyPageUserContents />
+
       </div>
 
     </div>
