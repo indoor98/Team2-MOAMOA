@@ -70,7 +70,7 @@ public class SecurityConfiguration {
                                     "/swagger-ui/**",
                                     "/swagger-ui.html",
                                     "/api/auth/refreshtoken",
-                                    "/api/post/list/{pageno}",
+                                    "/api/post/list/**",
                                     "/api/post/{postno}").permitAll().anyRequest().authenticated())
                     .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                     .authenticationProvider(daoAuthenticationProvider()).addFilterBefore(
