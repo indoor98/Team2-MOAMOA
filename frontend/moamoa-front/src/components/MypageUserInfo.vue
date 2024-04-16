@@ -38,6 +38,9 @@ console.log(nickname.value);
         회원 정보 수정
       </button>
     </div>
+    <div>
+
+    </div>
   </div>
 </template>
 

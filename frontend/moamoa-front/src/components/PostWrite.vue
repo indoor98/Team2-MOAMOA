@@ -51,6 +51,7 @@ const hashtags = ref('');
 
 const submitPost = async () => {
     try {
+        console.log
         const accessToken = localStorage.getItem('accessToken')
         const response = await axios.post(
         'http://localhost:8080/api/post',
@@ -77,8 +78,8 @@ const submitPost = async () => {
 
     // 해시태그를 쉼표(,)로 분할하여 배열로 반환하는 함수
     const parseHashtags = (hashtagsStr) => {
-    return hashtagsStr.split(',').map(tag => {
-        return { tag };
+    return hashtagsStr.split(',').map(hashtag => {
+        return { hashtag };
     });
     }
     </script>

@@ -2,7 +2,9 @@
   <div class="container">
     <div class="row align-items-center"> <!-- align-items-center 추가 -->
       <div class="col-md-4 col-12 text-center"> <!-- text-start에서 text-center로 변경 -->
+        <a href="/">
         <img src="@/assets/moamoa_logo_org.png" alt="로고 이미지" class="logo"> <!-- 클래스 추가 -->
+        </a>
       </div>
       <div class="col-md-5 col-12 my-md-0 my-3 mt-md-4 text-center mx-auto">
         <input type="search" class="form-control" placeholder="Search...">
