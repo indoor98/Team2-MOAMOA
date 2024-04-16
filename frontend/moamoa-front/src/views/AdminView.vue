@@ -13,6 +13,7 @@
         <div>작성자명</div>
         <div>학교명</div>
         <div>이미지</div>
+        <div>승인</div>
       </div>
       <div v-if="str" class="list-item"></div>
       <div class="list-item" v-for="item in str" :key="item.id">
@@ -21,7 +22,7 @@
         <div class="img">
           <img :src="item.photoUrl" alt="이미지">
           <button @click="approveRequest(item.id)">승인</button>
-          <button @click="rejectRequest(item.id)">거절</button>
+<!--          <button @click="rejectRequest(item.id)">거절</button>-->
         </div>
       </div>
     </div>
@@ -59,13 +60,18 @@ export default {
       console.log(id);
       const accessToken = localStorage.getItem('accessToken');
       console.log(accessToken);
-      const requestData = {
-        authNo: id,
-        approve: 1
-      };
+      // const requestData = {
+      //   authNo: id,
+      //   approve: true
+      // };
 
-      axios.put(`http://localhost:8080/api/admin/authlist/${id}`,
-          requestData, {
+      axios.put(
+          `http://localhost:8080/api/admin/authlist/${id}`,
+          null,
+          {
+            params: {
+              approve: true
+            },
             headers: {
               Authorization: `Bearer ${accessToken}`
             }
@@ -74,8 +80,6 @@ export default {
           .then((res) => {
             // 요청이 승인되었을 때의 로직 추가
             console.log("승인 완료");
-            console.log(requestData.authNo);
-            console.log(requestData.approve);
           })
           .catch((err) => {
             console.log("에러 발생");
@@ -83,25 +87,32 @@ export default {
           });
     };
 
-    const rejectRequest = (id) => {
-      const accessToken = localStorage.getItem('accessToken');
-      console.log(accessToken);
-      axios.put(`http://localhost:8080/api/admin/authlist/${id}`, null, {
-            headers: {
-              Authorization: `Bearer ${accessToken}`
-            }
-          }
-      )
-          .then((res) => {
-            // 요청이 거절되었을 때의 로직 추가
-            console.log("승인 거절");
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-    };
+    // const rejectRequest = (id) => {
+    //   const accessToken = localStorage.getItem('accessToken');
+    //   console.log(accessToken);
+    //   axios.put(
+    //       `http://localhost:8080/api/admin/authlist/${id}`,
+    //       null,
+    //       // json 이면 data로 요청하고, params이면 config로 요청
+    //       {
+    //         params: {
+    //           approve: false
+    //         },
+    //         headers: {
+    //           Authorization: `Bearer ${accessToken}`
+    //         }
+    //       }
+    //   )
+    //       .then((res) => {
+    //         // 요청이 거절되었을 때의 로직 추가
+    //         console.log("승인 거절");
+    //       })
+    //       .catch((err) => {
+    //         console.error(err);
+    //       });
+    // };
 
-    return { str, approveRequest, rejectRequest }; // 컴포넌트 템플릿에서 사용할 변수 및 메서드 반환
+    return { str, approveRequest}; // 컴포넌트 템플릿에서 사용할 변수 및 메서드 반환
   }
 };
 </script>
@@ -166,6 +177,7 @@ export default {
   height: 50px;
 }
 .list-item button {
-  margin-left: 10px;
+  width: 50px;
+  height: 50px;
 }
 </style>
