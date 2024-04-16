@@ -16,6 +16,54 @@ const decoder = new TextDecoder('utf-8');
 
 const nickname = ref('');
 
+const logout = async () => {
+  const accessToken = localStorage.getItem('accessToken');
+  console.log(accessToken);
+
+  const response = await axios.get("http://localhost:8080/api/auth/logout", {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  });
+
+  console.log(response);
+  // 로그아웃 후 로그인 페이지로 이동
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+  router.push({ name: 'login' })
+}
+
+const toSchoolAuth = () => {
+  router.push({name: 'auth'})
+}
+
+const withdrawMember = () => {
+  // 사용자로부터 비밀번호를 입력받음
+  var password = prompt("회원 탈퇴를 위해 비밀번호를 입력하세요:");
+  const accessToken = localStorage.getItem('accessToken');
+  // 사용자가 취소 버튼을 누르거나 아무것도 입력하지 않은 경우
+  if (password === null || password === "") {
+    alert("비밀번호를 입력해야 합니다.");
+  } else {
+    // 비밀번호를 서버로 전송하고 회원 탈퇴 작업 수행
+    axios.post("http://localhost:8080/api/auth/withdrawal", { password }, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+        .then(response => {
+          console.log(response.data);
+          // 회원 탈퇴 성공 시 로그아웃 처리 등을 수행
+          logout();
+        })
+        .catch(error => {
+          console.error(error);
+          alert("회원 탈퇴에 실패했습니다. 비밀번호를 확인해주세요.");
+        });
+  }
+}
+
+
 nickname.value = decoder.decode(bytes);
 console.log(nickname.value);
 </script>
@@ -29,21 +77,18 @@ console.log(nickname.value);
       {{ nickname }}
     </div>
     <div>
-      <button>
-        회원 탈퇴
-      </button>
-    </div >
+      <button @click="withdrawMember">회원 탈퇴</button>
+    </div>
     <div>
       <button>
         회원 정보 수정
       </button>
     </div>
-    <div>
-
-    </div>
+    <template v-if="!isAuthencated">
+      <button type="button" @click="toSchoolAuth">학교 인증이요ㅋ</button>
+    </template>
   </div>
 </template>
-
 <style scoped>
 
 .left-content img {
