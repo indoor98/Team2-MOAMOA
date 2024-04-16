@@ -32,6 +32,11 @@ const router = createRouter({
       name: 'mypage',
       component: () => import('../views/MypageView.vue')
     },
+    {
+      path: '/mypage/change/pwd',
+      name: 'mypagePasswordChange',
+      component: () => import('../views/MypagePasswordChangeView.vue')
+    },
       // 게시글 상세페이지
     {
       path: '/post/:postno',

@@ -1,6 +1,7 @@
 package team2.proto.service.mypage;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import team2.proto.dto.mypage.MyPageCommentResponseDTO;
 import team2.proto.dto.mypage.MyPagePostResponseDTO;
@@ -30,6 +31,8 @@ public class MyPageServiceImpl implements MyPageService{
     private final MyPageUserCommentRepository commentRepository;
 
     private final MypagePostRepository postRepository;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private MyPageUserResponseDTO dto = new MyPageUserResponseDTO();
 
@@ -63,6 +66,15 @@ public class MyPageServiceImpl implements MyPageService{
         System.out.println(nickName);
 
         userRepository.updateNickName(email, nickName);
+    }
+
+    @Override
+    public void updatePassword(String email, String newPwd){
+        System.out.println("MyPageServiceImpl.updatePwd");
+
+        User user = userRepository.findByEmail(email).get();
+        user.setPassword(bCryptPasswordEncoder.encode(newPwd));
+        userRepository.save(user);
     }
 
     // 본인이 작성한 게시글 조회

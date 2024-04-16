@@ -15,7 +15,7 @@ const bytes = Uint8Array.from(decodedPayload.nickname, c => c.charCodeAt(0));
 const decoder = new TextDecoder('utf-8');
 
 const nickname = ref('');
-
+const modalVisible = ref(false);
 const logout = async () => {
   const accessToken = localStorage.getItem('accessToken');
   console.log(accessToken);
@@ -62,10 +62,29 @@ const withdrawMember = () => {
         });
   }
 }
-
-
 nickname.value = decoder.decode(bytes);
-console.log(nickname.value);
+const openModal = () => {
+  modalVisible.value = true;
+}
+
+const closeModal = () => {
+  modalVisible.value = false;
+}
+
+const changePassword = () => {
+  // 비밀번호 재설정 로직 구현
+  console.log('비밀번호 재설정');
+  router.push({name: 'mypagePasswordChange'})
+  closeModal();
+}
+
+const changeNickname = () => {
+  // 닉네임 변경 로직 구현
+  console.log('닉네임 변경');
+  closeModal();
+}
+
+
 </script>
 
 <template>
@@ -80,15 +99,34 @@ console.log(nickname.value);
       <button @click="withdrawMember">회원 탈퇴</button>
     </div>
     <div>
-      <button>
-        회원 정보 수정
-      </button>
+      <button @click="openModal">회원 정보 수정</button>
     </div>
     <template v-if="!isAuthencated">
       <button type="button" @click="toSchoolAuth">학교 인증이요ㅋ</button>
     </template>
+
+    <!-- 모달 -->
+    <div v-if="modalVisible" class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+          <div class="modal-header">
+            <h3>원하는 작업을 선택하세요</h3>
+            <button class="modal-close-btn" @click="closeModal">X</button>
+          </div>
+          <div class="modal-body">
+            <button @click="changePassword" class="modal-btn">비밀번호 재설정</button>
+            <button @click="changeNickname" class="modal-btn">닉네임 변경</button>
+          </div>
+          <div class="modal-footer">
+            <button @click="closeModal">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
+
+
 <style scoped>
 
 .left-content img {
@@ -103,4 +141,66 @@ console.log(nickname.value);
   margin-bottom: 10px; /* 각 요소 사이의 간격 조정 */
 }
 
+
+.modal-mask {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index:1000;
+}
+
+.modal-wrapper {
+  width: 500px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.modal-close-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.modal-body {
+  margin-bottom: 10px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-footer button {
+  margin-left: 10px;
+}
+
+
+.modal-btn {
+  padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.modal-btn:hover {
+  background-color: #0056b3;
+}
 </style>
