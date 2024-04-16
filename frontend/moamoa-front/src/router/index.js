@@ -58,6 +58,16 @@ const router = createRouter({
       path: '/admin',
       name: 'admin',
       component: () => import('../views/AdminView.vue')
+    },
+    { // 내가 작성한 게시글 목록
+      path: '/mypost',
+      name: 'mypost',
+      component: () => import('../views/MyPostView.vue')
+    },
+    { // 내가 참석한 게시글 목록
+      path: '/joinpost',
+      name: 'joinpost',
+      component: () => import('../views/JoinPostView.vue')
     }
 
   ]
