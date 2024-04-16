@@ -36,6 +36,10 @@ const router = createRouter({
       path: '/mypage/change/pwd',
       name: 'mypagePasswordChange',
       component: () => import('../views/MypagePasswordChangeView.vue')
+    },{
+      path: '/mypage/change/nickname',
+      name: 'mypageNicknameChange',
+      component: () => import('../views/MypageNicknameChangeView.vue')
     },
       // 게시글 상세페이지
     {
