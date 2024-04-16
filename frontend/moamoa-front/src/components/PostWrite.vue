@@ -1,36 +1,83 @@
 <template>
-    <body>
-        <br/>
-    <div>
-        <form @submit.prevent="submitPost" class="post-form">
-        <label for="title">상품 이름:</label>
-        <input type="text" id="title" v-model="post.title" required>
+    <div class="container">
+        <div class="form-section">
+            <form @submit.prevent="submitPost" class="post-form">
+                <div class="row">
+                    <div class="col-25">
+                        <label for="title">상품 이름:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" id="title" v-model="post.title" required>
+                    </div>
+                </div>
 
-        <label for="price">가격:</label>
-        <input type="number" id="price" v-model="post.price" required>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="price">가격:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="number" id="price" v-model="post.price" required>
+                    </div>
+                </div>
 
-        <label for="headCount">참여 인원:</label>
-        <input type="number" id="headCount" v-model="post.headCount" required>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="headCount">참여 인원:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="number" id="headCount" v-model="post.headCount" required>
+                    </div>
+                </div>
 
-        <label for="deadLine">마감 일자:</label>
-        <input type="datetime-local" id="deadLine" v-model="post.deadLine" required>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="deadLine">마감 일자:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="datetime-local" id="deadLine" v-model="post.deadLine" required>
+                    </div>
+                </div>
 
-        <label for="receivePlace">수령 장소:</label>
-        <input type="text" id="receivePlace" v-model="post.receivePlace" required>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="receivePlace">수령 장소:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" id="receivePlace" v-model="post.receivePlace" required>
+                    </div>
+                </div>
 
-        <label for="productUrl">제품 URL:</label>
-        <input type="url" id="productUrl" v-model="post.productUrl" required>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="productUrl">제품 URL:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="url" id="productUrl" v-model="post.productUrl" required>
+                    </div>
+                </div>
 
-        <!-- 해시태그 입력 -->
-        <label for="hashtagList">해시태그:</label>
-        <input type="text" id="hashtagList" v-model="hashtags" required>
-        <p class="hint">여러 개의 해시태그를 입력할 경우 쉼표(,)로 구분해주세요.</p>
+                <!-- 해시태그 입력 -->
+                <div class="row">
+                    <div class="col-25">
+                        <label for="hashtagList">해시태그:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" id="hashtagList" v-model="hashtags" required>
+                    </div>
+                </div>
 
-        <button type="submit">작성 완료</button>
-        </form>
+                <div class="row">
+                    <p class="hint">여러 개의 해시태그를 입력할 경우 쉼표(,)로 구분해주세요.</p>
+                </div>
+
+                <div class="row">
+                    <input type="submit" value="작성 완료" class="submit-button">
+                </div>
+            </form>
+        </div>
+
+        <div class="margin-bottom"></div>
     </div>
-        
-    </body>
 </template>
 
 <script setup>
@@ -88,41 +135,75 @@ const parseHashtags = (hashtagsStr) => {
 </script>
 
 <style scoped>
-body {
-  background-color: #f7efe4; /* 전체 페이지의 배경색 변경 */
+.container {
+    padding: 20px;
 }
 
-.post-form {
+.header {
+    margin-bottom: 20px;
+}
+
+.form-section {
+    margin-bottom: 20px;
+}
+
+.margin-bottom {
+    margin-bottom: 20px;
+}
+
+.row {
     display: flex;
-    flex-direction: column;
-    max-width: 400px;
-    margin: auto;
+    margin-bottom: 15px;
 }
 
-.post-form label {
-    margin-bottom: 5px;
+.col-25 {
+    flex: 25%;
 }
 
-.post-form input, .post-form textarea {
+.col-75 {
+    flex: 75%;
+}
+
+/* Clear floats after the columns */
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+input[type=text],
+input[type=number],
+input[type=datetime-local],
+input[type=url],
+textarea {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
 }
 
-.post-form button {
-    padding: 10px 20px;
-    background-color: #019b63;
+label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+}
+
+input[type=submit] {
+    background-color: #04AA6D;
     color: white;
+    padding: 12px 20px;
     border: none;
+    border-radius: 4px;
     cursor: pointer;
+    float: right;
 }
 
-.post-form button:hover {
-  background-color: #ffd557;
+input[type=submit]:hover {
+    background-color: #45a049;
 }
 
-.post-form .hint {
-  font-size: 0.8rem;
-  margin-top: 5px;
+.hint {
+    font-size: 0.8rem;
+    margin-top: 5px;
 }
 </style>
