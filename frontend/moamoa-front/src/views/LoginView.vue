@@ -1,3 +1,19 @@
+<template>
+  <div class="container">
+    <!-- 이미지 삽입 -->
+    <img src="@/assets/moamoa_logo_org.png" alt="로고 이미지" class="logo">
+    <div class="login-container">
+      <form class="login-form" @submit.prevent="login">
+        <input type="text" v-model="email" placeholder="아이디 입력">
+        <br>
+        <input type="password" v-model="password" placeholder="비밀번호 입력">
+        <br>
+        <button type="submit">로그인</button>
+      </form>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
@@ -20,7 +36,7 @@ onMounted( () => {
   }
 })
 
-const handleSubmit = async () => {
+const login = async () => {
   try {
     const response = await axios.post("http://localhost:8080/api/auth/signin", {
       email: email.value,
@@ -36,55 +52,52 @@ const handleSubmit = async () => {
     router.push({ name: "home" })
   } catch (error) {
     console.error(error)
+    alert("로그인에 실패하였습니다. 이메일과 비밀번호를 확인해주세요");
   }
 }
 </script>
 
-
-<template>
-  <div class="login-container">
-    <h2 style = "color: white; font-weight: bold; padding-top:20px;">MOA<br/>MOA</h2>
-    <form class = "login-form" @submit.prevent="handleSubmit">
-      <input type="text" v-model="email" placeholder="아이디 입력">
-      <br>
-      <input type="password" v-model="password" placeholder="비밀번호 입력">
-      <br>
-      <button type="submit">로그인</button>
-    </form>
-  </div>
-</template>
-
 <style scoped>
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* 이미지 및 폼을 세로로 정렬하기 위해 추가 */
+  height: 100vh; /* 화면 전체 높이 */
+}
+
 .login-container {
   text-align: center;
-  width: 100dvw;
-  height: 100dvh;
-  padding: 10px;
-  background-color: #498C74; /* 로그인 입력 부분의 배경색 */
+  width: 350px; /* 폼의 너비를 조정합니다. */
+  padding: 20px;
+  border-radius: 10px; /* 모서리 둥근 사각형 */
+  background-color: #ffd557; /* 로그인 입력 부분의 배경색 */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+  margin-top: 20px; /* 이미지와 간격 조정 */
 }
-
 .login-container input {
-  width: 30dvw; /* 입력란 너비 */
+  width: calc(100% - 16px);
   margin-bottom: 10px;
   padding: 8px;
+  border-radius: 5px; /* 입력란의 모서리 둥글게 */
+  border: 1px solid #ccc;
 }
 .login-container button {
-  width: 10dvw; /* 버튼 너비 */
+  width: 100%;
   padding: 8px 20px;
   background-color: #007bff;
   color: #fff;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
 }
-.login-form{
-  padding-top: 20px;
-  background-color: #498C74;
+.login-form {
+  background-color: #ffd557; /* 로그인 입력 부분의 배경색 */
 }
-/*
-.login-form button{
-  background-color: gray;
-  color : black;
-}
-*/
 
+/* 로고 이미지 스타일 */
+.logo {
+  width: 250px; /* 로고 이미지의 너비를 조정합니다. */
+  height: auto; /* 높이 자동 조정 */
+}
 </style>

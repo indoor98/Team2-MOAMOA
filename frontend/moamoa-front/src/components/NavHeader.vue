@@ -1,5 +1,31 @@
-<script setup>
+<template>
+  <div class="container">
+    <div class="row align-items-center"> <!-- align-items-center 추가 -->
+      <div class="col-md-4 col-12 text-center"> <!-- text-start에서 text-center로 변경 -->
+        <a href="/">
+        <img src="@/assets/moamoa_logo_org.png" alt="로고 이미지" class="logo"> <!-- 클래스 추가 -->
+        </a>
+      </div>
+      <div class="col-md-5 col-12 my-md-0 my-3 mt-md-4 text-center mx-auto">
+        <input type="search" class="form-control" placeholder="Search...">
+      </div>
+      <div class="col-md-3 col-12 text-md-end text-start mt-3">
+        <!-- accessToken이 있는 경우 -->
+        <template v-if="accessToken">
+          <button type="button" class="btn btn-mypage me-md-2" @click="toMyPage">My Page</button>
+          <button type="button" class="btn btn-logout" @click="logout">Logout</button>
+        </template>
+        <!-- accessToken이 없는 경우 -->
+        <template v-else>
+          <button type="button" class="btn btn-signup me-md-2" @click="toSignup">SignUp</button>
+          <button type="button" class="btn btn-login" @click="toLogin">Login</button>
+        </template>
+      </div>
+    </div>
+  </div>
+</template>
 
+<script setup>
 import { useRouter } from 'vue-router'
 import axios from "axios";
 
@@ -19,12 +45,11 @@ const toMyPage = () => {
   router.push({ name: 'mypage' })
 }
 
-const logout = () => {
-
+const logout = async () => {
   const accessToken = localStorage.getItem('accessToken');
   console.log(accessToken);
 
-  const response = axios.get("http://localhost:8080/api/auth/logout", {
+  const response = await axios.get("http://localhost:8080/api/auth/logout", {
     headers: {
       Authorization: `Bearer ${accessToken}`
     }
@@ -36,34 +61,7 @@ const logout = () => {
   localStorage.removeItem('refreshToken');
   router.push({ name: 'login' })
 }
-
 </script>
-
-<template>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4 col-12 text-start">
-        <a class="navbar-brand" href="/">MOA<br>MOA</a>
-      </div>
-      <div class="col-md-5 col-12 my-md-0 my-3 mt-md-4 text-center mx-auto">
-        <input type="search" class="form-control" placeholder="Search...">
-      </div>
-      <div class="col-md-3 col-12 text-md-end text-start mt-3">
-        <!-- accessToken이 있는 경우 -->
-        <template v-if="accessToken">
-          <button type="button" class="btn btn-mypage me-md-2" @click="toMyPage">My Page</button>
-          <button type="button" class="btn btn-logout" @click="logout">Logout</button>
-        </template>
-        <!-- accessToken이 없는 경우 -->
-        <template v-else>
-          <button type="button" class="btn btn-signup me-md-2" @click="toSignup">SignUp</button>
-          <button type="button" class="btn btn-login" @click="toLogin">Login</button>
-        </template>
-
-      </div>
-    </div>
-  </div>
-</template>
 
 <style scoped>
 header .container {
@@ -76,14 +74,18 @@ header .container {
 .search-bar input[type="search"] {
   max-width: 500px; /* Adjust the width of the search bar */
 }
+/* 회원가입 버튼의 텍스트 색상을 흰색으로 변경 */
 .btn-signup {
   background-color: #498C74;
-  border-color: #f4f4f4;
+  border-color: #498C74; /* 회원가입 버튼과 같은 색의 테두리 추가 */
+  color: #fff; /* 텍스트 색상을 흰색으로 변경 */
 }
+
+/* 로그인 버튼의 테두리와 텍스트 색상 변경 */
 .btn-login {
   background-color: #f4f4f4;
-  border-color: #f4f4f4;
-  color: #498C74;
+  border-color: #498C74; /* 회원가입 버튼과 같은 색의 테두리 추가 */
+  color: #498C74; /* 텍스트 색상을 회원가입 버튼과 같은 색으로 변경 */
 }
 .btn-mypage {
   background-color: #498C74;
@@ -110,5 +112,11 @@ nav svg {
 /* 상단 부분의 여백 조절 크기를 위함. */
 .search-bar, .login-buttons {
   margin-top: 2rem; /* 위쪽 여백을 추가하여 아래로 내림 */
+}
+
+/* 추가한 로고 이미지 스타일 */
+.logo {
+  width: 150px; /* 로고 이미지의 너비를 조절합니다. */
+  height: auto; /* 높이 자동 조정 */
 }
 </style>

@@ -1,5 +1,6 @@
 <template>
-    <br/>
+    <body>
+        <br/>
     <div>
         <form @submit.prevent="submitPost" class="post-form">
         <label for="title">상품 이름:</label>
@@ -8,7 +9,7 @@
         <label for="price">가격:</label>
         <input type="number" id="price" v-model="post.price" required>
 
-        <label for="headCount">인원:</label>
+        <label for="headCount">참여 인원:</label>
         <input type="number" id="headCount" v-model="post.headCount" required>
 
         <label for="deadLine">마감 일자:</label>
@@ -28,6 +29,8 @@
         <button type="submit">작성 완료</button>
         </form>
     </div>
+        
+    </body>
 </template>
 
 <script setup>
@@ -48,6 +51,7 @@ const hashtags = ref('');
 
 const submitPost = async () => {
     try {
+        console.log
         const accessToken = localStorage.getItem('accessToken')
         const response = await axios.post(
         'http://localhost:8080/api/post',
@@ -74,8 +78,8 @@ const submitPost = async () => {
 
     // 해시태그를 쉼표(,)로 분할하여 배열로 반환하는 함수
     const parseHashtags = (hashtagsStr) => {
-    return hashtagsStr.split(',').map(tag => {
-        return { tag };
+    return hashtagsStr.split(',').map(hashtag => {
+        return { hashtag };
     });
     }
     </script>
@@ -86,32 +90,32 @@ body {
 }
 
 .post-form {
-  display: flex;
-  flex-direction: column;
-  max-width: 400px;
-  margin: auto;
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: auto;
 }
 
 .post-form label {
-  margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 
 .post-form input, .post-form textarea {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
 }
 
 .post-form button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
+    padding: 10px 20px;
+    background-color: #019b63;
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
 .post-form button:hover {
-  background-color: #0056b3;
+  background-color: #ffd557;
 }
 
 .post-form .hint {

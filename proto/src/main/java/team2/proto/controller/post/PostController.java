@@ -38,6 +38,7 @@ public class PostController {
 
         // 작성자 정보 설정 후 게시글 생성
         System.out.println("DEBUG >>>> PostController::write");
+        System.out.println("DEBUG >>>> params: "+params.getHashtagList().get(0).getHashtag());
         postService.createPost(params, userEmail);
         System.out.println();
         return new ResponseEntity<Void>(HttpStatus.OK);
