@@ -63,7 +63,7 @@ export default {
 <style scoped>
 
 header {
-  background-color: #498C74;
+  background-color: #f7efe4;
   color: white;
 }
 /* 게시글 스타일 조정을 위한 css 추가 */

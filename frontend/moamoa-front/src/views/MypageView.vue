@@ -25,7 +25,7 @@ import MyPageUserContents from "@/components/MyPageUserContents.vue";
 
 <style scoped>
 header {
-  background-color: #498C74;
+  background-color: #f7efe4;
   color: white;
 }
 
