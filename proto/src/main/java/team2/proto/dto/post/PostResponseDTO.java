@@ -16,6 +16,7 @@ public class PostResponseDTO {
     private String title;
     private Long price;
     private Integer headCount;
+    private Long joinedUsersCount;
     private LocalDateTime deadLine;
     private String receivePlace;
     private String productUrl;
