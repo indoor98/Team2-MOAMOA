@@ -32,6 +32,15 @@ const router = createRouter({
       name: 'mypage',
       component: () => import('../views/MypageView.vue')
     },
+    {
+      path: '/mypage/change/pwd',
+      name: 'mypagePasswordChange',
+      component: () => import('../views/MypagePasswordChangeView.vue')
+    },{
+      path: '/mypage/change/nickname',
+      name: 'mypageNicknameChange',
+      component: () => import('../views/MypageNicknameChangeView.vue')
+    },
       // 게시글 상세페이지
     {
       path: '/post/:postno',
@@ -53,6 +62,16 @@ const router = createRouter({
       path: '/admin',
       name: 'admin',
       component: () => import('../views/AdminView.vue')
+    },
+    { // 내가 작성한 게시글 목록
+      path: '/mypost',
+      name: 'mypost',
+      component: () => import('../views/MyPostView.vue')
+    },
+    { // 내가 참석한 게시글 목록
+      path: '/joinpost',
+      name: 'joinpost',
+      component: () => import('../views/JoinPostView.vue')
     }
 
   ]

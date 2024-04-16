@@ -1,7 +1,7 @@
 <script setup>
 import NavHeader from "@/components/NavHeader.vue";
 import MypageUserInfo from "@/components/mypage/MypageUserInfo.vue";
-import MyPageUserContents from "@/components/mypage/MyPageUserContents.vue";
+import MyPagePwd from "@/components/mypage/MyPagePwd.vue";
 
 </script>
 
@@ -15,7 +15,7 @@ import MyPageUserContents from "@/components/mypage/MyPageUserContents.vue";
         <MypageUserInfo />
       </div>
       <div class="right-content">
-        <MyPageUserContents />
+        <MyPagePwd/>
       </div>
 
     </div>

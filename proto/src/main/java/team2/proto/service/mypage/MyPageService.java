@@ -17,6 +17,8 @@ public interface MyPageService {
     // 본인 닉네임 변경
     void updateNickName(String userEmail, String nickName);
 
+    // 본인 비밀번호 변경
+    void updatePassword(String userEmail, String newPwd);
 
     // 작성한 게시글
     List<MyPagePostResponseDTO> findPostByUser(String email);
@@ -26,4 +28,5 @@ public interface MyPageService {
 
     // 작성한 댓글
     List<MyPageCommentResponseDTO> findCommentByUser(String email);
+
 }

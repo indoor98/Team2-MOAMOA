@@ -4,11 +4,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import team2.proto.dto.mypage.MyPageCommentResponseDTO;
-import team2.proto.dto.mypage.MyPagePostResponseDTO;
-import team2.proto.dto.mypage.MyPageUpdateRequestDTO;
-import team2.proto.dto.mypage.MyPageUserResponseDTO;
+import team2.proto.dto.mypage.*;
 import team2.proto.service.authentication.JwtService;
 import team2.proto.service.mypage.MyPageService;
 
@@ -22,6 +22,8 @@ public class MyPageController {
     // MyPageServiceImpl 객체 생성
     private final MyPageService myPageService;
     private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
+
 
     // 회원 정보 조회
     @GetMapping("/user")
@@ -55,7 +57,21 @@ public class MyPageController {
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
+    // 본인 계정 비밀번호 변경
+    @PostMapping("/password")
+    public ResponseEntity<Void> updatePassword(HttpServletRequest requset, @RequestBody MyPageUpdatePasswordRequestDTO request) {
+        System.out.println("DEBUG >>>>> MyPageController::updatePassword");
+        UserDetails user = jwtService.extractUserFromRequest(requset);
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user.getUsername(), request.getPreviousPwd()));
 
+        if (!request.getNewPwd().equals(request.getNewPwdCheck())) {
+            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+        } else {
+            myPageService.updatePassword(user.getUsername(), request.getNewPwd());
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        }
+    }
 
     @GetMapping("/postlist")
     public ResponseEntity<List<MyPagePostResponseDTO>> postByUser(HttpServletRequest request){
