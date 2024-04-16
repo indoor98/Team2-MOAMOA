@@ -48,7 +48,7 @@ getWriteList();
   <div class="right-content">
     <div class="right-content-div">
       <router-link to="/joinpost">참여중인 공동구매(클릭 시 전체보기로 이동)</router-link>
-<!--      <a href="">참여중인 공동구매(클릭 시 전체보기로 이동)</a>-->
+      <!--      <a href="">참여중인 공동구매(클릭 시 전체보기로 이동)</a>-->
       <div v-if="joinList.length > 0">
         <div class="card" v-for="(post, index) in joinList.slice(0, 5)" :key="post.id">
           <div class="card-body">
@@ -62,7 +62,7 @@ getWriteList();
     </div>
     <div class="right-content-div">
       <router-link to="/mypost">작성한 게시글 목록(클릭 시 전체보기로 이동)</router-link>
-<!--      <a href="">작성한 게시글 목록(클릭 시 전체보기로 이동)</a>-->
+      <!--      <a href="">작성한 게시글 목록(클릭 시 전체보기로 이동)</a>-->
       <div v-if="writeList.length > 0">
         <div class="card" v-for="(post, index) in writeList.slice(0, 5)" :key="post.id">
           <div class="card-body">
