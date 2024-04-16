@@ -1,21 +1,25 @@
 <template>
-  <div>
+  <div class="container" v-if="!loading">
     <NavHeader></NavHeader>
     <div class="main-content">
       <PostLeft
           :title="post.title"
-          :hashtags="post.hashtags"
+          :hashtags="post.hashtag"
           :receive-place="post.receivePlace"
           :postImg="post.postImg">
       </PostLeft>
       <PostRight
           :deadline="post.deadline"
           :headCount="post.headCount"
-          :joinUser="dummyJoinUser"
-          :price="post.price">
+          :joined-users-count="post.joinedUsersCount"
+          :price="post.price"
+          :postJoin="post.id">
       </PostRight>
     </div>
     <PostComment></PostComment>
+  </div>
+  <div v-else>
+    Loading...
   </div>
 </template>
 
@@ -37,62 +41,85 @@ export default {
   data() {
     return {
       post: {},
-      dummyJoinUser: 4
+      loading: true,
     }
   },
   mounted() {
-    this.fetchPost();
+    this.fetchPost()
   },
   methods: {
-    fetchPost() {
-      const postId = this.$route.params.postno;
-      const accessToken = localStorage.getItem('accessToken');
-      axios.get(`http://localhost:8080/api/post/${postId}`, {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
-        }
-      })
-          .then(response => {
-            console.log('API Response:', response.data);  // API 응답 로그 출력
-            this.post = response.data;
-            this.dummyJoinUser = response.data.joinUser || 5;
-          })
-          .catch(error => {
-            console.error("There was an error fetching the post: ", error);
-          });
+    async fetchPost() {
+      ///////////
+      try {
+        const postId = this.$route.params.postno;
+        const response = await axios.get(`http://localhost:8080/api/post/${postId}`);
+        this.post = response.data;
+        this.loading = false;
+      } catch (error) {
+        console.error("There was an error fetching the post: ", error);
+        this.loading = false;
+      }
+      ///////////////
+      // const postId = this.$route.params.postno;
+      // const accessToken = localStorage.getItem('accessToken');
+      // axios.get(`http://localhost:8080/api/post/${postId}`, {
+      //   headers: {
+      //     'Authorization': `Bearer ${accessToken}`
+      //   }
+      // })
+      //     .then(response => {
+      //       console.log('API Response:', response.data);
+      //       this.post = response.data;
+      //     })
+      //     .catch(error => {
+      //       console.error("There was an error fetching the post: ", error);
+      //     });
     }
   }
 }
 </script>
 
 <style>
+header {
+  background-color: #f7efe4;
+  color: white;
+}
+
 body {
   font-family: 'Helvetica Neue', Arial, sans-serif;
-  color: #333; /* 기본 텍스트 색상 */
+  color: #333;
 }
 
-/* 전체 페이지 컨테이너 스타일 */
+.main-content {
+  display: flex;
+  gap: 16px;
+  border: 1px solid black;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
 .container {
+  display: flex;
+  flex-direction: column;
   max-width: 1200px;
-  margin: 0 auto; /* 중앙 정렬 */
+  margin: 0 auto;
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1); /* 상자 그림자 효과 */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* 배경색 설정 */
+
 body {
-  background-color: #f4f4f4; /* 밝은 회색 배경 */
+  background-color: #f4f4f4;
 }
 
-/* 링크 스타일 */
+
 a {
-  color: #007BFF; /* 링크 색상 */
-  text-decoration: none; /* 밑줄 제거 */
+  color: #007BFF;
+  text-decoration: none;
 }
 
-/* 버튼 기본 스타일 */
 button {
-  background-color: #007BFF; /* 버튼 색상 */
+  background-color: #007BFF;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -102,6 +129,6 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3; /* 호버 시 버튼 색상 변경 */
+  background-color: #0056b3;
 }
 </style>
