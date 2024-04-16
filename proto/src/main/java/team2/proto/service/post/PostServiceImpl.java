@@ -51,8 +51,9 @@ public class PostServiceImpl implements PostService {
                 .build();
 
         // 해시태그 추가 하기
-        List<HashtagRequestDTO> hashtagList = params.getHastagList();
+        List<HashtagRequestDTO> hashtagList = params.getHashtagList();
         for(HashtagRequestDTO hashtagRequestDTO : hashtagList) {
+            System.out.println("DEBUG >>>> PostServece: hashttageRequestDTO : " + hashtagRequestDTO.getHashtag());
             Hashtag hashtag = Hashtag.createHashtag(hashtagRequestDTO.getHashtag(), post);
             post.addHashtag(hashtag);
            }

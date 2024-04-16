@@ -18,7 +18,7 @@ public class PostWriteDTO {
     private LocalDateTime deadLine;
     private String receivePlace;
     private String productUrl;
-    private List<HashtagRequestDTO> hastagList;
+    private List<HashtagRequestDTO> hashtagList;
 
 
 }
