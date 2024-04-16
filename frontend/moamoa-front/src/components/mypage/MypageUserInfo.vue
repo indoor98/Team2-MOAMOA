@@ -97,13 +97,13 @@ const changeNickname = () => {
       {{ nickname }}
     </div>
     <div>
-      <button @click="withdrawMember">회원 탈퇴</button>
+      <button @click="withdrawMember" class="action-btn">회원 탈퇴</button>
     </div>
     <div>
-      <button @click="openModal">회원 정보 수정</button>
+      <button @click="openModal" class="action-btn">회원 정보 수정</button>
     </div>
     <template v-if="!isAuthencated">
-      <button type="button" @click="toSchoolAuth">학교 인증이요ㅋ</button>
+      <button type="button" @click="toSchoolAuth" class="school-auth-btn">학교 인증이요ㅋ</button>
     </template>
 
     <!-- 모달 -->
@@ -203,5 +203,37 @@ const changeNickname = () => {
 
 .modal-btn:hover {
   background-color: #0056b3;
+}
+.action-btn {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.action-btn:hover {
+  background-color: #0056b3;
+}
+
+.school-auth-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #28a745;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.school-auth-btn:hover {
+  background-color: #218838;
 }
 </style>
