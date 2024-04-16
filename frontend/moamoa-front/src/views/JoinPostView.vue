@@ -38,18 +38,19 @@ getJoinList();
     <div class="list-header">
       <div>번호</div>
       <div>게시글 제목</div>
-      <div>이미지</div>
-      <div>참여 인원</div>
-    </div>
-    <!-- 리스트 아이템 예시 -->
-    <div class="list-item" v-for="(item, index) in joinList" :key="index">
-      <div class="number">{{ index + 1 }}</div>
-      <div class="title">{{ item.title }}</div>
-      <div class="url">{{ item.productUrl }}</div> <!-- 수정 예정 -->
-      <div class="head-count">{{ item.headCount }}</div>
+      <div>모집 인원</div>
+      <div>마감일자</div>
     </div>
 
-    <!-- 추가 리스트 아이템은 여기에 -->
+    <div class="list-item" v-for="(item, index) in joinList" :key="index">
+      <router-link :to="`/post/${item.postId}`">
+        <div class="number">{{ index + 1 }}</div>
+      </router-link>
+      <a :href="item.productUrl" target="_blank" class="title">{{ item.title }}</a>
+      <div class="head-count">{{ item.headCount }}</div>
+      <div class="deadline">{{item.deadLine}}</div>
+
+    </div>
   </div>
 
 </template>
@@ -82,25 +83,21 @@ header {
   margin-top: 20px;
   padding: 0 10%;
 }
-.list-header {
-  display: flex;
-  padding: 10px;
-  border-bottom: 2px solid #498C74;
-  font-weight: bold;
-}
-.list-header div, .list-item div {
-  flex: 1;
-  text-align: center;
-
-}
-.list-item {
+.list-header, .list-item {
   display: flex;
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #ddd;
 }
-.list-item img {
-  width: 50px;
-  height: 50px;
+.list-header div, .list-item div, .list-item a {
+  flex: 1; /* 모든 항목이 컨테이너의 공간을 균등하게 차지하도록 설정 */
+  text-align: center;
 }
+.number, .head-count, .deadline {
+  min-width: 50px; /* 최소 너비를 설정하여 내용에 따라 너비가 변하지 않도록 함 */
+}
+.title {
+  flex: 3; /* 제목 부분을 다른 칸들보다 넓게 설정 */
+}
+
 </style>
