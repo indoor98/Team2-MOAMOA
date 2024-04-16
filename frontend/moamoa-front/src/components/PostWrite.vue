@@ -36,6 +36,9 @@
 <script setup>
 import axios from 'axios'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const post = ref({
     title: '',
@@ -51,7 +54,6 @@ const hashtags = ref('');
 
 const submitPost = async () => {
     try {
-        console.log
         const accessToken = localStorage.getItem('accessToken')
         const response = await axios.post(
         'http://localhost:8080/api/post',
@@ -71,18 +73,19 @@ const submitPost = async () => {
         }
         )
         console.log('게시글 작성 완료:', response.data)
+        router.push({ name: 'homeview' }); // 작성 완료 후 HomeView로 이동
     } catch (error) {
         console.error('게시글 작성 에러:', error)
     }
-    }
+}
 
-    // 해시태그를 쉼표(,)로 분할하여 배열로 반환하는 함수
-    const parseHashtags = (hashtagsStr) => {
+// 해시태그를 쉼표(,)로 분할하여 배열로 반환하는 함수
+const parseHashtags = (hashtagsStr) => {
     return hashtagsStr.split(',').map(hashtag => {
         return { hashtag };
     });
-    }
-    </script>
+}
+</script>
 
 <style scoped>
 body {
