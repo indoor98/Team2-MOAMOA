@@ -120,7 +120,7 @@ const submitPost = async () => {
         }
         )
         console.log('게시글 작성 완료:', response.data)
-        router.push({ name: 'homeview' }); // 작성 완료 후 HomeView로 이동
+        router.push({ name: 'home' }); // 작성 완료 후 HomeView로 이동
     } catch (error) {
         console.error('게시글 작성 에러:', error)
     }
