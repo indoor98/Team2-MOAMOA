@@ -105,7 +105,6 @@ const cancelJoin = async () => {
 }
 
 const updateJoin = async () => {
-
   try {
     console.log('게시글 수정 폼으로 이동');
     // this.$router.push({ name: 'postUpdate', params: { postno: this.postno } });

@@ -97,7 +97,7 @@ public class MyPageServiceImpl implements MyPageService{
 
         System.out.println("success");
         for(Post post : posts){
-            if (post.getDeleteYn() == true) {
+            if (post.getDeleteYn() != true) {
                 MyPagePostResponseDTO dto = new MyPagePostResponseDTO();
                 dto.setPostId(post.getId());
                 dto.setProductUrl(post.getProductUrl());
@@ -173,7 +173,7 @@ public class MyPageServiceImpl implements MyPageService{
 
         List<MyPagePostResponseDTO> dtoList = new ArrayList<>();
         for(Post post : posts){
-            if (post.getDeleteYn() == true ) {
+            if (post.getDeleteYn() != true ) {
                 MyPagePostResponseDTO dto = new MyPagePostResponseDTO();
                 dto.setPostId(post.getId());
                 dto.setProductUrl(post.getProductUrl());

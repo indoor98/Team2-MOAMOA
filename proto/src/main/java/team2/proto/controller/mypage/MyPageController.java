@@ -81,7 +81,7 @@ public class MyPageController {
         System.out.println(userEmail);
 
         List<MyPagePostResponseDTO> list = myPageService.findPostByUser(userEmail);
-
+        System.out.println(list);
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
     

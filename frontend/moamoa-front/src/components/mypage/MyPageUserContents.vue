@@ -42,7 +42,7 @@ const getJoinList = () => {
 
 getJoinList();
 getWriteList();
-
+console.log(writeList.value);
 </script>
 <template>
   <div class="right-content">
@@ -64,7 +64,8 @@ getWriteList();
       <div class="post-list" v-if="writeList.length > 0">
         <div class="card" v-for="(post, index) in writeList.slice(0, 5)" :key="post.id">
           <div class="card-body">
-            <a class="card-title" href="">{{ post.title }}</a>
+            <router-link :to="`/post/${post.id}`" class="card-title" >{{ post.title }}</router-link>
+<!--            <a class="card-title" href="/post/{{post.id}}">{{ post.title }}</a>-->
           </div>
         </div>
       </div>
