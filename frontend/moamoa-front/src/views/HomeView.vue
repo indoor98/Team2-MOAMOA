@@ -19,6 +19,12 @@
         <PostCard v-for="(post, index) in posts" :key="index" :post="post" />
       </div>
     </div>
+    <!-- 페이지네이션 버튼 추가 -->
+    <div class="container mt-3 pagination">
+      <button @click="fetchPosts(currentPage - 1)" :disabled="currentPage <= 0" class="btn btn-lg btn-custom">이전</button>
+      <span>{{ currentPage + 1 }}</span>
+      <button @click="fetchPosts(currentPage + 1)" class="btn btn-lg btn-custom">다음</button>
+    </div>
     <!-- 공간을 띄우기 위한 마진 추가 -->
     <div class="container mt-5"></div>
   </div>
@@ -33,14 +39,20 @@ import PostCard from "@/components/PostCard.vue"; // PostCard.vue 컴포넌트 �
 
 const router = useRouter();
 const posts = ref([]);
+const currentPage = ref(0); // 현재 페이지 번호를 관리하는 ref 추가
 
-onMounted(async () => {
+const fetchPosts = async (page) => {
+  currentPage.value = page; // 페이지 업데이트
   try {
-    const response = await axios.get(`http://localhost:8080/api/post/list/0`);
-    posts.value = response.data;
+    const response = await axios.get(`http://localhost:8080/api/post/list/${currentPage.value}`);
+    posts.value = response.data; // 게시글 데이터 업데이트
   } catch (error) {
     console.error(error);
   }
+};
+
+onMounted(() => {
+  fetchPosts(0); // 초기 페이지 로드
 });
 
 const goToWritePage = () => {
@@ -79,4 +91,45 @@ body {
   color: white; /* 텍스트 색상을 흰색으로 지정 */
   border: none; /* 테두리 제거 */
 }
+
+header {
+  background-color: #f7efe4;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+body {
+  background-color: #f7efe4;
+}
+.container {
+  text-align: center;
+}
+.logodetail1,
+.logodetail3 {
+  width: calc(25% - 20px);
+  height: auto;
+  margin: 10px;
+}
+.logodetail2 {
+  width: 25%;
+  height: auto;
+}
+.btn-lg {
+  font-size: 20px;
+  padding: 10px 20px;
+}
+.btn-custom {
+  background-color: #fdbcbc;
+  color: white;
+  border: none;
+}
+
+.pagination {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination button {
+  margin: 0 40px; /* 버튼 간격 조정 */
+}
 </style>
+
