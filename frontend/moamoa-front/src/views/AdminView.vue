@@ -1,11 +1,7 @@
 <template>
   <div class="body">
     <div class="header">
-      <div class="logo">MOA<br/>MOA</div>
-      <div class="search-box-container">
-        <input type="text" class="search-box" placeholder="검색">
-        <div class="search-icon">&#128269;</div>
-      </div>
+      <img src="@/assets/moamoa_logo_org.png" alt="로고 이미지" class="logo">
     </div>
 
     <div class="list-container">
@@ -16,16 +12,16 @@
         <div>승인</div>
       </div>
       <div v-if="str" class="list-item"></div>
-      <div class="list-item" v-for="item in str" :key="item.id">
+      <div class="list-item" v-for="item in str" :key="item.id" v-show="!item.auth_yn">
         <div class="author-name">{{ item.nickname }}</div>
         <div class="school">{{ item.school }}</div>
         <div class="img">
           <img src="/userprofile/userdefault.jpg" alt="이미지">
         </div>
         <div class="approve-button">
-        <button @click="approveRequest(item.id)">승인</button>
+          <button @click="approveRequest(item.id)">승인</button>
         </div>
-        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -33,8 +29,6 @@
 <script>
 import { ref } from 'vue';
 import axios from 'axios';
-
-
 
 export default {
   name: 'About',
@@ -84,6 +78,7 @@ export default {
           .then((res) => {
             // 요청이 승인되었을 때의 로직 추가
             console.log("승인 완료");
+            str.value.find(item => item.id === id).auth_yn = true;
           })
           .catch((err) => {
             console.log("에러 발생");
@@ -91,32 +86,19 @@ export default {
           });
     };
 
-    // const rejectRequest = (id) => {
-    //   const accessToken = localStorage.getItem('accessToken');
-    //   console.log(accessToken);
-    //   axios.put(
-    //       `http://localhost:8080/api/admin/authlist/${id}`,
-    //       null,
-    //       // json 이면 data로 요청하고, params이면 config로 요청
-    //       {
-    //         params: {
-    //           approve: false
-    //         },
-    //         headers: {
-    //           Authorization: `Bearer ${accessToken}`
-    //         }
-    //       }
-    //   )
-    //       .then((res) => {
-    //         // 요청이 거절되었을 때의 로직 추가
-    //         console.log("승인 거절");
-    //       })
-    //       .catch((err) => {
-    //         console.error(err);
-    //       });
-    // };
+    // 승인되지 않은 아이템 필터링
+    const filteredItems = ref([]);
+    const filterItems = () => {
+      if (str.value) {
+        filteredItems.value = str.value.filter(item => !item.auth_yn);
+      }
+    };
 
-    return { str, approveRequest}; // 컴포넌트 템플릿에서 사용할 변수 및 메서드 반환
+    const mounted = () => {
+      filterItems();
+    };
+
+    return { str, approveRequest, mounted, filteredItems}; // 컴포넌트 템플릿에서 사용할 변수 및 메서드 반환
   }
 };
 </script>
@@ -127,33 +109,15 @@ export default {
   margin: 0;
   padding: 0;
 }
+.logo {
+  width: 200px; /* 로고 이미지의 너비를 조절합니다. */
+  height: auto; /* 높이 자동 조정 */
+}
 .header {
-  background-color: #498C74;
-  padding: 20px 10%;
-  color: white;
+  background-color: #f7efe4;;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-}
-.search-box-container {
-  position: relative;
-  flex-grow: 1;
-  margin: 0 20px;
-}
-.search-box {
-  width: 100%;
-  height: 40px;
-  padding: 10px 40px 10px 20px;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 20px;
-}
-.search-icon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
 }
 .list-container {
   margin-top: 20px;
@@ -184,8 +148,11 @@ export default {
 }
 .list-item button {
   width: 50px;
-  height: 50px;
+  height: 30px;
   justify-self: center; /* 버튼을 가운데 정렬 */
   margin-top: 10px; /* 버튼 위 간격 추가 */
+  background-color: #fdbcbc; /* 버튼의 배경색을 지정 */
+  color: white; /* 텍스트 색상을 흰색으로 지정 */
+  border: none; /* 테두리 제거 */
 }
 </style>
