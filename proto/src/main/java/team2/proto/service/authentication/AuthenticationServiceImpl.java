@@ -51,7 +51,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         String jwt = jwtService.generateToken(user);
 
-        RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getEmail());
+        // 이미 refreshToken이 존재하는지 확인하는 로직 추가하기
+        RefreshToken refreshToken = refreshTokenService.findRefreshToken(request.getEmail());
+        if (refreshToken == null) {
+            refreshToken = refreshTokenService.createRefreshToken(user.getEmail());
+            return JwtAuthenticationResponse.builder().
+                    accessToken(jwt).
+                    refreshToken(refreshToken.getRefreshToken())
+                    .build();
+        }
         return JwtAuthenticationResponse.builder().
                             accessToken(jwt).
                             refreshToken(refreshToken.getRefreshToken())
