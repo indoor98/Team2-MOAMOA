@@ -47,10 +47,17 @@ getWriteList();
       <router-link :to="`/post/${item.postId}`">
         <div class="number">{{ index + 1 }}</div>
       </router-link>
-      <a :href="item.productUrl" target="_blank" class="title">{{ item.title }}</a>
+      <div>
+        <a :href="item.productUrl" target="_blank" class="title">{{ item.title }}</a>
+        <!-- 미리보기 추가 -->
+        <div class="preview">
+          <img :src="item.metaImage" alt="미리보기 이미지" class="preview-image">
+          <div class="preview-title">{{ item.metaTitle }}</div>
+          <p class="preview-description">{{ item.metaDescription }}</p>
+        </div>
+      </div>
       <div class="head-count">{{ item.headCount }}</div>
-      <div class="deadline">{{item.deadLine}}</div>
-
+      <div class="deadline">{{ item.deadLine }}</div>
     </div>
   </div>
 

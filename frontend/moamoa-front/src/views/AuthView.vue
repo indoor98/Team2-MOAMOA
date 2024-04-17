@@ -45,22 +45,17 @@ const handleSubmit = async () => {
 }
 </script>
 
-
 <template>
   <div class="body">
-    <div>
-      <h2 style="color: white; font-weight: bold; text-align: center;">MOA<br/>MOA</h2>
-      <div class="authup-container">
-        <h2>Auth</h2>
-        <form class="auth-form" @submit.prevent="handleSubmit">
-          <input type="file" @change="readInputFile"/>
-          <div id="imagePreview">
-            <img v-if="image" :src="image" />
-          </div>
-          <br>
-          <button type="submit">제출</button>
-        </form>
-      </div>
+    <div class="authup-container">
+      <img src="@/assets/moamoa_logo_org.png" alt="로고 이미지" class="logo">
+      <form class="auth-form" @submit.prevent="handleSubmit">
+        <input type="file" @change="readInputFile"/>
+        <div id="imagePreview" :style="{ backgroundImage: 'url(' + image + ')' }">
+        </div>
+        <br>
+        <button type="submit">제출</button>
+      </form>
     </div>
   </div>
 </template>
@@ -70,52 +65,62 @@ const handleSubmit = async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
-  background-color: #f2f2f2;
+  flex-direction: column; /* 이미지 및 폼을 세로로 정렬하기 위해 추가 */
+  height: 100vh; /* 화면 전체 높이 */
+  //background-color: #f7efe4;
 }
 .authup-container {
   text-align: center;
-  width: 300px;
+  width: 350px; /* 폼의 너비를 조정합니다. */
   padding: 20px;
   border-radius: 10px; /* 모서리 둥근 사각형 */
-  background-color: #D9D9D9;
+  background-color: #f7efe4; /* 로그인 입력 부분의 배경색 */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+  margin-top: 20px; /* 이미지와 간격 조정 */
 }
 .authup-container input {
   width: calc(100% - 16px);
   margin-bottom: 10px;
   padding: 8px;
   border-radius: 5px; /* 입력란의 모서리 둥글게 */
-  border: 1px solid #ccc;
+  border: 1px solid #f7efe4;
+
 }
 .authup-container button {
   width: 100%;
   padding: 8px 20px;
-  background-color: #007bff;
+  background-color: #26499d;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 .auth-form{
-  background-color: #D9D9D9;
+  background-color: #ffd557;
+  text-align: center;
+  //width: 350px; /* 폼의 너비를 조정합니다. */
+  padding: 20px;
+  border-radius: 10px; /* 모서리 둥근 사각형 */
+  background-color: #ffd557; /* 로그인 입력 부분의 배경색 */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+  //margin-top: 20px; /* 이미지와 간격 조정 */
 }
-.body{
-  background-color: #498C74;
-}
+
 #imagePreview{
   width : 100%;
   height: 110px;
-  background-color : #EFF3FD;
-  border : 1px solid skyblue;
+  background-color : white;
+  border : 1px solid #f7efe4;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-
+  background-size: contain; /* 배경 이미지를 내용에 맞게 조정 */
+  background-repeat: no-repeat; /* 배경 이미지 반복 제거 */
+  background-position: center; /* 배경 이미지 가운데 정렬 */
 }
-
-
-
+.logo {
+  width: 250px; /* 로고 이미지의 너비를 조정합니다. */
+  height: auto; /* 높이 자동 조정 */
+}
 </style>
