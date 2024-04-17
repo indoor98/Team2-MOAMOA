@@ -4,7 +4,7 @@
     <div class="main-content">
       <PostLeft
           :title="post.title"
-          :hashtags="post.hashtag"
+          :hashtags="post.hashtags"
           :receive-place="post.receivePlace"
           :postImg="post.postImg">
       </PostLeft>
@@ -13,7 +13,9 @@
           :headCount="post.headCount"
           :joined-users-count="post.joinedUsersCount"
           :price="post.price"
-          :postJoin="post.id">
+          :postJoin="post.id.toString()"
+          :isUserJoined="post.isUserJoined"
+          @joinedOrCanceled="fetchPostData">
       </PostRight>
     </div>
     <PostComment></PostComment>
@@ -23,60 +25,36 @@
   </div>
 </template>
 
-<script>
-import NavHeader from '../components/NavHeader.vue'
-import PostLeft from '../components/postdetailpage/PostLeft.vue'
-import PostRight from '../components/postdetailpage/PostRight.vue'
-import PostComment from '../components/postdetailpage/PostComment.vue'
-import axios from 'axios'
+<script setup>
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { useRoute } from 'vue-router';
+import NavHeader from '../components/NavHeader.vue';
+import PostLeft from '../components/postdetailpage/PostLeft.vue';
+import PostRight from '../components/postdetailpage/PostRight.vue';
+import PostComment from '../components/postdetailpage/PostComment.vue';
 
-export default {
-  name: 'PostDetailView',
-  components: {
-    NavHeader,
-    PostLeft,
-    PostRight,
-    PostComment
-  },
-  data() {
-    return {
-      post: {},
-      loading: true,
-    }
-  },
-  mounted() {
-    this.fetchPost()
-  },
-  methods: {
-    async fetchPost() {
-      ///////////
-      try {
-        const postId = this.$route.params.postno;
-        const response = await axios.get(`http://localhost:8080/api/post/${postId}`);
-        this.post = response.data;
-        this.loading = false;
-      } catch (error) {
-        console.error("There was an error fetching the post: ", error);
-        this.loading = false;
-      }
-      ///////////////
-      // const postId = this.$route.params.postno;
-      // const accessToken = localStorage.getItem('accessToken');
-      // axios.get(`http://localhost:8080/api/post/${postId}`, {
-      //   headers: {
-      //     'Authorization': `Bearer ${accessToken}`
-      //   }
-      // })
-      //     .then(response => {
-      //       console.log('API Response:', response.data);
-      //       this.post = response.data;
-      //     })
-      //     .catch(error => {
-      //       console.error("There was an error fetching the post: ", error);
-      //     });
-    }
+const post = ref({});
+const loading = ref(true);
+const isUserJoined = ref(false);
+const route = useRoute();
+
+const fetchPostData = async () => {
+  const postId = route.params.postno;
+  const accessToken = localStorage.getItem('accessToken');
+  const headers = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
+  try {
+    const response = await axios.get(`http://localhost:8080/api/post/${postId}`, { headers });
+    post.value = response.data;
+    isUserJoined.value = response.data.isUserJoined;
+    loading.value = false;
+  } catch (error) {
+    console.error("There was an error fetching the post: ", error);
+    loading.value = false;
   }
-}
+};
+
+onMounted(fetchPostData);
 </script>
 
 <style>

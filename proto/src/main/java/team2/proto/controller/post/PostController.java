@@ -46,9 +46,19 @@ public class PostController {
 
     // 단일 게시글 조회 - id
     @GetMapping("/{postno}")
-    public ResponseEntity<PostResponseDTO> getPostById(@PathVariable("postno") Long id){
-        PostResponseDTO post = postService.getPostById(id) ;
-        return new ResponseEntity<PostResponseDTO>(post, HttpStatus.OK);
+    public ResponseEntity<PostResponseDTO> getPostById(@PathVariable("postno") Long id, HttpServletRequest request) {
+        String token = jwtService.extractTokenFromRequest(request);
+        String userEmail = null;
+
+        if (token != null && !token.isEmpty()) {
+            userEmail = jwtService.extractUserName(token); // 사용자 이름만 추출하고, 유효성 검증은 생략
+        }
+
+        PostResponseDTO post = postService.getPostById(id, userEmail);
+        if (post == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(post);
     }
     
     // 게시글 수정하기
