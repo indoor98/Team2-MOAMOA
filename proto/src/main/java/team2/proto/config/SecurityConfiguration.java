@@ -71,7 +71,8 @@ public class SecurityConfiguration {
                                     "/swagger-ui.html",
                                     "/api/auth/refreshtoken",
                                     "/api/post/list/**",
-                                    "/api/post/{postno}").permitAll().anyRequest().authenticated())
+                                    "/api/post/{postno}",
+                                    "/api/post/listhashtag/{pageno}").permitAll().anyRequest().authenticated())
                     .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                     .authenticationProvider(daoAuthenticationProvider()).addFilterBefore(
                             jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

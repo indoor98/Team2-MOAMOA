@@ -9,6 +9,7 @@
         <p class="card-text">가격: {{ post.price }}</p>
         <p class="card-text">인원수: {{ post.headCount }}</p>
         <p class="card-text">마감일: {{ post.deadLine }}</p>
+
       </div>
     </div>
   </div>

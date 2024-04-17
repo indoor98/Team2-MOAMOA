@@ -59,6 +59,12 @@ const router = createRouter({
       name: 'postwrite',
       component: () => import('../views/PostWriteView.vue')
     },
+     // 게시글 검색 페이지
+     {
+      path: '/search',
+      name: 'search',
+      component: () => import('../views/SearchView.vue')
+    },
     {
       path: '/auth',
       name: 'auth',
