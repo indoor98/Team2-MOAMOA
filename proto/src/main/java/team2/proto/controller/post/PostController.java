@@ -118,4 +118,14 @@ public class PostController {
         postService.cancel(postId, request);
         return new ResponseEntity<>("PostUser 정보를 삭제했습니다.", HttpStatus.OK);
     }
+
+    // 현재 유저가 해당 post에 참여하고 있는지 확인하는 함수 :
+    @GetMapping("/post/attend/{postno}")
+    public ResponseEntity<Integer> isAttend(@PathVariable("postno") Long postId, HttpServletRequest request) {
+        User user = jwtService.extractUserFromRequest(request);
+        Long userId = user.getId();
+        Integer attendtype = postService.attendType(postId, userId);
+        System.out.println(attendtype);
+        return new ResponseEntity<Integer>(attendtype, HttpStatus.OK);
+    }
 }

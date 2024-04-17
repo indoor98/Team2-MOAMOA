@@ -47,30 +47,28 @@ getWriteList();
 <template>
   <div class="right-content">
     <div class="right-content-div">
-      <router-link to="/joinpost">참여중인 공동구매(클릭 시 전체보기로 이동)</router-link>
-      <!--      <a href="">참여중인 공동구매(클릭 시 전체보기로 이동)</a>-->
-      <div v-if="joinList.length > 0">
+      <router-link to="/joinpost" class="section-title">참여중인 공동구매</router-link>
+      <div class="post-list" v-if="joinList.length > 0">
         <div class="card" v-for="(post, index) in joinList.slice(0, 5)" :key="post.id">
           <div class="card-body">
             <a class="card-title" href="">{{ post.title }}</a>
           </div>
         </div>
       </div>
-      <div v-else>
+      <div v-else class="no-content-msg">
         참여 중인 공동구매가 없습니다.
       </div>
     </div>
     <div class="right-content-div">
-      <router-link to="/mypost">작성한 게시글 목록(클릭 시 전체보기로 이동)</router-link>
-      <!--      <a href="">작성한 게시글 목록(클릭 시 전체보기로 이동)</a>-->
-      <div v-if="writeList.length > 0">
+      <router-link to="/mypost" class="section-title">작성한 게시글 목록</router-link>
+      <div class="post-list" v-if="writeList.length > 0">
         <div class="card" v-for="(post, index) in writeList.slice(0, 5)" :key="post.id">
           <div class="card-body">
             <a class="card-title" href="">{{ post.title }}</a>
           </div>
         </div>
       </div>
-      <div v-else>
+      <div v-else class="no-content-msg">
         작성한 게시글이 없습니다.
       </div>
     </div>
@@ -80,32 +78,50 @@ getWriteList();
 <style scoped>
 
 .right-content-div {
-  border: solid 1px;
-  margin: 50px;
-  height:30%;
+  border: solid 1px #dee2e6;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f7efe4;
 }
 
+.section-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #343a40;
+  text-decoration: none;
+}
+
+.post-list {
+  margin-top: 10px;
+}
 
 .card {
   width: 100%;
   border: 1px solid #ced4da;
-  margin: 0px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background-color: #fff;
 }
 
 .card-body {
   display: flex;
   font-size: 18px;
-  justify-content: center; /* 가로 중앙 정렬 */
-  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
 }
 
 .card-title {
-  text-align: center; /* 제목 가운데 정렬 */
-  margin: 0; /* 제목 상하 여백 제거 */
+  text-align: center;
+  margin: 0;
+  color: #212529;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
+.no-content-msg {
+  text-align: center;
+  font-style: italic;
+  color: #6c757d;
 }
 </style>

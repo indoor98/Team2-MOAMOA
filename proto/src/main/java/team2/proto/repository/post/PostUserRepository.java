@@ -16,6 +16,8 @@ public interface PostUserRepository  extends JpaRepository<PostUser, Long> {
 
     void deleteByPostIdAndIsHost(Long postId, boolean b);
 
+    PostUser findByPostIdAndUserId(Long postId, Long userId);
+
     List<PostUser> findByPost(Post post);
     List<PostUser> findAllByPostId(Long postId);
 

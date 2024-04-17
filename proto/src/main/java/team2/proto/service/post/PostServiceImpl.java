@@ -253,5 +253,19 @@ public class PostServiceImpl implements PostService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Integer attendType(Long postId, Long userId) {
+        PostUser postUser = postUserRepository.findByPostIdAndUserId(postId, userId);
+        if (postUser == null) {
+            return 0;
+        } else {
+            if (postUser.isHost()) {
+                return 1;
+            } else {
+                return 2;
+            }
+        }
+    }
+
 
 }
