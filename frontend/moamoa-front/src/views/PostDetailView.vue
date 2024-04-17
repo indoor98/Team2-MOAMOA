@@ -80,10 +80,7 @@ export default {
 </script>
 
 <style>
-header {
-  background-color: #f7efe4;
-  color: white;
-}
+
 
 body {
   font-family: 'Helvetica Neue', Arial, sans-serif;
