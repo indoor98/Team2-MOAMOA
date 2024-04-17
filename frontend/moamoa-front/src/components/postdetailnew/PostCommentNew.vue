@@ -3,6 +3,8 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from "axios";
 
+const router = useRouter()
+
 // accessToken 담기
 const accessToken = localStorage.getItem("accessToken");
 // 댓글 목록을 담을 ref
@@ -54,6 +56,23 @@ const loadComments = async () => {
   }
 };
 
+const submitComment = async () => {
+  try {
+    const postId = window.location.pathname.split('/').pop();
+    const response = await axios.post(`http://localhost:8080/api/comment/${postId}/write`, {
+      content: newComment.value
+    }, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}` // accessToken을 Bearer 토큰으로 사용하여 Authorization 헤더에 담음
+      }
+    });
+    newComment.value = '';
+    await loadComments(); // 새 댓글을 등록한 후에 댓글 목록을 다시 불러옴
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 onMounted(loadComments);
 
 </script>
@@ -82,7 +101,7 @@ onMounted(loadComments);
     <div v-if="userType >= 1">
     <div class="comment-section">
       <textarea v-model="newComment" placeholder="댓글"></textarea>
-      <button class="comment-button" @click="submitComment">등록</button>
+      <button class="comment-button" @click.prevent="submitComment">등록</button>
     </div>
     </div>
     <div v-else>
