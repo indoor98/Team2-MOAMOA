@@ -42,6 +42,22 @@ public class RefreshTokenService {
         }
     }
 
+    public RefreshToken findRefreshToken(String email) {
+        Optional<RefreshToken> refreshToken = refreshTokenRepository.findByUserId(userRepository.findByEmail(email).get());
+        if (refreshToken.isPresent()) {
+            RefreshToken token = refreshToken.get();
+            try {
+                verifyExpiration(token);
+                return refreshToken.get();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
     public void logoutRefreshToken(Long userId) {
         refreshTokenRepository.deleteByUserId(userRepository.findById(userId).get());
         System.out.println("로그아웃 완료 : 유저 refreshToken 삭제");
