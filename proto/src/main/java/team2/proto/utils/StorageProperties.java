@@ -8,7 +8,7 @@ public class StorageProperties {
     /**
      * 파일 저장을 위한 디렉토리 경로
      */
-    private String location = "auth-images";
+    private String location = "frontend/moamoa-front/public/auth-images";
 
     public String getLocation() {
         return location;
