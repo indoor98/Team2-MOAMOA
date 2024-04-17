@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import {ref} from 'vue';
 import axios from 'axios';
 
 export default {
@@ -100,7 +100,6 @@ export default {
     const mounted = () => {
       filterItems();
     };
-
 
 
     return {str, approveRequest, mounted, filteredItems}; // 컴포넌트 템플릿에서 사용할 변수 및 메서드 반환
