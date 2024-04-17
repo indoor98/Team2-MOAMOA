@@ -1,7 +1,8 @@
 <script setup>
 import NavHeader from "@/components/NavHeader.vue";
 import PostCommentNew from "@/components/postdetailnew/PostCommentNew.vue";
-import PostRightTH from "@/components/postdetailnew/PostRightTH.vue";
+import PostRightNew from "@/components/postdetailnew/PostRightNew.vue";
+
 </script>
 
 <template>
@@ -9,13 +10,8 @@ import PostRightTH from "@/components/postdetailnew/PostRightTH.vue";
     <NavHeader/>
   </header>
 
-  <div class="postdetail-content">
-    <div class="left-contentt">
-
-    </div>
-    <div class="right-content">
-      <PostRightTH/>
-    </div>
+  <div class = "right-component">
+    <PostRightNew/>
   </div>
 
   <div class="comment-component">
@@ -25,12 +21,5 @@ import PostRightTH from "@/components/postdetailnew/PostRightTH.vue";
 </template>
 
 <style scoped>
-header {
-  background-color: #f7efe4;
-  color: white;
-}
 
-.postdetail-content {
-  display: flex;
-}
 </style>

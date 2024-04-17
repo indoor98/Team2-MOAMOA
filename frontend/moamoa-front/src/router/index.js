@@ -84,6 +84,11 @@ const router = createRouter({
       path: '/joinpost',
       name: 'joinpost',
       component: () => import('../views/JoinPostView.vue')
+    },
+    {
+      path: '/postnew/:postno/update',
+      name: 'postUpdate',
+      component: () => import('../components/postdetailnew/PostUpdate.vue')
     }
 
   ]
