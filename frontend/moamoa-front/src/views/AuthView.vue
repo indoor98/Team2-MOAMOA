@@ -45,21 +45,19 @@ const handleSubmit = async () => {
 }
 </script>
 
-
 <template>
   <div class="body">
     <div class="authup-container">
       <img src="@/assets/moamoa_logo_org.png" alt="로고 이미지" class="logo">
-        <form class="auth-form" @submit.prevent="handleSubmit">
-          <input type="file" @change="readInputFile"/>
-          <div id="imagePreview">
-            <img v-if="image" :src="image" />
-          </div>
-          <br>
-          <button type="submit">제출</button>
-        </form>
-      </div>
+      <form class="auth-form" @submit.prevent="handleSubmit">
+        <input type="file" @change="readInputFile"/>
+        <div id="imagePreview" :style="{ backgroundImage: 'url(' + image + ')' }">
+        </div>
+        <br>
+        <button type="submit">제출</button>
+      </form>
     </div>
+  </div>
 </template>
 
 <style scoped>
@@ -117,15 +115,12 @@ const handleSubmit = async () => {
   justify-content: center;
   align-items: center;
   text-align: center;
-
+  background-size: contain; /* 배경 이미지를 내용에 맞게 조정 */
+  background-repeat: no-repeat; /* 배경 이미지 반복 제거 */
+  background-position: center; /* 배경 이미지 가운데 정렬 */
 }
 .logo {
   width: 250px; /* 로고 이미지의 너비를 조정합니다. */
   height: auto; /* 높이 자동 조정 */
 }
-
-
-
-
-
 </style>
