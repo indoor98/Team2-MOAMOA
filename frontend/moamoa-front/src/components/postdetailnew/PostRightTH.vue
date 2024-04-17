@@ -120,11 +120,10 @@ const deletePost = async () => {
     console.log('게시글 수정 폼으로 이동');
     // this.$router.push({ name: 'postUpdate', params: { postno: this.postno } });
     const response = await axios.delete(`http://localhost:8080/api/post/${ postId }`, {
-      postno: postId.value
-    }, {
       headers: {
         'Authorization': `Bearer ${accessToken}` // accessToken을 Bearer 토큰으로 사용하여 Authorization 헤더에 담음
-      }});
+      }
+    });
     router.push({name: 'home'});
   } catch (error) {
     console.error("Error cancelling the join: ", error);

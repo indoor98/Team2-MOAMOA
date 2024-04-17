@@ -97,36 +97,38 @@ public class MyPageServiceImpl implements MyPageService{
 
         System.out.println("success");
         for(Post post : posts){
-            MyPagePostResponseDTO dto = new MyPagePostResponseDTO();
-            dto.setPostId(post.getId());
-            dto.setProductUrl(post.getProductUrl());
-            dto.setDeadLine(post.getDeadline());
-            dto.setPrice(post.getPrice());
-            dto.setTitle(post.getTitle());
-            dto.setNickname(findUserById(email).getNickname());
-            dto.setHeadCount(post.getHeadCount());
+            if (post.getDeleteYn() == true) {
+                MyPagePostResponseDTO dto = new MyPagePostResponseDTO();
+                dto.setPostId(post.getId());
+                dto.setProductUrl(post.getProductUrl());
+                dto.setDeadLine(post.getDeadline());
+                dto.setPrice(post.getPrice());
+                dto.setTitle(post.getTitle());
+                dto.setNickname(findUserById(email).getNickname());
+                dto.setHeadCount(post.getHeadCount());
 
-            // Jsoup을 사용하여 메타 데이터 설정
-            try {
-                System.out.println(post.getProductUrl());
-                Document doc = Jsoup.connect(post.getProductUrl())
-                        .timeout(60000) // 타임아웃 증가시켜봄..
-                        .get();
-                String metaTitle = doc.select("meta[property=og:title]").attr("content");
-                String metaImage = doc.select("meta[property=og:image]").attr("content");
-                String metaDescription = doc.select("meta[property=og:description]").attr("content");
-                System.out.println(metaTitle);
-                System.out.println(metaImage);
-                System.out.println(metaDescription);
-                dto.setMetaTitle(metaTitle);
-                dto.setMetaImage(metaImage);
-                dto.setMetaDescription(metaDescription);
-            } catch (Exception e) {
-                e.printStackTrace();
-                // 적절한 예외 처리를 여기에 추가하세요.
+                // Jsoup을 사용하여 메타 데이터 설정
+                try {
+                    System.out.println(post.getProductUrl());
+                    Document doc = Jsoup.connect(post.getProductUrl())
+                            .timeout(60000) // 타임아웃 증가시켜봄..
+                            .get();
+                    String metaTitle = doc.select("meta[property=og:title]").attr("content");
+                    String metaImage = doc.select("meta[property=og:image]").attr("content");
+                    String metaDescription = doc.select("meta[property=og:description]").attr("content");
+                    System.out.println(metaTitle);
+                    System.out.println(metaImage);
+                    System.out.println(metaDescription);
+                    dto.setMetaTitle(metaTitle);
+                    dto.setMetaImage(metaImage);
+                    dto.setMetaDescription(metaDescription);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // 적절한 예외 처리를 여기에 추가하세요.
+                }
+
+                dtoList.add(dto);
             }
-
-            dtoList.add(dto);
         }
 
         return dtoList;
@@ -171,15 +173,17 @@ public class MyPageServiceImpl implements MyPageService{
 
         List<MyPagePostResponseDTO> dtoList = new ArrayList<>();
         for(Post post : posts){
-            MyPagePostResponseDTO dto = new MyPagePostResponseDTO();
-            dto.setPostId(post.getId());
-            dto.setProductUrl(post.getProductUrl());
-            dto.setDeadLine(post.getDeadline());
-            dto.setPrice(post.getPrice());
-            dto.setTitle(post.getTitle());
-            dto.setNickname(findUserById(email).getNickname());
-            dto.setHeadCount(post.getHeadCount());
-            dtoList.add(dto);
+            if (post.getDeleteYn() == true ) {
+                MyPagePostResponseDTO dto = new MyPagePostResponseDTO();
+                dto.setPostId(post.getId());
+                dto.setProductUrl(post.getProductUrl());
+                dto.setDeadLine(post.getDeadline());
+                dto.setPrice(post.getPrice());
+                dto.setTitle(post.getTitle());
+                dto.setNickname(findUserById(email).getNickname());
+                dto.setHeadCount(post.getHeadCount());
+                dtoList.add(dto);
+            }
         }
         return dtoList;
     }
