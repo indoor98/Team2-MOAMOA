@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <!-- 이미지 삽입 -->
+    <a href="/">
     <img src="@/assets/moamoa_logo_org.png" alt="로고 이미지" class="logo">
+    </a>
     <div class="login-container">
       <form class="login-form" @submit.prevent="login">
         <input type="text" v-model="email" placeholder="아이디 입력">
