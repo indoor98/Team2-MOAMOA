@@ -36,13 +36,13 @@ import PostComment from '../components/postdetailpage/PostComment.vue';
 
 const post = ref({});
 const loading = ref(true);
-const isUserJoined = ref(false); // 참여 상태 기본값 설정
+const isUserJoined = ref(false);
 const route = useRoute();
 
 const fetchPostData = async () => {
   const postId = route.params.postno;
   const accessToken = localStorage.getItem('accessToken');
-  const headers = accessToken ? { Authorization: `Bearer ${accessToken}` } : {}; // 토큰이 있다면 헤더에 추가
+  const headers = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
   try {
     const response = await axios.get(`http://localhost:8080/api/post/${postId}`, { headers });
     post.value = response.data;
