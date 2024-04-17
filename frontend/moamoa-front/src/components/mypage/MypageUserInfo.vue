@@ -96,16 +96,18 @@ const changeNickname = () => {
     <div>
       {{ nickname }}
     </div>
-    <div>
-      <button @click="withdrawMember" class="action-btn">회원 탈퇴</button>
-    </div>
+
     <div>
       <button @click="openModal" class="action-btn">회원 정보 수정</button>
     </div>
+
+    <div>
+      <button @click="withdrawMember" class="action-btn" style="background-color: #df4d1c;">회원 탈퇴</button>
+    </div>
+
     <template v-if="!isAuthencated">
       <button type="button" @click="toSchoolAuth" class="school-auth-btn">학교 인증이요ㅋ</button>
     </template>
-
     <!-- 모달 -->
     <div v-if="modalVisible" class="modal-mask">
       <div class="modal-wrapper">
@@ -209,7 +211,7 @@ const changeNickname = () => {
   margin-right: 10px;
   border: none;
   border-radius: 5px;
-  background-color: #007bff;
+  background-color: #fdbcbc;
   color: #fff;
   font-size: 16px;
   cursor: pointer;
@@ -217,15 +219,18 @@ const changeNickname = () => {
   transition: background-color 0.3s ease;
 }
 
+
+
 .action-btn:hover {
   background-color: #0056b3;
 }
+
 
 .school-auth-btn {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #28a745;
+  background-color: #fdbcbc;
   color: #fff;
   font-size: 16px;
   cursor: pointer;
