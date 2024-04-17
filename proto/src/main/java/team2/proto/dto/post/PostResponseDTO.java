@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class PostResponseDTO {
+    private Long id;
     private String title;
     private Long price;
     private Integer headCount;
@@ -21,5 +22,6 @@ public class PostResponseDTO {
     private String receivePlace;
     private String productUrl;
     private List<HashtagRequestDTO> hashtagList;
+    private boolean joined;
 
 }

@@ -2,7 +2,7 @@
   <div class="left-column">
     <div class="event-description">{{ title }}</div>
     <div class="hashtags">
-      <button v-for="tag in hashtag" :key="tag.id">
+      <button v-for="tag in hashtags" :key="tag.id">
         {{ tag.hashtag }}
       </button>
     </div>
@@ -14,9 +14,13 @@
 <script>
 export default {
   name: 'PostLeft',
-  props: ['title', 'hashtag', 'receivePlace', 'postImg']
+  props: {
+    title: String,
+    hashtags: Array,
+    receivePlace: String,
+    postImg: String
+  }
 }
-
 </script>
 
 <style scoped>
