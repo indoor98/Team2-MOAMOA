@@ -78,15 +78,15 @@ onMounted(loadComments);
 </script>
 
 <template>
-  <div>
+  <div class="comments-container">
     <!-- 댓글 목록 표시 -->
-    <div v-if="comments.length > 0">
-      <h2>댓글 목록</h2>
+    <div v-if="comments.length > 0" class="comments-list">
+      <H3>Comment</H3>
       <ul>
-        <li v-for="(comment, index) in comments" :key="index">
-          {{ comment.comment }}
-          {{ comment.nickname }}
-          {{ comment.createDate.slice(0, 10) + ' ' + comment.createDate.slice(11, 16)}}
+        <li v-for="(comment, index) in comments" :key="index" class="comment-item">
+          <span class="comment-content"> {{ comment.comment }} </span>
+          <span class="comment-nickname"> {{ comment.nickname }} </span>
+          <span class="comment-date"> {{ comment.createDate.slice(0, 10) + ' ' + comment.createDate.slice(11, 16)}} </span>
         </li>
       </ul>
     </div>
@@ -110,5 +110,86 @@ onMounted(loadComments);
 </template>
 
 <style scoped>
+.bottom-column {
+  padding: 20px;
+  margin-top: 20px;
+}
 
+.comment-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-section textarea {
+  width: 100%;
+  margin-bottom: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.comment-section .comment-button {
+  padding: 10px 20px;
+  background-color: #458971;
+  color: white;
+  border: none;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+.comments-container {
+  margin-bottom: 20px;
+}
+
+.comments-list {
+  margin-bottom: 20px;
+}
+
+.comment-item {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.comment-content {
+  font-weight: bold;
+}
+
+.comment-nickname {
+  margin-left: 10px;
+}
+
+.comment-date {
+  margin-left: 10px;
+  font-size: 0.8em;
+  color: #888;
+}
+
+.no-comments {
+  color: #888;
+}
+
+.comment-input textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.comment-button {
+  padding: 10px 20px;
+  background-color: #458971;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.comment-button:hover {
+  background-color: #356e5c;
+}
 </style>
