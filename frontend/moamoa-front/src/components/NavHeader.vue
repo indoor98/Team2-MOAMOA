@@ -3,11 +3,12 @@
     <div class="row align-items-center"> <!-- align-items-center 추가 -->
       <div class="col-md-4 col-12 text-center"> <!-- text-start에서 text-center로 변경 -->
         <a href="/">
-        <img src="@/assets/moamoa_logo_org.png" alt="로고 이미지" class="logo"> <!-- 클래스 추가 -->
+          <img src="@/assets/moamoa_logo_org.png" alt="로고 이미지" class="logo"> <!-- 클래스 추가 -->
         </a>
       </div>
       <div class="col-md-5 col-12 my-md-0 my-3 mt-md-4 text-center mx-auto">
-        <input type="search" class="form-control" placeholder="Search...">
+        <!-- 검색 입력 폼 -->
+        <input type="search" v-model="searchTerm" @input="search" class="form-control" placeholder="Search...">
       </div>
       <div class="col-md-3 col-12 text-md-end text-start mt-3">
         <!-- accessToken이 있는 경우 -->
@@ -28,10 +29,12 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import axios from "axios";
+import { ref } from 'vue'
 
 const router = useRouter()
 
 const accessToken = localStorage.getItem('accessToken')
+const searchTerm = ref('');
 
 const toLogin = () => {
   router.push({ name: 'login' })
@@ -47,7 +50,6 @@ const toMyPage = () => {
 
 const logout = async () => {
   const accessToken = localStorage.getItem('accessToken');
-  console.log(accessToken);
 
   const response = await axios.get("http://localhost:8080/api/auth/logout", {
     headers: {
@@ -55,13 +57,18 @@ const logout = async () => {
     }
   });
 
-  console.log(response);
-  // 로그아웃 후 로그인 페이지로 이동
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
   router.push({ name: 'login' })
 }
+
+// 검색 메서드
+const search = async () => {
+  // 검색어를 홈 뷰로 전달
+  router.push({ name: 'home', query: { searchTerm: searchTerm.value } });
+};
 </script>
+
 
 <style scoped>
 header .container {
