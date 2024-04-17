@@ -20,6 +20,9 @@ public interface PostService {
 
     void join(Long postId, HttpServletRequest request);
 
+    // 로그인한 사용자가 게시글에 어떠한 방식으로 참여하고 있는지 리턴하는 함수
+    Integer attendType(Long postId, Long userId);
+
     // 공동구매 참여 취소
     @Transactional
     void cancel(Long postId, HttpServletRequest request);
