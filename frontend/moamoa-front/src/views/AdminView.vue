@@ -121,7 +121,7 @@ export default {
 }
 
 .header {
-  background-color: #f7efe4;;
+  background-color: #f7efe4;
   display: flex;
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
@@ -136,7 +136,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   padding: 10px;
-  border-bottom: 2px solid #498C74;
+  border-bottom: 2px solid #019b63;
   font-weight: bold;
 }
 
