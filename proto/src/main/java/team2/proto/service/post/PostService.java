@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface PostService {
     Long createPost(PostWriteDTO params, String userEmail);
-    PostResponseDTO getPostById(Long id);
+    PostResponseDTO getPostById(Long id, String userEmail);
     void updatePost(Long id, PostUpdateDTO param);
     List<PostListResponseDTO> getAllPosts(Integer pageno);
     void delete(Long id, User user);

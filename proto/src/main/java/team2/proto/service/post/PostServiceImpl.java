@@ -88,16 +88,21 @@ public class PostServiceImpl implements PostService {
     // 단일 게시글 조회
     @Override
     @Transactional(readOnly = true)
-    public PostResponseDTO getPostById(Long id) {
+    public PostResponseDTO getPostById(Long id, String userEmail) {
         Post post = postRepository.findByIdAndDeleteYnFalse(id);
-        long joinedUsersCount = postUserRepository.countByPostId(id);
 
         if (post == null) {
             // 삭제 여부가 false인 게시글이 없을 경우 예외 처리 또는 null 처리
             // 여기서는 null을 리턴하도록 하겠습니다.
             return null;
         }
+        long joinedUsersCount = postUserRepository.countByPostId(id);
+        User currentUser = userService.findByEmail(userEmail);
+        boolean isJoined = postUserRepository.existsByPostIdAndUserId(id, currentUser.getId());
+
+
         return new PostResponseDTO(
+                post.getId(),
                 post.getTitle(),
                 post.getPrice(),
                 post.getHeadCount(),
@@ -105,7 +110,9 @@ public class PostServiceImpl implements PostService {
                 post.getDeadline(),
                 post.getReceivePlace(),
                 post.getProductUrl(),
-                convertHashtagEntityToDto(post.getHashtagList()));
+                convertHashtagEntityToDto(post.getHashtagList()),
+                isJoined
+                );
     }
 
 
@@ -228,14 +235,6 @@ public class PostServiceImpl implements PostService {
         if (postUser != null) {
             postUserRepository.deleteByPostIdAndIsHost(postId, false);
         }
-//        String token = request.getHeader("Authorization").substring(7);
-//        String userEmail = jwtService.extractUserName(token);
-//        User user = userService.findByEmail(userEmail);
-//
-//        PostUser postUser = postUserRepository.findByPostAndUserAndIsHost(post, user, false);
-//        if (postUser != null) {
-//            postUserRepository.delete(postUser);
-//        }
     }
 
     // 단일 Hashtag 사용하여 조회하는 함수
