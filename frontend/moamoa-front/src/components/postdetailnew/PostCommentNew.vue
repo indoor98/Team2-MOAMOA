@@ -48,7 +48,6 @@ const loadComments = async () => {
     });
     const data = await response.json();
     // 받아온 댓글 목록을 ref에 저장
-    console.log(data);
     comments.value = data;
   } catch (error) {
     // 에러가 발생하면 에러 ref 업데이트

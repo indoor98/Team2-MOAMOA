@@ -1,28 +1,203 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from "axios";
 
-const loadComments = async () => {
+const post = ref({
+  "id": 0,
+  "title": "string",
+  "price": 0,
+  "headCount": 0,
+  "joinedUsersCount": 0,
+  "deadLine": "2024-04-17T11:56:05.061Z",
+  "receivePlace": "string",
+  "productUrl": "string",
+  "hashtagList": [
+    {
+      "hashtag": "string"
+    }
+  ],
+  "joined": true
+});
+const isPull = ref(0);
+const accessToken = localStorage.getItem("accessToken");
+const userType = ref(-1);
+const router = useRouter();
+
+if (post.value.headCount === post.value.joinedUsersCount) {
+  isPull.value = 1;
+}
+
+const isAttend = () => {
+  try {
+    const postId = window.location.pathname.split('/').pop();
+    const response = axios.get(`http://localhost:8080/api/post/post/attend/${postId}`,{
+      headers: {
+        'Authorization': `Bearer ${accessToken}` // accessToken을 Bearer 토큰으로 사용하여 Authorization 헤더에 담음
+      }})
+        .then( (value) => {
+          userType.value = value.data;
+          console.log(userType.value);
+        });
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+const loadPost = async () => {
   try {
     // 게시글 정보 불러오기
     const postId = window.location.pathname.split('/').pop();
-
     // API 요청 보내기
-    const response = await axios.get()
-
+    const response = await fetch(`http://localhost:8080/api/post/${postId}`,{
+      headers: {
+        'Authorization': `Bearer ${accessToken}` // accessToken을 Bearer 토큰으로 사용하여 Authorization 헤더에 담음
+      }});
+    const data = await response.json();
+    post.value = data;
+    console.log(post.value);
 
   } catch (error) {
     console.log(error);
   }
 }
 
+const joinPost = async () => {
+  try {
+    // 게시글 정보 불러오기
+    const postId = window.location.pathname.split('/').pop();
+    // API 요청 보내기
+    const response = await axios.post(`http://localhost:8080/api/post/join/${postId}`,
+        {
+      postno: postId.value
+    },
+        {
+      headers: {
+        'Authorization': `Bearer ${accessToken}` // accessToken을 Bearer 토큰으로 사용하여 Authorization 헤더에 담음
+      }});
+    const data = await response;
+    console.log(post.value);
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const cancelJoin = async () => {
+  try {
+    // 게시글 정보 불러오기
+    const postId = window.location.pathname.split('/').pop();
+    // API 요청 보내기
+    const response = await axios.put(`http://localhost:8080/api/post/cancel/${postId}`,
+        {
+          postno: postId.value
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${accessToken}` // accessToken을 Bearer 토큰으로 사용하여 Authorization 헤더에 담음
+          }});
+    const data = await response;
+    console.log(post.value);
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const updateJoin = async () => {
+
+  try {
+    console.log('게시글 수정 폼으로 이동');
+    // this.$router.push({ name: 'postUpdate', params: { postno: this.postno } });
+    router.push({name: 'postUpdate'});
+  } catch (error) {
+    console.error("Error cancelling the join: ", error);
+  }
+};
+const deletePost = async () => {
+  try {
+    const postId = window.location.pathname.split('/').pop();
+    console.log('게시글 수정 폼으로 이동');
+    // this.$router.push({ name: 'postUpdate', params: { postno: this.postno } });
+    const response = await axios.delete(`http://localhost:8080/api/post/${ postId }`, {
+      postno: postId.value
+    }, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}` // accessToken을 Bearer 토큰으로 사용하여 Authorization 헤더에 담음
+      }});
+    router.push({name: 'home'});
+  } catch (error) {
+    console.error("Error cancelling the join: ", error);
+  }
+};
+
+onMounted(async () => {
+  await loadPost();
+  await isAttend();
+});
+
+
+
+
+
 </script>
 
 <template>
-<button>
-  드가자
-</button>
+
+  <div>
+    모집 인원 : {{ post.headCount }}
+  </div>
+  <div>
+    현재 참여 인원 : {{ post.joinedUsersCount }}
+  </div>
+  <div>
+    마감 시간 : {{ post.deadLine.slice(0, 10) + ' ' + post.deadLine.slice(11,16) }}
+  </div>
+  <div>
+    가격 : {{ post.price }}
+  </div>
+  <div>
+    수령 장소 : {{ post.receivePlace }}
+  </div>
+
+
+  <div class="post-right-button-logined">
+    <div v-if="accessToken" class="post-right-button-ispull">
+      <div v-if="userType==1">
+        <button @click.prevent="updateJoin"> 수정하기 </button> <button @click.prevent="deletePost"> 삭제하기 </button>
+      </div>
+      <div v-else-if="userType==0">
+        <div v-if="isPull==1">
+          <button @click.prevent=""> 마감이요 </button>
+        </div>
+        <div v-else>
+        <button @click.prevent="joinPost"> 참여 하실래요 ? </button>
+        </div>
+      </div>
+      <div v-else>
+        <button @click.prevent="cancelJoin"> 취소하기 </button>
+      </div>
+    </div>
+    <div v-else class="post-right-button-isnotpull">
+      <div>
+        <button> 로그인 하십쇼 </button>
+      </div>
+    </div>
+  </div>
+
+
+<!--  <div class="right-column">-->
+<!--      <div v-if="isJoined == 0">-->
+<!--      <button @click="joinGroupPurchase" class="participate-button">참여하기</button>-->
+<!--      </div>-->
+<!--      <div v-else>-->
+<!--        <button @click="cancelJoin" class="cancel-button">참여 취소</button>-->
+<!--      </div>-->
+
+<!--      <button @click="updateJoin" class="update-button">게시글 수정</button>-->
+<!--  </div>-->
+
+
 </template>
 
 <style scoped>
