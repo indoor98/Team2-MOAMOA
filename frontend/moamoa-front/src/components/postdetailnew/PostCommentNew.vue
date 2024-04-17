@@ -79,16 +79,18 @@ onMounted(loadComments);
 
 <template>
   <div class="comments-container">
+    <h4 class="comment-header">댓글</h4>
     <!-- 댓글 목록 표시 -->
     <div v-if="comments.length > 0" class="comments-list">
-      <H3>Comment</H3>
-      <ul>
+<!--      <ul>-->
+      <div>
         <li v-for="(comment, index) in comments" :key="index" class="comment-item">
-          <span class="comment-content"> {{ comment.comment }} </span>
           <span class="comment-nickname"> {{ comment.nickname }} </span>
-          <span class="comment-date"> {{ comment.createDate.slice(0, 10) + ' ' + comment.createDate.slice(11, 16)}} </span>
+          <span class="comment-date"> {{ comment.createDate.slice(0, 10) + ' ' + comment.createDate.slice(11, 16)}} <br/></span>
+          <span class="comment-content"> {{ comment.comment }} </span>
         </li>
-      </ul>
+      </div>
+<!--      </ul>-->
     </div>
 
     <!-- 댓글이 없을 때 표시 -->
@@ -97,10 +99,16 @@ onMounted(loadComments);
     </div>
   </div>
 
+  <div class="comment-info">
+      <span>
+        다른 사람에게 불쾌감을 주는 욕설, 혐오, 비하의 표현이나 타인의 권리를 침해하는 내용은 주의해주세요.
+      </span>
+  </div>
+
   <div class="bottom-column">
     <div v-if="userType >= 1">
     <div class="comment-section">
-      <textarea v-model="newComment" placeholder="댓글"></textarea>
+      <textarea v-model="newComment" placeholder="댓글을 입력하세요"></textarea>
       <button class="comment-button" @click.prevent="submitComment">등록</button>
     </div>
     </div>
@@ -111,8 +119,14 @@ onMounted(loadComments);
 
 <style scoped>
 .bottom-column {
-  padding: 20px;
+  //padding: 20px;
   margin-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+li {
+  list-style: none;
 }
 
 .comment-section {
@@ -124,8 +138,9 @@ onMounted(loadComments);
   width: 100%;
   margin-bottom: 8px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
+  //border-radius: 4px;
+  resize: none;
+  height: 90px;
 }
 
 .comment-section .comment-button {
@@ -138,37 +153,63 @@ onMounted(loadComments);
 }
 
 .comments-container {
-  margin-bottom: 20px;
+  display: flex;
+  background-color: rgba(245,237,226,0.58);
+  border: 1px solid #e3e3e3;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.comment-header{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 20px;
 }
 
 .comments-list {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .comment-item {
-  margin-bottom: 10px;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #f9f9f9;
+  background-color: white;
+  border: 1px solid #e3e3e3;
 }
 
 .comment-content {
-  font-weight: bold;
+  margin-top: 50px;
+  padding-left: 10px;
+  margin-left: 76px;
 }
 
 .comment-nickname {
-  margin-left: 10px;
+  font-weight: bold;
+  margin-left: 20px;
 }
 
 .comment-date {
-  margin-left: 10px;
+  margin-left: 40px;
   font-size: 0.8em;
   color: #888;
 }
 
 .no-comments {
   color: #888;
+}
+
+.comment-info {
+  display: flex;
+  background-color: rgba(245,237,226,0.58);
+  border: 1px solid #e3e3e3;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
 }
 
 .comment-input textarea {
@@ -192,4 +233,10 @@ onMounted(loadComments);
 .comment-button:hover {
   background-color: #356e5c;
 }
+
+textarea {
+  padding-top: 5px;
+  padding-left: 10px;
+}
+
 </style>

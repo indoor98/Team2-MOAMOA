@@ -9,10 +9,15 @@
       <div>{{ price }}원</div>
     </div>
   </div>
+  <div>
+    <button @click="editPost" class="edit-button">수정</button>
+    <button class="delete-button">삭제</button>
+
+  </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import {computed, ref} from 'vue';
 import axios from 'axios';
 
 export default {
@@ -23,7 +28,8 @@ export default {
     joinedUsersCount: Number,
     price: Number,
     postJoin: String,
-    isUserJoined: Boolean
+    isUserJoined: Boolean,
+    postUser: String
   },
   setup(props, { emit }) {
     const accessToken = ref(localStorage.getItem('accessToken'));
@@ -62,7 +68,15 @@ export default {
       }
     };
 
-    return { joinGroupPurchase, cancelJoin, isJoined, accessToken };
+    const deletePost = async () => {
+      if (!accessToken.value) {
+        alert("로그인을 진행해주세요.");
+        return;
+      }
+
+    }
+
+    return { joinGroupPurchase, cancelJoin, isJoined, accessToken, deletePost };
   }
 }
 </script>
@@ -121,5 +135,18 @@ export default {
   padding: 10px 20px;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.edit-button, .delete-button {
+  margin-top: 10px;
+  background-color: #4CAF50; /* Green for edit */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.delete-button {
+  background-color: #f44336; /* Red for delete */
 }
 </style>
