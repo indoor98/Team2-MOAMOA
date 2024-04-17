@@ -16,7 +16,7 @@
         <div class="author-name">{{ item.nickname }}</div>
         <div class="school">{{ item.school }}</div>
         <div class="img">
-          <img src="/userprofile/userdefault.jpg" alt="이미지">
+          <img :src="getFileName(item.photoUrl)" alt="이미지">
         </div>
         <div class="approve-button">
           <button @click="approveRequest(item.id)">승인</button>
@@ -34,12 +34,15 @@ export default {
   name: 'About',
 
   methods: {
-    convertPath(path) {
-      // "C:\proto\auth-images\wolf.jpg" -> "../proto/auth-images/wolf.jpg"
-      `/auth-images/${path.split('\\').pop()}`;
+    // 파일 경로에서 파일 이름만 추출하는 메서드
+    getFileName(filePath) {
+      if (!filePath) return '';
+      const fileName = filePath.substring(filePath.lastIndexOf('\\') + 1);
+      console.log(fileName);
+      const filename = `/auth-images/${fileName}`;
+      return filename;
     }
   },
-
   setup() {
     const str = ref(null); // 데이터를 저장할 변수
 
@@ -98,7 +101,9 @@ export default {
       filterItems();
     };
 
-    return { str, approveRequest, mounted, filteredItems}; // 컴포넌트 템플릿에서 사용할 변수 및 메서드 반환
+
+
+    return {str, approveRequest, mounted, filteredItems}; // 컴포넌트 템플릿에서 사용할 변수 및 메서드 반환
   }
 };
 </script>
@@ -109,20 +114,24 @@ export default {
   margin: 0;
   padding: 0;
 }
+
 .logo {
   width: 200px; /* 로고 이미지의 너비를 조절합니다. */
   height: auto; /* 높이 자동 조정 */
 }
+
 .header {
   background-color: #f7efe4;;
   display: flex;
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
 }
+
 .list-container {
   margin-top: 20px;
   padding: 0 10%;
 }
+
 .list-header {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -130,10 +139,12 @@ export default {
   border-bottom: 2px solid #498C74;
   font-weight: bold;
 }
+
 .list-header div, .list-item div {
   text-align: center;
   padding: 10px;
 }
+
 .list-item {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -141,11 +152,13 @@ export default {
   padding: 10px;
   border-bottom: 1px solid #ddd;
 }
+
 .list-item img {
   width: 50px;
   height: 50px;
   justify-self: center; /* 이미지를 가운데 정렬 */
 }
+
 .list-item button {
   width: 50px;
   height: 30px;
