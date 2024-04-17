@@ -15,10 +15,13 @@ import team2.proto.repository.mypage.MyPageUserCommentRepository;
 import team2.proto.repository.mypage.MypageJoinPostRepository;
 import team2.proto.repository.mypage.MypagePostRepository;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 @Service("mypage")
 @RequiredArgsConstructor
@@ -102,6 +105,27 @@ public class MyPageServiceImpl implements MyPageService{
             dto.setTitle(post.getTitle());
             dto.setNickname(findUserById(email).getNickname());
             dto.setHeadCount(post.getHeadCount());
+
+            // Jsoup을 사용하여 메타 데이터 설정
+            try {
+                System.out.println(post.getProductUrl());
+                Document doc = Jsoup.connect(post.getProductUrl())
+                        .timeout(60000) // 타임아웃 증가시켜봄..
+                        .get();
+                String metaTitle = doc.select("meta[property=og:title]").attr("content");
+                String metaImage = doc.select("meta[property=og:image]").attr("content");
+                String metaDescription = doc.select("meta[property=og:description]").attr("content");
+                System.out.println(metaTitle);
+                System.out.println(metaImage);
+                System.out.println(metaDescription);
+                dto.setMetaTitle(metaTitle);
+                dto.setMetaImage(metaImage);
+                dto.setMetaDescription(metaDescription);
+            } catch (Exception e) {
+                e.printStackTrace();
+                // 적절한 예외 처리를 여기에 추가하세요.
+            }
+
             dtoList.add(dto);
         }
 
