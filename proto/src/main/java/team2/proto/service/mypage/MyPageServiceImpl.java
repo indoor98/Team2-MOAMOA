@@ -95,6 +95,8 @@ public class MyPageServiceImpl implements MyPageService{
         System.out.println("success");
         for(Post post : posts){
             MyPagePostResponseDTO dto = new MyPagePostResponseDTO();
+            dto.setPostId(post.getId());
+            dto.setProductUrl(post.getProductUrl());
             dto.setDeadLine(post.getDeadline());
             dto.setPrice(post.getPrice());
             dto.setTitle(post.getTitle());
@@ -146,6 +148,8 @@ public class MyPageServiceImpl implements MyPageService{
         List<MyPagePostResponseDTO> dtoList = new ArrayList<>();
         for(Post post : posts){
             MyPagePostResponseDTO dto = new MyPagePostResponseDTO();
+            dto.setPostId(post.getId());
+            dto.setProductUrl(post.getProductUrl());
             dto.setDeadLine(post.getDeadline());
             dto.setPrice(post.getPrice());
             dto.setTitle(post.getTitle());

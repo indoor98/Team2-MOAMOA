@@ -50,7 +50,7 @@ const router = createRouter({
     // 게시글 작성페이지
     {
       path: '/post',
-      name: 'post',
+      name: 'postwrite',
       component: () => import('../views/PostWriteView.vue')
     },
     {

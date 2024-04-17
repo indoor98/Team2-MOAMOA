@@ -1,67 +1,82 @@
 <template>
-  <header>
-    <NavHeader />
-  </header>
-
-  <div class="container mt-5">
-    <div class="row g-4">
-      <PostCard v-for="(post, index) in posts" :key="index" :post="post" />
+  <div>
+    <header>
+      <NavHeader />
+    </header>
+    <div class="container">
+      <div class="row justify-content-center mt-5">
+        <img src="@/assets/home/moamoa_home_01.png" alt="로고 이미지" class="logodetail1" />
+        <img src="@/assets/home/moamoa_home_02.png" alt="로고 이미지" class="logodetail2" />
+        <img src="@/assets/home/moamoa_home_03.png" alt="로고 이미지" class="logodetail3" />
+      </div>
     </div>
+    <!-- 게시글 작성 버튼 추가 -->
+    <div class="container mt-3">
+      <button @click="goToWritePage" class="btn btn-lg btn-custom">상품 등록</button>
+    </div>
+    <div class="container">
+      <div class="row g-4 mt-5">
+        <PostCard v-for="(post, index) in posts" :key="index" :post="post" />
+      </div>
+    </div>
+    <!-- 공간을 띄우기 위한 마진 추가 -->
+    <div class="container mt-5"></div>
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import axios from "axios";
 import NavHeader from "@/components/NavHeader.vue";
 import PostCard from "@/components/PostCard.vue"; // PostCard.vue 컴포넌트 추가
-import axios from "axios";
-import { useRouter } from "vue-router";
 
 const router = useRouter();
+const posts = ref([]);
 
-export default {
-  components: { NavHeader, PostCard }, // PostCard.vue 컴포넌트 등록
-  data() {
-    return {
-      posts: []
-    };
-  },
-  created() {
-    this.fetchPosts();
-  },
-  methods: {
-    async fetchPosts() {
-      try {
-        const response = await axios.get("/api/list/{pageno}");
-        this.posts = response.data;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    async toLogin() {
-      try {
-        this.$router.push({
-          name: "login",
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    async toSignup() {
-      try {
-        this.$router.push({
-          name: "signup",
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    },
-  },
+onMounted(async () => {
+  try {
+    const response = await axios.get(`http://localhost:8080/api/post/list/0`);
+    posts.value = response.data;
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+const goToWritePage = () => {
+  // 게시글 작성 페이지로 이동하는 메서드
+  router.push({ name: "postwrite" });
 };
 </script>
 
 <style scoped>
 header {
   background-color: #f7efe4;
-  color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+}
+body {
+  background-color: #f7efe4; /* 전체 페이지의 배경색 변경 */
+}
+.container {
+  text-align: center; /* 내용을 가운데 정렬 */
+}
+.logodetail1,
+.logodetail3 {
+  width: calc(25% - 20px); /* 화면 가로로 가득 차게 설정 */
+  height: auto; /* 높이 자동 조정 */
+  margin: 10px; /* 이미지 간격 조절 */
+}
+.logodetail2 {
+  width: 25%; /* 로고 detail2 이미지의 너비를 설정 */
+  height: auto; /* 높이 자동 조정 */
+}
+.btn-lg {
+  font-size: 20px; /* 버튼 크기 조절 */
+  padding: 10px 20px; /* 버튼 내부 여백 조절 */
+}
+.btn-custom {
+  background-color: #fdbcbc; /* 버튼의 배경색을 지정 */
+  color: white; /* 텍스트 색상을 흰색으로 지정 */
+  border: none; /* 테두리 제거 */
 }
 </style>

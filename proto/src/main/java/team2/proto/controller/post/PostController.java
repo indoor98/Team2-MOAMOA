@@ -94,12 +94,18 @@ public class PostController {
     public ResponseEntity<Void> join(@PathVariable("postno") Long postId, HttpServletRequest request) {
         postService.join(postId, request);
         return new ResponseEntity<>(HttpStatus.OK);
+//        try {
+//            postService.join(postId, request);
+//            return new ResponseEntity<>(HttpStatus.OK);
+//        } catch (IllegalArgumentException e) {
+//            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
     }
 
     // 공동구매 참여 취소
     @PutMapping("/cancel/{postno}")
-    public ResponseEntity<String> cancelPostUser(@PathVariable("postno") Long postId) {
-        postService.cancel(postId);
+    public ResponseEntity<String> cancelPostUser(@PathVariable("postno") Long postId, HttpServletRequest request) {
+        postService.cancel(postId, request);
         return new ResponseEntity<>("PostUser 정보를 삭제했습니다.", HttpStatus.OK);
     }
 }
