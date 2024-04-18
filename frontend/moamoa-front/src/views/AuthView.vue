@@ -98,7 +98,7 @@ const handleSubmit = async () => {
 .auth-form{
   background-color: #ffd557;
   text-align: center;
-  width: 350px; /* 폼의 너비를 조정합니다. */
+  width: 310px; /* 폼의 너비를 조정합니다. */
   padding: 20px;
   border-radius: 10px; /* 모서리 둥근 사각형 */
   background-color: #ffd557; /* 로그인 입력 부분의 배경색 */

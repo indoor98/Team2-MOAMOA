@@ -12,7 +12,7 @@
         <div>승인</div>
       </div>
       <div v-if="str" class="list-item"></div>
-      <div class="list-item" v-for="item in str" :key="item.id" v-show="!item.auth_yn">
+      <div class="list-item" v-for="item in str" :key="item.id" v-show="!item.authYn">
         <div class="author-name">{{ item.nickname }}</div>
         <div class="school">{{ item.school }}</div>
         <div class="img">
@@ -89,20 +89,7 @@ export default {
           });
     };
 
-    // 승인되지 않은 아이템 필터링
-    const filteredItems = ref([]);
-    const filterItems = () => {
-      if (str.value) {
-        filteredItems.value = str.value.filter(item => !item.auth_yn);
-      }
-    };
-
-    const mounted = () => {
-      filterItems();
-    };
-
-
-    return {str, approveRequest, mounted, filteredItems}; // 컴포넌트 템플릿에서 사용할 변수 및 메서드 반환
+    return {str, approveRequest}; // 컴포넌트 템플릿에서 사용할 변수 및 메서드 반환
   }
 };
 </script>
