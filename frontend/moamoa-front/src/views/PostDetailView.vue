@@ -11,12 +11,12 @@ import PostLeftNew from "@/components/postdetailnew/PostLeftNew.vue";
   </header>
 
   <div class="postdetail-component">
-  <div class = "left-component">
-    <PostLeftNew/>
-  </div>
-  <div class = "right-component">
-    <PostRightTH/>
-  </div>
+    <div class = "left-component">
+      <PostLeftNew/>
+    </div>
+    <div class = "right-component">
+      <PostRightTH/>
+    </div>
   </div>
   <div class="comment-component">
     <PostCommentNew/>
@@ -31,7 +31,9 @@ header {
 
 .postdetail-component {
   display: flex;
+  flex-direction: row;
   justify-content: center;
+  max-height: 2000px;
 }
 
 .left-component,
