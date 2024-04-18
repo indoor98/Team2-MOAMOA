@@ -52,26 +52,40 @@ onMounted(loadPost);
 </script>
 
 <template>
-
-  <div>
-    제목 : {{ post.title }}
-  </div>
-  <span v-for="(hashtag, index) in post.hashtagList" :key="index" >
-    #{{ hashtag.hashtag }} <space>  </space>
-  </span>
-  <div>
-    <a :href="post.productUrl" target="_blank">
-      <img :src= "post.metaImage" class="image-preview">
-      <br>
-      <span>{{post.metaTitle}}</span>
+  <div class="container">
+    <div class="title">제목 : {{ post.title }}</div>
+    <div>
+      <span class="hashtag" v-for="(hashtag, index) in post.hashtagList" :key="index">
+        #{{ hashtag.hashtag }}
+      </span>
+    </div>
+    <a :href="post.productUrl" target="_blank" class="product-link">
+      <img :src="post.metaImage" class="image-preview">
+      <span class="product-title">{{ post.metaTitle }}</span>
     </a>
-
   </div>
-
-
 </template>
 
 <style scoped>
+
+
+.container {
+  text-align: center; /* Center everything inside the container */
+}
+
+.title {
+  font-size: 2em; /* Larger text for the title */
+  margin-bottom: 0.5em; /* Space below the title */
+  font-weight: bold; /* Make the title text bold */
+}
+
+.hashtag {
+  font-size: 1.3em; /* Slightly larger text for hashtags */
+  color: #333; /* Dark grey color for the hashtags */
+  padding: 0.25em; /* Spacing inside the hashtag elements */
+  margin: 0.25em; /* Space between hashtag elements */
+}
+
 .image-preview {
   max-width: 500px; /* 최대 너비 설정 */
   max-height: 500px; /* 최대 높이 설정 */
@@ -79,6 +93,21 @@ onMounted(loadPost);
   height: auto; /* 원본 이미지 비율 유지 */
   display: block; /* 줄바꿈 방지 */
   object-fit: cover; /* 컨테이너에 맞춰 이미지를 채우되, 비율 유지 */
+  margin: 0 auto; /* 이미지를 중앙으로 배치 */
+  border: 10px solid #f4f4f4; /* 빨간색 테두리 */
+}
+
+.product-link {
+  display: inline-block; /* Align the link inline with other elements */
+  text-decoration: none; /* Removes the underline from the link */
+  color: black; /* Sets the link color to black */
+  margin-top: 1em; /* Space above the product link */
+}
+
+.product-title {
+  display: block; /* Display the title in a block to force a new line */
+  font-size: 1.2em; /* Slightly larger text for the product title */
+  margin-top: 0.25em; /* Space above the product title */
 }
 
 </style>
