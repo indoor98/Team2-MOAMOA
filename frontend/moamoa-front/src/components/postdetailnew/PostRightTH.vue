@@ -176,7 +176,7 @@ onMounted(async () => {
           <div class="info-item">
             가격 : {{ post.price }}원
           </div>
-          <div class="info-item">
+          <div class="place">
             모임 장소 : {{ post.receivePlace }}
           </div>
         </div>
@@ -187,8 +187,8 @@ onMounted(async () => {
     <div class="post-right-button-logined">
       <div v-if="accessToken" class="post-right-button-ispull">
         <div v-if="userType ==1">
-          <button @click.prevent="updateJoin"> 수정하기</button>
-          <button @click.prevent="deletePost"> 삭제하기</button>
+          <button @click.prevent="updateJoin" class="edit-button"> 수정하기</button>
+          <button @click.prevent="deletePost" class="delete-button"> 삭제하기</button>
         </div>
         <div v-else-if="userType==0">
           <div v-if="isPull==1">
@@ -234,22 +234,37 @@ onMounted(async () => {
   align-items: flex-start;
 }
 
+.edit-button, .delete-button {
+  font-size: 1.5em;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  margin-top: 30px;
+  margin-left: 20px;
+  padding: 10px 20px;
+}
+
+.edit-button {
+  background-color: #488b73; /* Green */
+  color: white;
+}
+
+.delete-button {
+  background-color: #fbbbbb;
+  color: white;
+}
+
 .join-box {
+  margin-top: 150px;
   display: flex;
   flex-direction: column;
   align-content: center;
+  font-weight: bold;
   text-align: center;
 }
 
-.amount-raised, .info-item{
-  margin-top: 10px;
-  margin-bottom: 8px;
-  font-weight: bold;
-  font-size: 30px;
-}
-
 .head-count-item {
-  color: red;
+  color: #dd4c1c;
   align-content: center;
 }
 
@@ -262,11 +277,15 @@ onMounted(async () => {
 
 }
 
+.amount-raised, .info-item, .place {
+  margin-top: 5px;
+  font-size: 25px;
+}
+
 .info-item {
   margin-bottom: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid #eee;
-  font-size: 14px;
 }
 
 .info-item:last-child {
@@ -300,7 +319,8 @@ onMounted(async () => {
   border-radius: 10px;
   cursor: pointer;
   border: none;
-  width: 300px;
+  width: 450px;
+  margin-top: 40px;
 }
 
 .participate-button {
