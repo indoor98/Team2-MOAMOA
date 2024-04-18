@@ -49,9 +49,9 @@ console.log(writeList.value);
     <div class="right-content-div">
       <router-link to="/joinpost" class="section-title">참여중인 공동구매</router-link>
       <div class="post-list" v-if="joinList.length > 0">
-        <div class="card" v-for="(post, index) in joinList.slice(0, 5)" :key="post.id">
+        <div class="card" v-for="(post, index) in joinList.slice(0, 5)" :key="post.postId">
           <div class="card-body">
-            <a class="card-title" href="">{{ post.title }}</a>
+            <router-link :to="`/post/${post.postId}`" class="card-title" >{{ post.title }}</router-link>
           </div>
         </div>
       </div>
@@ -62,9 +62,9 @@ console.log(writeList.value);
     <div class="right-content-div">
       <router-link to="/mypost" class="section-title">작성한 게시글 목록</router-link>
       <div class="post-list" v-if="writeList.length > 0">
-        <div class="card" v-for="(post, index) in writeList.slice(0, 5)" :key="post.id">
+        <div class="card" v-for="(post, index) in writeList.slice(0, 5)" :key="post.postId">
           <div class="card-body">
-            <router-link :to="`/post/${post.id}`" class="card-title" >{{ post.title }}</router-link>
+            <router-link :to="`/post/${post.postId}`" class="card-title" >{{ post.title }}</router-link>
 <!--            <a class="card-title" href="/post/{{post.id}}">{{ post.title }}</a>-->
           </div>
         </div>
