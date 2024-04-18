@@ -1,5 +1,7 @@
 ## 모아모아
-<img src="">
+<p align="center">
+<img src="ForReadMe/moamoaLogo/moamoa_logo_org.png" width="300" height="300">
+</p>
 
 ## 팀원 소개
 | <img src="https://github.com/indoor98/proto/assets/134200142/d929de1f-0492-463c-99c8-ea8e3ed552ac" width="100" height="100"> | <img src="https://github.com/indoor98/proto/assets/134200142/ce807998-88e9-48a4-a0b6-ce61aa22ed11" width="100" height="100"> | <img src="https://github.com/indoor98/proto/assets/134200142/c217a7ec-4080-43de-8394-75eb9b7cc3a4" width="100" height="100"> | <img src="https://github.com/indoor98/proto/assets/134200142/08485ed5-3350-4d3d-9fd8-c8d7128be1ad" width="100" height="100"> | <img src="https://github.com/indoor98/proto/assets/134200142/f95377e9-e857-415f-bbd0-97c19be143cd" width="100" height="100"> 
@@ -9,6 +11,9 @@
 
 ## 프로젝트 소개
 **모아모아: 대학 기숙사 거주 학생을 위한 공동 구매 참여 사이트**
+<p align ="center">
+<img src="ForReadMe/moamoaLogo/moamoa_identity.png" width="300" height="300">
+</p>
 
 "모아모아"는 대학 기숙사에 거주하는 학생들을 대상으로 한 공동 구매 서비스입니다. 저렴한 가격으로 대용량의 상품을 구매하여 소비자들이 효율적으로 돈을 절약할 수 있는 시스템을 제공합니다.
 
@@ -33,7 +38,19 @@
 ## Requirements
 - Java 17
 - MariaDB or MySQL
+- Vue3
+- Vite
 
+## 📌Frontend
+| 기술                | 버전     |
+|-------------------|--------|
+| Node              | 21.7.3 |
+| NPM               | 10.5.0 |
+| Vue               | 3.4.21 |
+| Pinia             | 2.1.7  |
+| Vite              | 5.2.8  |
+
+----------
 ## 📌Backend
 | 기술                | 버전     |
 |-------------------|--------|
@@ -48,7 +65,7 @@
 ----------
 
 **개발 기간**
-2024.03.04 ~ 2024.03.28
+2024.04.01 ~ 04.18
 
 ## 설계
 
@@ -92,3 +109,7 @@
 ## 테스트 케이스 및 결과 보고서
 
 - <https://docs.google.com/document/d/1r4iJGAXg6GL7j4NUlw16QeEHKis0Cqt9zFDCd4YM7cw/edit#heading=h.1tggv8i3p8uj>
+
+
+## StoryBoard
+- <https://www.figma.com/file/yab9wGErgDzQuX7DPhVQYd/Beyond-SW-5th-moamoa-StoryBoard?type=design&node-id=0%3A1&mode=design&t=CQrCahQjesenCO5t-1>
