@@ -98,13 +98,13 @@
 
 ### 기능 명세서
 ![기능명세서](https://github.com/indoor98/proto/assets/92570309/27b60128-3bff-429f-ba5c-f2119d63be7b)
-![image](https://github.com/indoor98/Team2-MOAMOA/assets/155680893/501ca7e0-e99a-4a97-9851-005a26d19c79)
 
 
 ---
 
 ### 요구사항 명세서
 ![요구사항 명세서](https://github.com/indoor98/proto/assets/92570309/a0a79f8f-ab77-4a29-85ce-de974447f586)
+![image](https://github.com/indoor98/Team2-MOAMOA/assets/155680893/501ca7e0-e99a-4a97-9851-005a26d19c79)
 
 ----------
 
