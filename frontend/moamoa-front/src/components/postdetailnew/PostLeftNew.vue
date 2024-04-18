@@ -68,7 +68,7 @@ onMounted(loadPost);
 
   </div>
 
-  
+
 </template>
 
 <style scoped>
