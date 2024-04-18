@@ -38,7 +38,7 @@ const handleSubmit = async () => {
       }
     });
     console.log(request.data)
-    router.push({ name: "auth" })
+    router.push({ name: "mypage" })
   } catch (error) {
     console.error(error)
   }
