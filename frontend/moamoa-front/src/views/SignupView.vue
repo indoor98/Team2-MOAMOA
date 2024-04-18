@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <!-- 이미지 삽입 -->
-    <img src="@/assets/moamoa_logo.png" alt="로고 이미지" class="logo">
+    <a href="/">
+      <img src="@/assets/moamoa_logo.png" alt="로고 이미지" class="logo">
+    </a>
     <div class="signup-container">
       <form class="signup-form" @submit.prevent="signUp">
         <img src="@/assets/moamoa_logo_txt.png" alt="로고 글자" class="logo_txt">
