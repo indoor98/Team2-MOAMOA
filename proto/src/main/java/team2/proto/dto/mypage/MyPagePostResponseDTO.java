@@ -17,9 +17,7 @@ public class MyPagePostResponseDTO {
     private String productUrl;
 
     // html에서 불러온 메타 데이터를 담을 필드들
-    private String metaTitle;
     private String metaImage;
-    private String metaDescription;
 
 
 }

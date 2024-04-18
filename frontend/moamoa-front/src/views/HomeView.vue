@@ -31,34 +31,38 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 import NavHeader from "@/components/NavHeader.vue";
-import PostCard from "@/components/PostCard.vue"; // PostCard.vue 컴포넌트 추가
+import PostCard from "@/components/PostCard.vue";
 
 const router = useRouter();
 const posts = ref([]);
-const currentPage = ref(0); // 현재 페이지 번호를 관리하는 ref 추가
+const currentPage = ref(0);
 
 const fetchPosts = async (page) => {
-  currentPage.value = page; // 페이지 업데이트
+  currentPage.value = page;
   try {
     const response = await axios.get(`http://localhost:8080/api/post/list/${currentPage.value}`);
-    posts.value = response.data; // 게시글 데이터 업데이트
+    posts.value = response.data;
   } catch (error) {
     console.error(error);
   }
 };
 
 onMounted(() => {
-  fetchPosts(0); // 초기 페이지 로드
+  fetchPosts(0);
 });
 
 const goToWritePage = () => {
-  // 게시글 작성 페이지로 이동하는 메서드
   router.push({ name: "postwrite" });
 };
+
+// watch를 사용하여 posts 배열의 변경을 감지하고, 변경이 있을 때마다 fetchPosts 함수를 호출하여 화면을 업데이트합니다.
+watch(posts, () => {
+  fetchPosts(currentPage.value);
+});
 </script>
 
 <style scoped>

@@ -56,15 +56,18 @@
           </div>
         </div>
 
-        <!-- 해시태그 입력 -->
+        <!-- 해시태그 입력 폼 -->
         <div class="row">
           <div class="col-25">
             <label for="hashtagList">해시태그:</label>
           </div>
           <div class="col-75">
             <input type="text" id="hashtagList" v-model="hashtags" required>
+            <!-- 기존에 작성된 해시태그 표시 -->
+            <span v-for="(hashtag, index) in post.hashtagList" :key="index">#{{ hashtag }} </span>
           </div>
         </div>
+
 
         <div class="row">
           <p class="hint">여러 개의 해시태그를 입력할 경우 쉼표(,)로 구분해주세요.</p>
@@ -75,34 +78,36 @@
         </div>
       </form>
     </div>
+    
 
     <div class="margin-bottom"></div>
   </div>
 </template>
 
-<script setup>
-import axios from 'axios'
-import { ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router';
 
-const route = useRoute(); // 현재 라우터 정보를 가져옴
-const router = useRouter();
-
-const postno = route.params.postno;
-
-const post = ref({
-  title: '',
-  price: null,
-  headCount: null,
-  deadLine: '',
-  receivePlace: '',
-  productUrl: '',
-  hashtagList: []
-})
-
-const hashtags = ref('');
-
-const updatePost = async () => {
+ <script setup>
+ import axios from 'axios'
+ import { ref, onMounted } from 'vue'
+ import { useRoute, useRouter } from 'vue-router';
+ 
+ const route = useRoute(); // 현재 라우터 정보를 가져옴
+ const router = useRouter();
+ 
+ const postno = route.params.postno;
+ 
+ const post = ref({
+   title: '',
+   price: null,
+   headCount: null,
+   deadLine: '',
+   receivePlace: '',
+   productUrl: '',
+   hashtagList: [] // 해시태그 리스트 추가
+ })
+ 
+ const hashtags = ref('');
+ 
+ const updatePost = async () => {
   try {
     const accessToken = localStorage.getItem('accessToken')
     const response = await axios.post(
@@ -124,20 +129,44 @@ const updatePost = async () => {
     )
     console.log('게시글 수정 완료:', response.data);
     alert('게시글 수정이 완료 되었습니다!');
-    router.push({ name: 'postnoNew' }); // 작성 완료 후 HomeView로 이동
+    router.push({ name: 'postno' }); // 작성 완료 후 HomeView로 이동
   } catch (error) {
     console.error('게시글 수정 에러:', error)
   }
-}
+ }
+ 
+ // 해시태그를 쉼표(,)로 분할하여 배열로 반환하는 함수
+ const parseHashtags = (hashtagsStr) => {
+   return hashtagsStr.split(',').map(hashtag => hashtag.trim());
+ }
+ 
+ // 게시글 정보를 가져와서 입력 폼에 표시하는 함수
+ const loadPost = async () => {
+   try {
+     const accessToken = localStorage.getItem('accessToken')
+     const response = await axios.get(`http://localhost:8080/api/post/${postno}`, {
+       headers: {
+         Authorization: `Bearer ${accessToken}`
+       }
+     });
+     const postData = response.data;
+     post.value.title = postData.title;
+     post.value.price = postData.price;
+     post.value.headCount = postData.headCount;
+     post.value.deadLine = postData.deadLine;
+     post.value.receivePlace = postData.receivePlace;
+     post.value.productUrl = postData.productUrl;
+     post.value.hashtagList = postData.hashtagList.map(tag => tag.hashtag); // 해시태그 리스트 설정
+   } catch (error) {
+     console.error('게시글 정보 로드 에러:', error)
+   }
+ }
+ 
+ onMounted(() => {
+   loadPost(); // 페이지가 마운트되면 게시글 정보를 로드하여 입력 폼에 표시
+ });
 
-// 해시태그를 쉼표(,)로 분할하여 배열로 반환하는 함수
-const parseHashtags = (hashtagsStr) => {
-  return hashtagsStr.split(',').map(hashtag => {
-    return { hashtag };
-  });
-}
 </script>
-
 
 <style scoped>
 .container {

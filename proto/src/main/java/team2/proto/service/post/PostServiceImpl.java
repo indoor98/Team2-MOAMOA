@@ -2,6 +2,9 @@ package team2.proto.service.post;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -100,19 +103,47 @@ public class PostServiceImpl implements PostService {
         User currentUser = userService.findByEmail(userEmail);
         boolean isJoined = postUserRepository.existsByPostIdAndUserId(id, currentUser.getId());
 
+        String metaImage = "Default Image URL"; // 기본 이미지 URL 설정
+        String metaTitle = "제목 없음";
+        try {
+            Document doc = Jsoup.connect(post.getProductUrl())
+                    .userAgent("Mozilla/5.0")
+                    .get();
+            Element metaImageElement = doc.selectFirst("meta[property=og:image]");
+            Element metaTitleElement = doc.selectFirst("meta[property=og:title]");
+            if (metaImageElement != null) {
+                metaImage = metaImageElement.attr("content");
+            }
+
+            if (metaTitleElement != null) {
+                metaTitle = metaTitleElement.attr("content");
+            } else {
+                // og:title이 없을 경우 <title> 태그에서 값을 가져옴  --> 홈플러스 : <title>
+                Element titleElement = doc.selectFirst("title");
+                if (titleElement != null) {
+                    metaTitle = titleElement.text();
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         return new PostResponseDTO(
-                post.getId(),
-                post.getTitle(),
-                post.getPrice(),
-                post.getHeadCount(),
-                joinedUsersCount,
-                post.getDeadline(),
-                post.getReceivePlace(),
-                post.getProductUrl(),
-                convertHashtagEntityToDto(post.getHashtagList()),
-                isJoined
-                );
+            post.getId(),
+            post.getTitle(),
+            post.getPrice(),
+            post.getHeadCount(),
+            joinedUsersCount,
+            post.getDeadline(),
+            post.getReceivePlace(),
+            post.getProductUrl(),
+            convertHashtagEntityToDto(post.getHashtagList()),
+            isJoined,
+            metaImage,
+            metaTitle
+
+        );
     }
 
 
@@ -162,9 +193,36 @@ public class PostServiceImpl implements PostService {
         // null 값을 무시하고 false인 데이터만 필터링하여 반환
         return posts.stream()
                 .filter(post -> post.getDeleteYn() != null && !post.getDeleteYn())
-                .map(post -> new PostListResponseDTO(post.getTitle(), post.getPrice(), post.getHeadCount(),
-                        post.getDeadline(), post.getReceivePlace(), post.getProductUrl(), convertHashtagEntityToDto(post.getHashtagList())))
+                .map(post -> {
+                    // 메타 이미지 추출 로직
+                    String metaImage = "Default Image URL"; // 기본 이미지 URL 설정
+                    try {
+                        Document doc = Jsoup.connect(post.getProductUrl())
+                                .userAgent("Mozilla/5.0")
+                                .get();
+                        Element metaImageElement = doc.selectFirst("meta[property=og:image]");
+                        if (metaImageElement != null) {
+                            metaImage = metaImageElement.attr("content");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    // DTO 객체 생성 및 메타 이미지 설정
+                    return new PostListResponseDTO(
+                            post.getTitle(),
+                            post.getPrice(),
+                            post.getHeadCount(),
+                            post.getDeadline(),
+                            post.getReceivePlace(),
+                            post.getProductUrl(),
+                            convertHashtagEntityToDto(post.getHashtagList()),
+                            post.getId(),
+                            metaImage // 여기에 메타 이미지를 설정
+                    );
+                })
                 .collect(Collectors.toList());
+
     }
 
 
@@ -248,9 +306,36 @@ public class PostServiceImpl implements PostService {
         // null 값을 무시하고 false인 데이터만 필터링하여 반환
         return posts.stream()
                 .filter(post -> post.getDeleteYn() != null && !post.getDeleteYn())
-                .map(post -> new PostListResponseDTO(post.getTitle(), post.getPrice(), post.getHeadCount(),
-                        post.getDeadline(), post.getReceivePlace(), post.getProductUrl(), convertHashtagEntityToDto(post.getHashtagList())))
+                .map(post ->{
+                    // 메타 이미지 추출 로직
+                    String metaImage = "Default Image URL"; // 기본 이미지 URL 설정
+                    try {
+                        Document doc = Jsoup.connect(post.getProductUrl())
+                                .userAgent("Mozilla/5.0")
+                                .get();
+                        Element metaImageElement = doc.selectFirst("meta[property=og:image]");
+                        if (metaImageElement != null) {
+                            metaImage = metaImageElement.attr("content");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    // DTO 객체 생성 및 메타 이미지 설정
+                    return new PostListResponseDTO(
+                            post.getTitle(),
+                            post.getPrice(),
+                            post.getHeadCount(),
+                            post.getDeadline(),
+                            post.getReceivePlace(),
+                            post.getProductUrl(),
+                            convertHashtagEntityToDto(post.getHashtagList()),
+                            post.getId(),
+                            metaImage // 여기에 메타 이미지를 설정
+                    );
+                })
                 .collect(Collectors.toList());
+
     }
 
     @Override

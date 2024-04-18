@@ -36,20 +36,24 @@ getJoinList();
 
   <div class="list-container">
     <div class="list-header">
-      <div>번호</div>
-      <div>게시글 제목</div>
-      <div>모집 인원</div>
-      <div>마감일자</div>
+      <div class="header-item">번호</div>
+      <div class="header-item">게시글 제목</div>
+      <div class="header-item">모집 인원</div>
+      <div class="header-item">마감일자</div>
     </div>
 
     <div class="list-item" v-for="(item, index) in joinList" :key="index">
-      <router-link :to="`/post/${item.postId}`">
-        <div class="number">{{ index + 1 }}</div>
-      </router-link>
-      <a :href="item.productUrl" target="_blank" class="title">{{ item.title }}</a>
-      <div class="head-count">{{ item.headCount }}</div>
-      <div class="deadline">{{item.deadLine}}</div>
-
+      <div class="item-content number">{{ index + 1 }}</div>
+      <div class="item-content title-block">
+        <router-link :to="`/post/${item.postId}`" class="title-link">
+          <div>{{ item.title }}</div>
+        </router-link>
+        <a :href="item.productUrl" target="_blank" class="image-link">
+          <img :src="item.metaImage" alt="미리보기 이미지" class="preview-image">
+        </a>
+      </div>
+      <div class="item-content head-count">{{ item.headCount }}</div>
+      <div class="item-content deadline">{{ item.deadLine }}</div>
     </div>
   </div>
 
@@ -99,5 +103,11 @@ header {
 .title {
   flex: 3; /* 제목 부분을 다른 칸들보다 넓게 설정 */
 }
-
+.preview-image {
+  width: 100%; /* 이미지 너비를 컨테이너에 맞춤 */
+  max-width: 150px; /* 최대 너비 제한 */
+  height: auto; /* 높이는 자동으로 설정하여 비율 유지 */
+  object-fit: cover; /* 컨테이너를 채우면서 비율 유지 */
+  border-radius: 8px; /* 이미지에 둥근 모서리 추가 (선택적) */
+}
 </style>
