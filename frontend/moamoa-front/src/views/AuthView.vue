@@ -67,7 +67,7 @@ const handleSubmit = async () => {
   align-items: center;
   flex-direction: column; /* 이미지 및 폼을 세로로 정렬하기 위해 추가 */
   height: 100vh; /* 화면 전체 높이 */
-  //background-color: #f7efe4;
+  background-color: #f7efe4;
 }
 .authup-container {
   text-align: center;
