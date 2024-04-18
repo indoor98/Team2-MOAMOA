@@ -7,7 +7,7 @@ const post = ref({
   "id": 0,
   "title": "string",
   "price": 0,
-  "headCount": 0,
+  "headCount": 100,
   "joinedUsersCount": 0,
   "deadLine": "2024-04-17T11:56:05.061Z",
   "receivePlace": "string",
@@ -26,40 +26,44 @@ const router = useRouter();
 
 if (post.value.headCount === post.value.joinedUsersCount) {
   isPull.value = 1;
+  console.log(isPull.value);
+}else{
+  isPull.value = 0;
+  console.log(isPull.value);
 }
 
-// const isAttend = () => {
+const isAttend = () => {
+  try {
+    const postId = window.location.pathname.split('/').pop();
+    const response = axios.get(`http://localhost:8080/api/post/post/attend/${postId}`,{
+      headers: {
+        'Authorization': `Bearer ${accessToken}` // accessToken을 Bearer 토큰으로 사용하여 Authorization 헤더에 담음
+      }})
+        .then( (value) => {
+          userType.value = value.data;
+          console.log("usertype : ",userType.value);
+        });
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+// const isAttend = async () => {
 //   try {
 //     const postId = window.location.pathname.split('/').pop();
-//     const response = axios.get(`http://localhost:8080/api/post/post/attend/${postId}`,{
+//     const response = await axios.get(`http://localhost:8080/api/post/post/attend/${postId}`, {
 //       headers: {
-//         'Authorization': `Bearer ${accessToken}` // accessToken을 Bearer 토큰으로 사용하여 Authorization 헤더에 담음
-//       }})
-//         .then( (value) => {
-//           userType.value = value.data;
-//           console.log(userType.value);
-//         });
-
+//         'Authorization': `Bearer ${accessToken}`
+//       }
+//     });
+//     if (response && response.data) {
+//       userType.value = response.data;
+//       console.log("usertype : ",userType.value);
+//     }
 //   } catch (error) {
 //     console.log(error);
 //   }
 // }
-const isAttend = async () => {
-  try {
-    const postId = window.location.pathname.split('/').pop();
-    const response = await axios.get(`http://localhost:8080/api/post/post/attend/${postId}`, {
-      headers: {
-        'Authorization': `Bearer ${accessToken}`
-      }
-    });
-    if (response && response.data) {
-      userType.value = response.data;
-      console.log(userType.value);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
 const loadPost = async () => {
   try {
     // 게시글 정보 불러오기
@@ -84,7 +88,7 @@ const joinPost = async () => {
     // API 요청 보내기
     const response = await axios.post(`http://localhost:8080/api/post/join/${postId}`,
         {
-      postno: postId.value
+      postno: postId
     },
         {
       headers: {
@@ -177,11 +181,11 @@ onMounted(async () => {
 
   <div class="post-right-button-logined">
     <div v-if="accessToken" class="post-right-button-ispull">
-      <div v-if="userType.value ==1">
+      <div v-if="userType ==1">
         <button @click.prevent="updateJoin"> 수정하기 </button> <button @click.prevent="deletePost"> 삭제하기 </button>
       </div>
-      <div v-else-if="userType.value==0">
-        <div v-if="isPull.value==1">
+      <div v-else-if="userType==0">
+        <div v-if="isPull==1">
           <button @click.prevent=""> 마감이요 </button>
         </div>
         <div v-else>
