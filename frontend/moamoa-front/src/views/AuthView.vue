@@ -89,7 +89,7 @@ const handleSubmit = async () => {
 .authup-container button {
   width: 100%;
   padding: 8px 20px;
-  background-color: #26499d;
+  background-color: #007BFF;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -98,12 +98,12 @@ const handleSubmit = async () => {
 .auth-form{
   background-color: #ffd557;
   text-align: center;
-  //width: 350px; /* 폼의 너비를 조정합니다. */
+  width: 350px; /* 폼의 너비를 조정합니다. */
   padding: 20px;
   border-radius: 10px; /* 모서리 둥근 사각형 */
   background-color: #ffd557; /* 로그인 입력 부분의 배경색 */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
-  //margin-top: 20px; /* 이미지와 간격 조정 */
+  margin-top: 20px; /* 이미지와 간격 조정 */
 }
 
 #imagePreview{

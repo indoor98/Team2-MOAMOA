@@ -45,6 +45,7 @@ const fetchPosts = async (page) => {
   currentPage.value = page; // 페이지 업데이트
   try {
     const response = await axios.get(`http://localhost:8080/api/post/list/${currentPage.value}`);
+    console.log(response.data);
     posts.value = response.data; // 게시글 데이터 업데이트
   } catch (error) {
     console.error(error);

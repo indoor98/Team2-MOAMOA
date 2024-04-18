@@ -28,22 +28,38 @@ if (post.value.headCount === post.value.joinedUsersCount) {
   isPull.value = 1;
 }
 
-const isAttend = () => {
+// const isAttend = () => {
+//   try {
+//     const postId = window.location.pathname.split('/').pop();
+//     const response = axios.get(`http://localhost:8080/api/post/post/attend/${postId}`,{
+//       headers: {
+//         'Authorization': `Bearer ${accessToken}` // accessToken을 Bearer 토큰으로 사용하여 Authorization 헤더에 담음
+//       }})
+//         .then( (value) => {
+//           userType.value = value.data;
+//           console.log(userType.value);
+//         });
+
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+const isAttend = async () => {
   try {
     const postId = window.location.pathname.split('/').pop();
-    const response = axios.get(`http://localhost:8080/api/post/post/attend/${postId}`,{
+    const response = await axios.get(`http://localhost:8080/api/post/post/attend/${postId}`, {
       headers: {
-        'Authorization': `Bearer ${accessToken}` // accessToken을 Bearer 토큰으로 사용하여 Authorization 헤더에 담음
-      }})
-        .then( (value) => {
-          userType.value = value.data;
-          console.log(userType.value);
-        });
-
+        'Authorization': `Bearer ${accessToken}`
+      }
+    });
+    if (response && response.data) {
+      userType.value = response.data;
+      console.log(userType.value);
+    }
   } catch (error) {
     console.log(error);
   }
-}
+};
 const loadPost = async () => {
   try {
     // 게시글 정보 불러오기
@@ -55,7 +71,6 @@ const loadPost = async () => {
       }});
     const data = await response.json();
     post.value = data;
-    console.log(post.value);
 
   } catch (error) {
     console.log(error);
@@ -149,8 +164,9 @@ onMounted(async () => {
     현재 참여 인원 : {{ post.joinedUsersCount }}
   </div>
   <div>
-    마감 시간 : {{ post.deadLine.slice(0, 10) + ' ' + post.deadLine.slice(11,16) }}
+  마감 시간 : {{ post.deadLine ? post.deadLine.slice(0, 10) + ' ' + post.deadLine.slice(11,16) : '' }}
   </div>
+
   <div>
     가격 : {{ post.price }}
   </div>
@@ -161,11 +177,11 @@ onMounted(async () => {
 
   <div class="post-right-button-logined">
     <div v-if="accessToken" class="post-right-button-ispull">
-      <div v-if="userType==1">
+      <div v-if="userType.value ==1">
         <button @click.prevent="updateJoin"> 수정하기 </button> <button @click.prevent="deletePost"> 삭제하기 </button>
       </div>
-      <div v-else-if="userType==0">
-        <div v-if="isPull==1">
+      <div v-else-if="userType.value==0">
+        <div v-if="isPull.value==1">
           <button @click.prevent=""> 마감이요 </button>
         </div>
         <div v-else>
