@@ -1,6 +1,7 @@
 package team2.proto.service.mypage;
 
 import lombok.RequiredArgsConstructor;
+import org.jsoup.nodes.Element;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import team2.proto.dto.mypage.MyPageCommentResponseDTO;
@@ -110,22 +111,27 @@ public class MyPageServiceImpl implements MyPageService{
                 // Jsoup을 사용하여 메타 데이터 설정
                 try {
                     System.out.println(post.getProductUrl());
+                    // URL 인코딩 추가.  --> 인코딩 문제 아님
+                    // String encodedUrl = URLEncoder.encode(post.getProductUrl(), StandardCharsets.UTF_8.toString());
+
                     Document doc = Jsoup.connect(post.getProductUrl())
-                            .timeout(60000) // 타임아웃 증가시켜봄..
+                            .userAgent("Mozilla/5.0")
                             .get();
-                    String metaTitle = doc.select("meta[property=og:title]").attr("content");
-                    String metaImage = doc.select("meta[property=og:image]").attr("content");
-                    String metaDescription = doc.select("meta[property=og:description]").attr("content");
-                    System.out.println(metaTitle);
+
+
+                    // meta 태그의 Element 추출
+                    Element metaImageElement = doc.selectFirst("meta[property=og:image]");
+
+                    // 각 Element에서 content 속성 값 추출, 없으면 기본값 설정
+                    String metaImage = metaImageElement != null ? metaImageElement.attr("content") : "Default Image URL";
+
                     System.out.println(metaImage);
-                    System.out.println(metaDescription);
-                    dto.setMetaTitle(metaTitle);
                     dto.setMetaImage(metaImage);
-                    dto.setMetaDescription(metaDescription);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    // 적절한 예외 처리를 여기에 추가하세요.
+
                 }
+
 
                 dtoList.add(dto);
             }
@@ -182,7 +188,29 @@ public class MyPageServiceImpl implements MyPageService{
                 dto.setTitle(post.getTitle());
                 dto.setNickname(findUserById(email).getNickname());
                 dto.setHeadCount(post.getHeadCount());
+
+                try {
+                    System.out.println(post.getProductUrl());
+                    // URL 인코딩 추가.  --> 인코딩 문제 아님
+                    // String encodedUrl = URLEncoder.encode(post.getProductUrl(), StandardCharsets.UTF_8.toString());
+                    Document doc = Jsoup.connect(post.getProductUrl())
+                            .userAgent("Mozilla/5.0")
+                            .get();
+
+                    // meta 태그의 Element 추출
+                    Element metaImageElement = doc.selectFirst("meta[property=og:image]");
+
+                    // 각 Element에서 content 속성 값 추출, 없으면 기본값 설정
+                    String metaImage = metaImageElement != null ? metaImageElement.attr("content") : "Default Image URL";
+
+                    System.out.println(metaImage);
+                    dto.setMetaImage(metaImage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                }
                 dtoList.add(dto);
+
             }
         }
         return dtoList;

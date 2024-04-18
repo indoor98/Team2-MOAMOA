@@ -2,7 +2,9 @@
   <div class="col-md-4">
     <div class="card">
       <!-- 이미지 삽입 -->
-      <img :src="post.productUrl" class="card-img-top" alt="...">
+      <router-link :to="`/post/${post.id}`">
+        <img :src="post.metaImage" class="card-img-top" alt="...">
+      </router-link>
       <div class="card-body">
         <!-- 제목, 가격, 인원수, 마감일 출력 -->
         <h5 class="card-title">{{ post.title }}</h5>
