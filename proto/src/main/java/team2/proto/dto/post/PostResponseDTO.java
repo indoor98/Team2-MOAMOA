@@ -24,4 +24,7 @@ public class PostResponseDTO {
     private List<HashtagRequestDTO> hashtagList;
     private boolean joined;
 
+    private String metaImage;
+    private String metaTitle;
+
 }

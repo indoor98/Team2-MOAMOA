@@ -19,5 +19,10 @@ public class PostListResponseDTO {
     private String receivePlace;
     private String productUrl;
     private List<HashtagRequestDTO> hastagList;
+
+    // 게시글 클릭 시 라우팅 연결을 위한 id 필드 생성.......................ㅎ
+    private Long id;
+    private String metaImage;
+
 }
 

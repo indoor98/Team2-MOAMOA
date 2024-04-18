@@ -60,12 +60,25 @@ onMounted(loadPost);
     #{{ hashtag.hashtag }} <space>  </space>
   </span>
   <div>
-    <img src="/userprofile/userdefault.jpg">
+    <a :href="post.productUrl" target="_blank">
+      <img :src= "post.metaImage" class="image-preview">
+      <br>
+      <span>{{post.metaTitle}}</span>
+    </a>
+
   </div>
 
   
 </template>
 
 <style scoped>
+.image-preview {
+  max-width: 500px; /* 최대 너비 설정 */
+  max-height: 500px; /* 최대 높이 설정 */
+  width: auto; /* 원본 이미지 비율 유지 */
+  height: auto; /* 원본 이미지 비율 유지 */
+  display: block; /* 줄바꿈 방지 */
+  object-fit: cover; /* 컨테이너에 맞춰 이미지를 채우되, 비율 유지 */
+}
 
 </style>
