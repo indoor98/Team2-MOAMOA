@@ -98,6 +98,8 @@
 
 ### 기능 명세서
 ![기능명세서](https://github.com/indoor98/proto/assets/92570309/27b60128-3bff-429f-ba5c-f2119d63be7b)
+![image](https://github.com/indoor98/Team2-MOAMOA/assets/155680893/501ca7e0-e99a-4a97-9851-005a26d19c79)
+
 
 ---
 
@@ -109,6 +111,7 @@
 ## 테스트 케이스 및 결과 보고서
 
 - <https://docs.google.com/document/d/1r4iJGAXg6GL7j4NUlw16QeEHKis0Cqt9zFDCd4YM7cw/edit#heading=h.1tggv8i3p8uj>
+![image](https://github.com/indoor98/Team2-MOAMOA/assets/155680893/2ebed502-41d2-4b9a-a8fb-7e2bc8c0cf6e)
 
 
 ## StoryBoard
